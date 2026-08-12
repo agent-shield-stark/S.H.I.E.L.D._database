@@ -1,922 +1,577 @@
 <!DOCTYPE html>
 <html lang="uk">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>S.H.I.E.L.D. // DOSSIER</title>
-
+<title>S.H.I.E.L.D. // PERSONNEL FILE</title>
 
 <style>
+
+:root {
+    --bg: #02080d;
+    --panel: #06131b;
+    --panel-light: #081923;
+    --cyan: #19cfff;
+    --cyan-soft: #5edfff;
+    --text: #d9f3ff;
+    --muted: #7194a5;
+    --green: #5df2ae;
+    --red: #ff5c6c;
+}
 
 * {
     box-sizing: border-box;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 body {
-
     margin: 0;
+    background:
+        linear-gradient(rgba(20,130,170,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(20,130,170,.035) 1px, transparent 1px),
+        var(--bg);
 
-    min-height: 100vh;
+    background-size: 50px 50px;
 
-    background: #02070c;
-
-    color: #dff7ff;
+    color: var(--text);
 
     font-family:
         "Courier New",
         monospace;
 
-    overflow-x: hidden;
-
+    min-height: 100vh;
 }
 
 
-/* ===== BACKGROUND GRID ===== */
+/* ============================= */
+/* HEADER */
+/* ============================= */
 
-body::before {
+.header {
 
-    content: "";
+    border-bottom: 1px solid rgba(25,207,255,.35);
 
-    position: fixed;
-
-    inset: 0;
-
-    pointer-events: none;
-
-    background:
-
-        linear-gradient(
-            rgba(40,190,255,.035) 1px,
-            transparent 1px
-        ),
-
-        linear-gradient(
-            90deg,
-            rgba(40,190,255,.035) 1px,
-            transparent 1px
-        );
-
-    background-size: 45px 45px;
-
-    z-index: -2;
-
-}
-
-
-/* ===== SCANNING LINE ===== */
-
-body::after {
-
-    content: "";
-
-    position: fixed;
-
-    left: 0;
-
-    right: 0;
-
-    top: -5px;
-
-    height: 2px;
+    padding:
+        28px
+        clamp(20px, 5vw, 70px);
 
     background:
-
         linear-gradient(
-            90deg,
-            transparent,
-            #35c9ff,
+            180deg,
+            rgba(10,40,55,.35),
             transparent
         );
 
-    box-shadow:
-        0 0 15px #35c9ff;
-
-    animation:
-        scan 5s linear infinite;
-
-    pointer-events: none;
-
-    z-index: 50;
-
 }
 
+.header-top {
 
-@keyframes scan {
+    color: var(--cyan);
 
-    from {
-        top: -5px;
-    }
-
-    to {
-        top: 100%;
-    }
-
-}
-
-
-/* ===== TERMINAL ===== */
-
-.terminal {
-
-    width:
-        min(1100px, 94%);
-
-    margin:
-        30px auto 50px;
-
-    background:
-        rgba(3,11,17,.96);
-
-    border:
-        1px solid rgba(50,190,255,.3);
-
-    box-shadow:
-        0 0 35px rgba(0,140,255,.08);
-
-}
-
-
-/* ===== TOP BAR ===== */
-
-.topbar {
-
-    min-height: 55px;
-
-    padding:
-        0 20px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    border-bottom:
-        1px solid rgba(50,190,255,.25);
-
-    font-size: 11px;
-
-    letter-spacing: 2px;
-
-}
-
-
-.system {
-
-    color: #39c5ff;
-
-    text-shadow:
-        0 0 8px rgba(40,200,255,.7);
-
-}
-
-
-.status {
-
-    color: #66e6a0;
-
-}
-
-
-.status::before {
-
-    content: "● ";
-
-    animation:
-        pulse 1.5s infinite;
-
-}
-
-
-@keyframes pulse {
-
-    50% {
-        opacity: .25;
-    }
-
-}
-
-
-/* ===== CONTENT ===== */
-
-.content {
-
-    padding:
-        clamp(25px, 5vw, 60px);
-
-}
-
-
-/* ===== RETURN ===== */
-
-.return {
-
-    display: inline-block;
-
-    margin-bottom: 35px;
-
-    padding:
-        10px 15px;
-
-    border:
-        1px solid rgba(50,190,255,.25);
-
-    color: #39c5ff;
-
-    text-decoration: none;
-
-    font-size: 10px;
-
-    letter-spacing: 2px;
-
-    transition: .25s;
-
-}
-
-
-.return:hover {
-
-    background:
-        rgba(50,190,255,.08);
-
-    border-color:
-        rgba(50,190,255,.65);
-
-    box-shadow:
-        0 0 15px rgba(50,190,255,.12);
-
-}
-
-
-/* ===== DOSSIER HEADER ===== */
-
-.classification {
-
-    color: #3b9cbd;
-
-    font-size: 10px;
+    font-size: 12px;
 
     letter-spacing: 4px;
 
-    margin-bottom: 15px;
+    margin-bottom: 45px;
 
 }
 
-
-#character-name {
-
-    margin: 0;
+.header-title {
 
     font-size:
-        clamp(32px, 7vw, 65px);
+        clamp(38px, 7vw, 80px);
 
     font-weight: 300;
 
-    letter-spacing: 5px;
+    letter-spacing: 6px;
+
+    margin: 0;
 
     text-shadow:
-        0 0 14px rgba(50,190,255,.5);
+        0 0 15px rgba(25,207,255,.35);
+
+}
+
+.header-subtitle {
+
+    margin-top: 15px;
+
+    color: var(--muted);
+
+    letter-spacing: 3px;
+
+    font-size: 12px;
 
 }
 
 
-#character-alias {
+/* ============================= */
+/* MAIN */
+/* ============================= */
 
-    margin-top: 12px;
+.container {
 
-    color: #6aa9bd;
+    width: min(1100px, 90%);
+
+    margin: 60px auto 100px;
+
+}
+
+
+/* ============================= */
+/* BACK BUTTON */
+/* ============================= */
+
+.back {
+
+    display: inline-block;
+
+    margin-bottom: 30px;
+
+    padding: 12px 18px;
+
+    border: 1px solid rgba(25,207,255,.35);
+
+    color: var(--cyan);
+
+    text-decoration: none;
 
     font-size: 12px;
 
     letter-spacing: 2px;
 
+    transition: .2s;
+
+}
+
+.back:hover {
+
+    background: rgba(25,207,255,.08);
+
+    border-color: var(--cyan);
+
 }
 
 
-/* ===== MAIN DOSSIER ===== */
+/* ============================= */
+/* DOSSIER */
+/* ============================= */
 
 .dossier {
 
-    margin-top: 45px;
-
-    display: grid;
-
-    grid-template-columns:
-        300px 1fr;
-
-    gap: 40px;
-
-}
-
-
-/* ===== PHOTO ===== */
-
-.photo-box {
-
-    min-height: 390px;
-
-    border:
-        1px solid rgba(50,190,255,.25);
+    border: 1px solid rgba(25,207,255,.4);
 
     background:
-        rgba(5,25,35,.5);
+        linear-gradient(
+            135deg,
+            rgba(10,30,40,.85),
+            rgba(2,10,15,.95)
+        );
 
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    overflow: hidden;
+    padding:
+        clamp(25px, 5vw, 60px);
 
     position: relative;
 
+    box-shadow:
+        0 0 30px rgba(0,150,200,.08);
+
 }
 
 
-.photo-box::before {
+/* decorative corners */
 
-    content:
-        "S.H.I.E.L.D. // VISUAL RECORD";
+.dossier::before,
+.dossier::after {
+
+    content: "";
 
     position: absolute;
 
-    top: 12px;
+    width: 35px;
+    height: 35px;
 
-    left: 12px;
+    border-color: var(--cyan);
 
-    color: #39758b;
+}
 
-    font-size: 8px;
+.dossier::before {
 
-    letter-spacing: 1px;
+    top: -1px;
+    left: -1px;
+
+    border-top: 2px solid;
+    border-left: 2px solid;
+
+}
+
+.dossier::after {
+
+    right: -1px;
+    bottom: -1px;
+
+    border-right: 2px solid;
+    border-bottom: 2px solid;
 
 }
 
 
-#character-photo {
+/* ============================= */
+/* FILE NUMBER */
+/* ============================= */
 
-    width: 100%;
+.file-number {
 
-    height: 100%;
+    color: var(--cyan);
 
-    object-fit: cover;
+    font-size: 12px;
 
-    display: none;
+    letter-spacing: 3px;
+
+    margin-bottom: 25px;
 
 }
 
 
-.photo-placeholder {
+/* ============================= */
+/* CHARACTER NAME */
+/* ============================= */
 
-    color: #326579;
+.character-name {
 
-    font-size: 10px;
+    font-size:
+        clamp(32px, 6vw, 60px);
+
+    font-weight: 300;
+
+    letter-spacing: 3px;
+
+    margin: 0 0 15px;
+
+    text-shadow:
+        0 0 15px rgba(25,207,255,.3);
+
+}
+
+
+/* ============================= */
+/* STATUS */
+/* ============================= */
+
+.status {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: var(--green);
+
+    font-size: 12px;
 
     letter-spacing: 2px;
 
-    text-align: center;
+    margin-bottom: 45px;
 
-    padding: 20px;
+}
+
+.status::before {
+
+    content: "";
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: var(--green);
+
+    box-shadow:
+        0 0 10px var(--green);
 
 }
 
 
-/* ===== INFO ===== */
+/* ============================= */
+/* INFO GRID */
+/* ============================= */
 
 .info-grid {
 
     display: grid;
 
     grid-template-columns:
-        repeat(2, 1fr);
+        repeat(
+            auto-fit,
+            minmax(220px, 1fr)
+        );
 
-    gap: 15px;
+    gap: 18px;
 
-}
-
-
-.info {
-
-    padding:
-        18px;
-
-    border:
-        1px solid rgba(50,190,255,.15);
-
-    background:
-        rgba(5,25,35,.35);
+    margin-bottom: 45px;
 
 }
 
+.info-box {
+
+    border-left: 2px solid var(--cyan);
+
+    background: rgba(10,35,48,.45);
+
+    padding: 18px 20px;
+
+}
 
 .info-label {
 
-    color: #3d91ad;
+    color: var(--muted);
 
-    font-size: 9px;
+    font-size: 10px;
 
     letter-spacing: 2px;
 
-    margin-bottom: 9px;
+    margin-bottom: 10px;
 
 }
-
 
 .info-value {
 
-    color: #d5f4ff;
+    font-size: 16px;
 
-    font-size: 14px;
+    color: var(--text);
 
 }
 
 
-/* ===== SECTIONS ===== */
+/* ============================= */
+/* SECTION */
+/* ============================= */
 
 .section {
 
-    margin-top: 35px;
-
-    padding:
-        25px;
-
-    border:
-        1px solid rgba(50,190,255,.15);
-
-    border-left:
-        2px solid rgba(50,190,255,.45);
-
-    background:
-        rgba(4,20,29,.45);
+    margin-top: 45px;
 
 }
-
 
 .section-title {
 
-    color: #3bc7ff;
+    color: var(--cyan);
 
-    font-size: 11px;
+    font-size: 12px;
 
-    letter-spacing: 3px;
+    letter-spacing: 4px;
 
-    margin-bottom: 15px;
+    margin-bottom: 18px;
+
+    border-bottom: 1px solid rgba(25,207,255,.2);
+
+    padding-bottom: 10px;
 
 }
 
-
 .section-text {
 
-    color: #b8d6e0;
-
-    font-family:
-        "Segoe UI",
-        Arial,
-        sans-serif;
-
-    font-size: 15px;
+    color: #b7d0db;
 
     line-height: 1.8;
+
+    font-size: 15px;
 
     white-space: pre-line;
 
 }
 
 
-/* ===== QUOTE ===== */
+/* ============================= */
+/* ABILITIES */
+/* ============================= */
 
-.quote {
-
-    margin-top: 25px;
-
-    padding:
-        20px;
-
-    border-left:
-        2px solid #39c5ff;
-
-    background:
-        rgba(40,180,255,.04);
-
-    color: #9bcfe0;
-
-    font-family:
-        "Segoe UI",
-        Arial,
-        sans-serif;
-
-    font-style: italic;
-
-    line-height: 1.7;
-
-}
-
-
-/* ===== FOOTER ===== */
-
-.footer {
-
-    margin-top: 50px;
-
-    padding-top: 20px;
-
-    border-top:
-        1px solid rgba(50,190,255,.15);
-
-    color: #3d6675;
-
-    font-size: 9px;
-
-    letter-spacing: 1px;
+.abilities {
 
     display: flex;
 
-    justify-content: space-between;
-
-    gap: 15px;
-
     flex-wrap: wrap;
+
+    gap: 10px;
+
+}
+
+.ability {
+
+    border: 1px solid rgba(25,207,255,.35);
+
+    padding: 9px 14px;
+
+    color: var(--cyan-soft);
+
+    font-size: 11px;
+
+    letter-spacing: 1px;
+
+    background: rgba(25,207,255,.03);
 
 }
 
 
-/* ===== MOBILE ===== */
+/* ============================= */
+/* CLASSIFIED */
+/* ============================= */
 
-@media(max-width:750px) {
+.classified {
+
+    margin-top: 50px;
+
+    border: 1px solid rgba(255,92,108,.3);
+
+    padding: 20px;
+
+    color: #ff8792;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+}
+
+
+/* ============================= */
+/* LOADING */
+/* ============================= */
+
+.loading {
+
+    text-align: center;
+
+    padding: 100px 20px;
+
+    color: var(--cyan);
+
+    letter-spacing: 3px;
+
+    font-size: 13px;
+
+}
+
+
+/* ============================= */
+/* ERROR */
+/* ============================= */
+
+.error {
+
+    text-align: center;
+
+    padding: 80px 20px;
+
+    color: var(--red);
+
+    line-height: 1.8;
+
+}
+
+
+/* ============================= */
+/* MOBILE */
+/* ============================= */
+
+@media (max-width: 600px) {
+
+    .container {
+
+        width: 92%;
+
+        margin-top: 35px;
+
+    }
 
     .dossier {
 
-        grid-template-columns:
-            1fr;
+        padding: 25px 20px;
 
     }
 
-    .photo-box {
+    .character-name {
 
-        max-width: 400px;
-
-        margin: auto;
-
-        width: 100%;
-
-    }
-
-    .info-grid {
-
-        grid-template-columns:
-            1fr;
-
-    }
-
-    .topbar {
-
-        font-size: 8px;
-
-        padding: 0 10px;
+        letter-spacing: 1px;
 
     }
 
 }
 
 </style>
-
 </head>
 
 
 <body>
 
 
-<div class="terminal">
+<header class="header">
+
+    <div class="header-top">
+        S.H.I.E.L.D. // SECURE TERMINAL
+    </div>
+
+    <h1 class="header-title">
+        PERSONNEL
+    </h1>
+
+    <div class="header-subtitle">
+        CLASSIFIED PERSONNEL DATABASE // LEVEL 04
+    </div>
+
+</header>
 
 
-    <!-- TOP BAR -->
+<main class="container">
 
-    <div class="topbar">
-
-        <div class="system">
-
-            S.H.I.E.L.D. // SECURE TERMINAL
-
-        </div>
+    <a href="characters.html" class="back">
+        ← RETURN TO PERSONNEL DATABASE
+    </a>
 
 
-        <div class="status">
+    <div id="content">
 
-            DOSSIER ACCESS
-
+        <div class="loading">
+            > RETRIEVING PERSONNEL FILE...
         </div>
 
     </div>
 
-
-
-    <main class="content">
-
-
-        <!-- RETURN -->
-
-        <a
-            href="characters.html"
-            class="return"
-        >
-
-            &lt; RETURN TO PERSONNEL DATABASE
-
-        </a>
-
-
-
-        <!-- HEADER -->
-
-        <div class="classification">
-
-            S.H.I.E.L.D. // PERSONNEL FILE
-
-        </div>
-
-
-        <h1 id="character-name">
-
-            UNKNOWN SUBJECT
-
-        </h1>
-
-
-        <div id="character-alias">
-
-            CLASSIFIED
-
-        </div>
-
-
-
-        <!-- DOSSIER -->
-
-        <div class="dossier">
-
-
-            <!-- PHOTO -->
-
-            <div class="photo-box">
-
-                <img
-                    id="character-photo"
-                    alt="Character photograph"
-                >
-
-                <div
-                    class="photo-placeholder"
-                    id="photo-placeholder"
-                >
-
-                    NO VISUAL RECORD AVAILABLE
-
-                </div>
-
-            </div>
-
-
-
-            <!-- BASIC INFO -->
-
-            <div>
-
-                <div class="info-grid">
-
-
-                    <div class="info">
-
-                        <div class="info-label">
-                            STATUS
-                        </div>
-
-                        <div
-                            class="info-value"
-                            id="character-status"
-                        >
-                            —
-                        </div>
-
-                    </div>
-
-
-                    <div class="info">
-
-                        <div class="info-label">
-                            AFFILIATION
-                        </div>
-
-                        <div
-                            class="info-value"
-                            id="character-affiliation"
-                        >
-                            —
-                        </div>
-
-                    </div>
-
-
-                    <div class="info">
-
-                        <div class="info-label">
-                            AGE
-                        </div>
-
-                        <div
-                            class="info-value"
-                            id="character-age"
-                        >
-                            —
-                        </div>
-
-                    </div>
-
-
-                    <div class="info">
-
-                        <div class="info-label">
-                            CODE NAME
-                        </div>
-
-                        <div
-                            class="info-value"
-                            id="character-codename"
-                        >
-                            —
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-
-
-                <!-- BIOGRAPHY -->
-
-                <section class="section">
-
-                    <div class="section-title">
-                        // BIOGRAPHY
-                    </div>
-
-                    <div
-                        class="section-text"
-                        id="character-biography"
-                    >
-                        No data available.
-                    </div>
-
-                </section>
-
-
-
-                <!-- ABILITIES -->
-
-                <section class="section">
-
-                    <div class="section-title">
-                        // ABILITIES
-                    </div>
-
-                    <div
-                        class="section-text"
-                        id="character-abilities"
-                    >
-                        No data available.
-                    </div>
-
-                </section>
-
-
-
-                <!-- PERSONALITY -->
-
-                <section class="section">
-
-                    <div class="section-title">
-                        // PERSONALITY
-                    </div>
-
-                    <div
-                        class="section-text"
-                        id="character-personality"
-                    >
-                        No data available.
-                    </div>
-
-                </section>
-
-
-
-                <!-- HISTORY -->
-
-                <section class="section">
-
-                    <div class="section-title">
-                        // HISTORY
-                    </div>
-
-                    <div
-                        class="section-text"
-                        id="character-history"
-                    >
-                        No data available.
-                    </div>
-
-                </section>
-
-
-
-                <!-- RELATIONSHIPS -->
-
-                <section class="section">
-
-                    <div class="section-title">
-                        // RELATIONSHIPS
-                    </div>
-
-                    <div
-                        class="section-text"
-                        id="character-relationships"
-                    >
-                        No data available.
-                    </div>
-
-                </section>
-
-
-
-                <!-- QUOTE -->
-
-                <div
-                    class="quote"
-                    id="character-quote"
-                >
-
-                    "NO RECORDED STATEMENT."
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <footer class="footer">
-
-            <span>
-                S.H.I.E.L.D. // PERSONNEL DATABASE
-            </span>
-
-            <span>
-                CLASSIFICATION: CONFIDENTIAL
-            </span>
-
-        </footer>
-
-
-    </main>
-
-</div>
+</main>
 
 
 <script>
 
-/*
-    CHARACTER DATA CONNECTION
-    -------------------------
-    На наступному етапі сюди підключимо
-    characters-data.json.
-*/
-
-
-const params = new URLSearchParams(window.location.search);
-
-const characterId = params.get("id");
-
-
 async function loadCharacter() {
+
+    const content = document.getElementById("content");
+
+    /*
+        Беремо ID персонажа
+        з адреси:
+
+        character.html?id=wanda
+    */
+
+    const params = new URLSearchParams(
+        window.location.search
+    );
+
+    const characterId = params.get("id");
+
 
     if (!characterId) {
 
-        document.getElementById("character-name").textContent =
-            "NO SUBJECT SELECTED";
-
-        document.getElementById("character-alias").textContent =
-            "SELECT A PERSONNEL FILE";
+        content.innerHTML = `
+            <div class="error">
+                > ERROR 404<br><br>
+                PERSONNEL IDENTIFIER NOT FOUND.
+            </div>
+        `;
 
         return;
+
     }
 
 
@@ -925,140 +580,380 @@ async function loadCharacter() {
         const response =
             await fetch("characters-data.json");
 
-        const characters =
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Database unavailable"
+            );
+
+        }
+
+
+        const data =
             await response.json();
+
+
+        /*
+            Підтримуємо як масив:
+
+            [
+                {...},
+                {...}
+            ]
+
+            так і:
+
+            {
+                "characters": [
+                    {...}
+                ]
+            }
+        */
+
+        const characters =
+            Array.isArray(data)
+                ? data
+                : data.characters;
 
 
         const character =
             characters.find(
-                person => person.id === characterId
+                item =>
+                    item.id === characterId
             );
 
 
         if (!character) {
 
-            document.getElementById("character-name").textContent =
-                "FILE NOT FOUND";
+            content.innerHTML = `
+                <div class="error">
 
-            document.getElementById("character-alias").textContent =
-                "DATABASE RECORD DOES NOT EXIST";
+                    > ACCESS ERROR
+
+                    <br><br>
+
+                    PERSONNEL FILE
+                    <strong>${characterId}</strong>
+                    NOT FOUND.
+
+                </div>
+            `;
 
             return;
-        }
-
-
-        /*
-        ==========================================
-        BASIC INFORMATION
-        ==========================================
-        */
-
-        document.getElementById("character-name").textContent =
-            character.name || "UNKNOWN SUBJECT";
-
-
-        document.getElementById("character-alias").textContent =
-            character.alias || "CLASSIFIED";
-
-
-        document.getElementById("character-status").textContent =
-            character.status || "—";
-
-
-        document.getElementById("character-affiliation").textContent =
-            character.affiliation || "—";
-
-
-        document.getElementById("character-age").textContent =
-            character.age || "—";
-
-
-        document.getElementById("character-codename").textContent =
-            character.codename || "—";
-
-
-        /*
-        ==========================================
-        TEXT SECTIONS
-        ==========================================
-        */
-
-        document.getElementById("character-biography").textContent =
-            character.biography || "No data available.";
-
-
-        document.getElementById("character-abilities").textContent =
-            character.abilities || "No data available.";
-
-
-        document.getElementById("character-personality").textContent =
-            character.personality || "No data available.";
-
-
-        document.getElementById("character-history").textContent =
-            character.history || "No data available.";
-
-
-        document.getElementById("character-relationships").textContent =
-            character.relationships || "No data available.";
-
-
-        document.getElementById("character-quote").textContent =
-            character.quote
-                ? `"${character.quote}"`
-                : '"NO RECORDED STATEMENT."';
-
-
-        /*
-        ==========================================
-        PHOTO
-        ==========================================
-        */
-
-        if (character.photo) {
-
-            const photo =
-                document.getElementById("character-photo");
-
-            const placeholder =
-                document.getElementById("photo-placeholder");
-
-
-            photo.src =
-                character.photo;
-
-            photo.style.display =
-                "block";
-
-            placeholder.style.display =
-                "none";
 
         }
 
-    }
 
-    catch (error) {
+        renderCharacter(character);
+
+
+        /*
+            Міняємо назву вкладки
+        */
+
+        document.title =
+            "S.H.I.E.L.D. // " +
+            character.name;
+
+
+    } catch (error) {
 
         console.error(error);
 
-        document.getElementById("character-name").textContent =
-            "DATABASE ERROR";
+        content.innerHTML = `
 
-        document.getElementById("character-alias").textContent =
-            "UNABLE TO ACCESS PERSONNEL DATABASE";
+            <div class="error">
+
+                > DATABASE CONNECTION FAILED.
+
+                <br><br>
+
+                CHECK CHARACTERS-DATA.JSON
+
+            </div>
+
+        `;
 
     }
+
+}
+
+
+/* ============================= */
+/* RENDER CHARACTER */
+/* ============================= */
+
+function renderCharacter(character) {
+
+    const content =
+        document.getElementById("content");
+
+
+    const abilities =
+        character.abilities || [];
+
+
+    const abilitiesHTML =
+        abilities.length
+
+        ? `
+
+            <div class="section">
+
+                <div class="section-title">
+                    ABILITIES // CAPABILITIES
+                </div>
+
+                <div class="abilities">
+
+                    ${abilities
+                        .map(
+                            ability =>
+                                `<span class="ability">
+                                    ${ability}
+                                </span>`
+                        )
+                        .join("")
+                    }
+
+                </div>
+
+            </div>
+
+        `
+
+        : "";
+
+
+    content.innerHTML = `
+
+        <article class="dossier">
+
+
+            <div class="file-number">
+
+                FILE // ${
+                    character.file ||
+                    character.id.toUpperCase()
+                }
+
+            </div>
+
+
+            <h1 class="character-name">
+
+                ${character.name}
+
+            </h1>
+
+
+            <div class="status">
+
+                ${
+                    character.status ||
+                    "ACTIVE"
+                }
+
+            </div>
+
+
+            <div class="info-grid">
+
+
+                ${
+                    character.alias
+
+                    ? `
+
+                        <div class="info-box">
+
+                            <div class="info-label">
+                                ALIAS
+                            </div>
+
+                            <div class="info-value">
+                                ${character.alias}
+                            </div>
+
+                        </div>
+
+                    `
+
+                    : ""
+                }
+
+
+                ${
+                    character.affiliation
+
+                    ? `
+
+                        <div class="info-box">
+
+                            <div class="info-label">
+                                AFFILIATION
+                            </div>
+
+                            <div class="info-value">
+                                ${character.affiliation}
+                            </div>
+
+                        </div>
+
+                    `
+
+                    : ""
+                }
+
+
+                ${
+                    character.role
+
+                    ? `
+
+                        <div class="info-box">
+
+                            <div class="info-label">
+                                ROLE
+                            </div>
+
+                            <div class="info-value">
+                                ${character.role}
+                            </div>
+
+                        </div>
+
+                    `
+
+                    : ""
+                }
+
+
+                ${
+                    character.location
+
+                    ? `
+
+                        <div class="info-box">
+
+                            <div class="info-label">
+                                LOCATION
+                            </div>
+
+                            <div class="info-value">
+                                ${character.location}
+                            </div>
+
+                        </div>
+
+                    `
+
+                    : ""
+                }
+
+
+            </div>
+
+
+            ${
+                character.description
+
+                ? `
+
+                    <div class="section">
+
+                        <div class="section-title">
+                            PERSONNEL SUMMARY
+                        </div>
+
+                        <div class="section-text">
+
+                            ${character.description}
+
+                        </div>
+
+                    </div>
+
+                `
+
+                : ""
+            }
+
+
+            ${abilitiesHTML}
+
+
+            ${
+                character.history
+
+                ? `
+
+                    <div class="section">
+
+                        <div class="section-title">
+                            HISTORY
+                        </div>
+
+                        <div class="section-text">
+
+                            ${character.history}
+
+                        </div>
+
+                    </div>
+
+                `
+
+                : ""
+            }
+
+
+            ${
+                character.notes
+
+                ? `
+
+                    <div class="section">
+
+                        <div class="section-title">
+                            ARCHIVE NOTES
+                        </div>
+
+                        <div class="section-text">
+
+                            ${character.notes}
+
+                        </div>
+
+                    </div>
+
+                `
+
+                : ""
+            }
+
+
+            <div class="classified">
+
+                ◈ S.H.I.E.L.D. CLASSIFIED
+                <br><br>
+                UNAUTHORIZED DISTRIBUTION
+                OF THIS FILE IS PROHIBITED.
+
+            </div>
+
+
+        </article>
+
+    `;
 
 }
 
 
 loadCharacter();
 
-}
-
 </script>
 
-
 </body>
-
 </html>
