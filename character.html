@@ -1,37 +1,50 @@
 <!DOCTYPE html>
 <html lang="uk">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>S.H.I.E.L.D. // PERSONNEL FILE</title>
 
 <style>
 
 :root {
+
     --bg: #02080d;
+
     --panel: #06131b;
-    --panel-light: #081923;
+
     --cyan: #19cfff;
+
     --cyan-soft: #5edfff;
+
     --text: #d9f3ff;
+
     --muted: #7194a5;
+
     --green: #5df2ae;
+
     --red: #ff5c6c;
+
 }
+
 
 * {
+
     box-sizing: border-box;
+
 }
 
-body {
-    margin: 0;
-    background:
-        linear-gradient(rgba(20,130,170,.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(20,130,170,.035) 1px, transparent 1px),
-        var(--bg);
 
-    background-size: 50px 50px;
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
 
     color: var(--text);
 
@@ -39,21 +52,39 @@ body {
         "Courier New",
         monospace;
 
-    min-height: 100vh;
+    background:
+
+        linear-gradient(
+            rgba(20,130,170,.035) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(20,130,170,.035) 1px,
+            transparent 1px
+        ),
+
+        var(--bg);
+
+    background-size: 50px 50px;
+
 }
 
 
-/* ============================= */
-/* HEADER */
-/* ============================= */
+/* =========================
+   HEADER
+   ========================= */
 
 .header {
 
-    border-bottom: 1px solid rgba(25,207,255,.35);
+    border-bottom:
+        1px solid
+        rgba(25,207,255,.35);
 
     padding:
         28px
-        clamp(20px, 5vw, 70px);
+        clamp(20px,5vw,70px);
 
     background:
         linear-gradient(
@@ -63,6 +94,7 @@ body {
         );
 
 }
+
 
 .header-top {
 
@@ -76,21 +108,24 @@ body {
 
 }
 
+
 .header-title {
 
+    margin: 0;
+
     font-size:
-        clamp(38px, 7vw, 80px);
+        clamp(38px,7vw,80px);
 
     font-weight: 300;
 
     letter-spacing: 6px;
 
-    margin: 0;
-
     text-shadow:
-        0 0 15px rgba(25,207,255,.35);
+        0 0 15px
+        rgba(25,207,255,.35);
 
 }
+
 
 .header-subtitle {
 
@@ -105,22 +140,24 @@ body {
 }
 
 
-/* ============================= */
-/* MAIN */
-/* ============================= */
+/* =========================
+   MAIN
+   ========================= */
 
 .container {
 
-    width: min(1100px, 90%);
+    width:
+        min(1100px,90%);
 
-    margin: 60px auto 100px;
+    margin:
+        60px auto 100px;
 
 }
 
 
-/* ============================= */
-/* BACK BUTTON */
-/* ============================= */
+/* =========================
+   BACK
+   ========================= */
 
 .back {
 
@@ -128,9 +165,12 @@ body {
 
     margin-bottom: 30px;
 
-    padding: 12px 18px;
+    padding:
+        12px 18px;
 
-    border: 1px solid rgba(25,207,255,.35);
+    border:
+        1px solid
+        rgba(25,207,255,.35);
 
     color: var(--cyan);
 
@@ -144,22 +184,27 @@ body {
 
 }
 
+
 .back:hover {
 
-    background: rgba(25,207,255,.08);
+    background:
+        rgba(25,207,255,.08);
 
-    border-color: var(--cyan);
+    border-color:
+        var(--cyan);
 
 }
 
 
-/* ============================= */
-/* DOSSIER */
-/* ============================= */
+/* =========================
+   DOSSIER
+   ========================= */
 
 .dossier {
 
-    border: 1px solid rgba(25,207,255,.4);
+    border:
+        1px solid
+        rgba(25,207,255,.4);
 
     background:
         linear-gradient(
@@ -169,17 +214,16 @@ body {
         );
 
     padding:
-        clamp(25px, 5vw, 60px);
+        clamp(25px,5vw,60px);
 
     position: relative;
 
     box-shadow:
-        0 0 30px rgba(0,150,200,.08);
+        0 0 30px
+        rgba(0,150,200,.08);
 
 }
 
-
-/* decorative corners */
 
 .dossier::before,
 .dossier::after {
@@ -189,36 +233,147 @@ body {
     position: absolute;
 
     width: 35px;
+
     height: 35px;
 
-    border-color: var(--cyan);
+    border-color:
+        var(--cyan);
 
 }
+
 
 .dossier::before {
 
     top: -1px;
+
     left: -1px;
 
     border-top: 2px solid;
+
     border-left: 2px solid;
 
 }
 
+
 .dossier::after {
 
     right: -1px;
+
     bottom: -1px;
 
     border-right: 2px solid;
+
     border-bottom: 2px solid;
 
 }
 
 
-/* ============================= */
-/* FILE NUMBER */
-/* ============================= */
+/* =========================
+   DOSSIER TOP
+   ========================= */
+
+.dossier-top {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(180px,280px)
+        1fr;
+
+    gap: 45px;
+
+    align-items: start;
+
+}
+
+
+.photo-wrapper {
+
+    aspect-ratio: 3 / 4;
+
+    border:
+        1px solid
+        rgba(25,207,255,.35);
+
+    background:
+        rgba(0,15,22,.8);
+
+    position: relative;
+
+    overflow: hidden;
+
+}
+
+
+.photo-wrapper img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+}
+
+
+.photo-placeholder {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 20px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+}
+
+
+.photo-label {
+
+    position: absolute;
+
+    left: 0;
+
+    right: 0;
+
+    bottom: 0;
+
+    padding: 8px;
+
+    background:
+        rgba(2,8,13,.85);
+
+    border-top:
+        1px solid
+        rgba(25,207,255,.25);
+
+    color: var(--cyan);
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+}
+
+
+/* =========================
+   FILE
+   ========================= */
 
 .file-number {
 
@@ -233,30 +388,41 @@ body {
 }
 
 
-/* ============================= */
-/* CHARACTER NAME */
-/* ============================= */
-
 .character-name {
 
     font-size:
-        clamp(32px, 6vw, 60px);
+        clamp(32px,6vw,60px);
 
     font-weight: 300;
 
     letter-spacing: 3px;
 
-    margin: 0 0 15px;
+    margin:
+        0 0 15px;
 
     text-shadow:
-        0 0 15px rgba(25,207,255,.3);
+        0 0 15px
+        rgba(25,207,255,.3);
 
 }
 
 
-/* ============================= */
-/* STATUS */
-/* ============================= */
+.full-name {
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 18px;
+
+}
+
+
+/* =========================
+   STATUS
+   ========================= */
 
 .status {
 
@@ -272,30 +438,34 @@ body {
 
     letter-spacing: 2px;
 
-    margin-bottom: 45px;
+    margin-bottom: 35px;
 
 }
+
 
 .status::before {
 
     content: "";
 
     width: 7px;
+
     height: 7px;
 
     border-radius: 50%;
 
-    background: var(--green);
+    background:
+        var(--green);
 
     box-shadow:
-        0 0 10px var(--green);
+        0 0 10px
+        var(--green);
 
 }
 
 
-/* ============================= */
-/* INFO GRID */
-/* ============================= */
+/* =========================
+   INFO
+   ========================= */
 
 .info-grid {
 
@@ -304,55 +474,59 @@ body {
     grid-template-columns:
         repeat(
             auto-fit,
-            minmax(220px, 1fr)
+            minmax(180px,1fr)
         );
 
-    gap: 18px;
-
-    margin-bottom: 45px;
+    gap: 14px;
 
 }
+
 
 .info-box {
 
-    border-left: 2px solid var(--cyan);
+    border-left:
+        2px solid
+        var(--cyan);
 
-    background: rgba(10,35,48,.45);
+    background:
+        rgba(10,35,48,.45);
 
-    padding: 18px 20px;
+    padding:
+        16px 18px;
 
 }
+
 
 .info-label {
 
     color: var(--muted);
 
-    font-size: 10px;
+    font-size: 9px;
 
     letter-spacing: 2px;
 
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 
 }
+
 
 .info-value {
 
-    font-size: 16px;
-
-    color: var(--text);
+    font-size: 14px;
 
 }
 
 
-/* ============================= */
-/* SECTION */
-/* ============================= */
+/* =========================
+   SECTIONS
+   ========================= */
 
 .section {
 
     margin-top: 45px;
 
 }
+
 
 .section-title {
 
@@ -364,11 +538,14 @@ body {
 
     margin-bottom: 18px;
 
-    border-bottom: 1px solid rgba(25,207,255,.2);
+    border-bottom:
+        1px solid
+        rgba(25,207,255,.2);
 
     padding-bottom: 10px;
 
 }
+
 
 .section-text {
 
@@ -383,9 +560,9 @@ body {
 }
 
 
-/* ============================= */
-/* ABILITIES */
-/* ============================= */
+/* =========================
+   ABILITIES
+   ========================= */
 
 .abilities {
 
@@ -397,11 +574,15 @@ body {
 
 }
 
+
 .ability {
 
-    border: 1px solid rgba(25,207,255,.35);
+    border:
+        1px solid
+        rgba(25,207,255,.35);
 
-    padding: 9px 14px;
+    padding:
+        9px 14px;
 
     color: var(--cyan-soft);
 
@@ -409,20 +590,23 @@ body {
 
     letter-spacing: 1px;
 
-    background: rgba(25,207,255,.03);
+    background:
+        rgba(25,207,255,.03);
 
 }
 
 
-/* ============================= */
-/* CLASSIFIED */
-/* ============================= */
+/* =========================
+   CLASSIFIED
+   ========================= */
 
 .classified {
 
     margin-top: 50px;
 
-    border: 1px solid rgba(255,92,108,.3);
+    border:
+        1px solid
+        rgba(255,92,108,.3);
 
     padding: 20px;
 
@@ -435,9 +619,9 @@ body {
 }
 
 
-/* ============================= */
-/* LOADING */
-/* ============================= */
+/* =========================
+   LOADING / ERROR
+   ========================= */
 
 .loading {
 
@@ -454,10 +638,6 @@ body {
 }
 
 
-/* ============================= */
-/* ERROR */
-/* ============================= */
-
 .error {
 
     text-align: center;
@@ -471,11 +651,25 @@ body {
 }
 
 
-/* ============================= */
-/* MOBILE */
-/* ============================= */
+/* =========================
+   MOBILE
+   ========================= */
 
-@media (max-width: 600px) {
+@media(max-width:700px) {
+
+    .dossier-top {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .photo-wrapper {
+
+        max-width: 280px;
+
+        margin: auto;
+
+    }
 
     .container {
 
@@ -485,21 +679,10 @@ body {
 
     }
 
-    .dossier {
-
-        padding: 25px 20px;
-
-    }
-
-    .character-name {
-
-        letter-spacing: 1px;
-
-    }
-
 }
 
 </style>
+
 </head>
 
 
@@ -509,15 +692,25 @@ body {
 <header class="header">
 
     <div class="header-top">
-        S.H.I.E.L.D. // SECURE TERMINAL
+
+        S.H.I.E.L.D. //
+        SECURE TERMINAL
+
     </div>
 
+
     <h1 class="header-title">
+
         PERSONNEL
+
     </h1>
 
+
     <div class="header-subtitle">
-        CLASSIFIED PERSONNEL DATABASE // LEVEL 04
+
+        CLASSIFIED PERSONNEL DATABASE //
+        LEVEL 04
+
     </div>
 
 </header>
@@ -525,18 +718,27 @@ body {
 
 <main class="container">
 
-    <a href="characters.html" class="back">
-        ← RETURN TO PERSONNEL DATABASE
-    </a>
+
+<a
+    href="characters.html"
+    class="back"
+>
+
+    ← RETURN TO PERSONNEL DATABASE
+
+</a>
 
 
-    <div id="content">
+<div id="content">
 
-        <div class="loading">
-            > RETRIEVING PERSONNEL FILE...
-        </div>
+    <div class="loading">
+
+        > RETRIEVING PERSONNEL FILE...
 
     </div>
+
+</div>
+
 
 </main>
 
@@ -545,29 +747,37 @@ body {
 
 async function loadCharacter() {
 
-    const content = document.getElementById("content");
+    const content =
+        document.getElementById(
+            "content"
+        );
 
-    /*
-        Беремо ID персонажа
-        з адреси:
 
-        character.html?id=wanda
-    */
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
 
-    const params = new URLSearchParams(
-        window.location.search
-    );
 
-    const characterId = params.get("id");
+    const characterId =
+        params.get("id");
 
 
     if (!characterId) {
 
         content.innerHTML = `
+
             <div class="error">
-                > ERROR 404<br><br>
-                PERSONNEL IDENTIFIER NOT FOUND.
+
+                > ERROR 404
+
+                <br><br>
+
+                PERSONNEL IDENTIFIER
+                NOT FOUND.
+
             </div>
+
         `;
 
         return;
@@ -578,13 +788,15 @@ async function loadCharacter() {
     try {
 
         const response =
-            await fetch("characters-data.json");
+            await fetch(
+                "characters-data.json"
+            );
 
 
         if (!response.ok) {
 
             throw new Error(
-                "Database unavailable"
+                "DATABASE UNAVAILABLE"
             );
 
         }
@@ -593,23 +805,6 @@ async function loadCharacter() {
         const data =
             await response.json();
 
-
-        /*
-            Підтримуємо як масив:
-
-            [
-                {...},
-                {...}
-            ]
-
-            так і:
-
-            {
-                "characters": [
-                    {...}
-                ]
-            }
-        */
 
         const characters =
             Array.isArray(data)
@@ -627,6 +822,7 @@ async function loadCharacter() {
         if (!character) {
 
             content.innerHTML = `
+
                 <div class="error">
 
                     > ACCESS ERROR
@@ -634,10 +830,10 @@ async function loadCharacter() {
                     <br><br>
 
                     PERSONNEL FILE
-                    <strong>${characterId}</strong>
                     NOT FOUND.
 
                 </div>
+
             `;
 
             return;
@@ -648,18 +844,15 @@ async function loadCharacter() {
         renderCharacter(character);
 
 
-        /*
-            Міняємо назву вкладки
-        */
-
         document.title =
             "S.H.I.E.L.D. // " +
             character.name;
 
 
-    } catch (error) {
+    } catch(error) {
 
         console.error(error);
+
 
         content.innerHTML = `
 
@@ -680,18 +873,24 @@ async function loadCharacter() {
 }
 
 
-/* ============================= */
-/* RENDER CHARACTER */
-/* ============================= */
+/* =========================
+   RENDER
+   ========================= */
 
 function renderCharacter(character) {
 
     const content =
-        document.getElementById("content");
+        document.getElementById(
+            "content"
+        );
 
 
     const abilities =
-        character.abilities || [];
+        Array.isArray(
+            character.abilities
+        )
+        ? character.abilities
+        : [];
 
 
     const abilitiesHTML =
@@ -702,17 +901,29 @@ function renderCharacter(character) {
             <div class="section">
 
                 <div class="section-title">
-                    ABILITIES // CAPABILITIES
+
+                    ABILITIES //
+                    CAPABILITIES
+
                 </div>
+
 
                 <div class="abilities">
 
                     ${abilities
                         .map(
                             ability =>
-                                `<span class="ability">
-                                    ${ability}
-                                </span>`
+                            `
+
+                            <span class="ability">
+
+                                ${escapeHTML(
+                                    ability
+                                )}
+
+                            </span>
+
+                            `
                         )
                         .join("")
                     }
@@ -726,131 +937,150 @@ function renderCharacter(character) {
         : "";
 
 
+    const photoHTML =
+        character.photo
+
+        ? `
+
+            <img
+                src="${escapeAttribute(
+                    character.photo
+                )}"
+                alt="${escapeAttribute(
+                    character.name
+                )}"
+            >
+
+        `
+
+        : `
+
+            <div class="photo-placeholder">
+
+                NO VISUAL DATA AVAILABLE
+
+                <br><br>
+
+                S.H.I.E.L.D.
+                ARCHIVE
+
+            </div>
+
+        `;
+
+
     content.innerHTML = `
 
         <article class="dossier">
 
 
-            <div class="file-number">
-
-                FILE // ${
-                    character.file ||
-                    character.id.toUpperCase()
-                }
-
-            </div>
+            <div class="dossier-top">
 
 
-            <h1 class="character-name">
+                <div class="photo-wrapper">
 
-                ${character.name}
+                    ${photoHTML}
 
-            </h1>
+                    <div class="photo-label">
 
+                        VISUAL IDENTIFICATION
 
-            <div class="status">
+                    </div>
 
-                ${
-                    character.status ||
-                    "ACTIVE"
-                }
-
-            </div>
+                </div>
 
 
-            <div class="info-grid">
+                <div>
 
 
-                ${
-                    character.alias
+                    <div class="file-number">
 
-                    ? `
+                        FILE //
+                        ${
+                            character.file ||
+                            character.id
+                                .toUpperCase()
+                        }
 
-                        <div class="info-box">
+                    </div>
 
-                            <div class="info-label">
-                                ALIAS
+
+                    <h1 class="character-name">
+
+                        ${escapeHTML(
+                            character.name ||
+                            "CLASSIFIED"
+                        )}
+
+                    </h1>
+
+
+                    ${
+                        character.fullName
+
+                        ? `
+
+                            <div class="full-name">
+
+                                ${escapeHTML(
+                                    character.fullName
+                                )}
+
                             </div>
 
-                            <div class="info-value">
-                                ${character.alias}
-                            </div>
+                        `
 
-                        </div>
-
-                    `
-
-                    : ""
-                }
+                        : ""
+                    }
 
 
-                ${
-                    character.affiliation
+                    <div class="status">
 
-                    ? `
+                        ${escapeHTML(
+                            character.status ||
+                            "CLASSIFIED"
+                        )}
 
-                        <div class="info-box">
-
-                            <div class="info-label">
-                                AFFILIATION
-                            </div>
-
-                            <div class="info-value">
-                                ${character.affiliation}
-                            </div>
-
-                        </div>
-
-                    `
-
-                    : ""
-                }
+                    </div>
 
 
-                ${
-                    character.role
-
-                    ? `
-
-                        <div class="info-box">
-
-                            <div class="info-label">
-                                ROLE
-                            </div>
-
-                            <div class="info-value">
-                                ${character.role}
-                            </div>
-
-                        </div>
-
-                    `
-
-                    : ""
-                }
+                    <div class="info-grid">
 
 
-                ${
-                    character.location
+                        ${infoBox(
+                            "ALIAS",
+                            character.alias
+                        )}
 
-                    ? `
 
-                        <div class="info-box">
+                        ${infoBox(
+                            "AGE",
+                            character.age
+                        )}
 
-                            <div class="info-label">
-                                LOCATION
-                            </div>
 
-                            <div class="info-value">
-                                ${character.location}
-                            </div>
+                        ${infoBox(
+                            "AFFILIATION",
+                            character.affiliation
+                        )}
 
-                        </div>
 
-                    `
+                        ${infoBox(
+                            "ROLE",
+                            character.role
+                        )}
 
-                    : ""
-                }
+
+                        ${infoBox(
+                            "LOCATION",
+                            character.location
+                        )}
+
+
+                    </div>
+
+
+                </div>
 
 
             </div>
@@ -864,12 +1094,16 @@ function renderCharacter(character) {
                     <div class="section">
 
                         <div class="section-title">
+
                             PERSONNEL SUMMARY
+
                         </div>
 
                         <div class="section-text">
 
-                            ${character.description}
+                            ${escapeHTML(
+                                character.description
+                            )}
 
                         </div>
 
@@ -885,6 +1119,35 @@ function renderCharacter(character) {
 
 
             ${
+                character.personality
+
+                ? `
+
+                    <div class="section">
+
+                        <div class="section-title">
+
+                            PSYCHOLOGICAL PROFILE
+
+                        </div>
+
+                        <div class="section-text">
+
+                            ${escapeHTML(
+                                character.personality
+                            )}
+
+                        </div>
+
+                    </div>
+
+                `
+
+                : ""
+            }
+
+
+            ${
                 character.history
 
                 ? `
@@ -892,12 +1155,45 @@ function renderCharacter(character) {
                     <div class="section">
 
                         <div class="section-title">
+
                             HISTORY
+
                         </div>
 
                         <div class="section-text">
 
-                            ${character.history}
+                            ${escapeHTML(
+                                character.history
+                            )}
+
+                        </div>
+
+                    </div>
+
+                `
+
+                : ""
+            }
+
+
+            ${
+                character.relationships
+
+                ? `
+
+                    <div class="section">
+
+                        <div class="section-title">
+
+                            RELATIONSHIPS
+
+                        </div>
+
+                        <div class="section-text">
+
+                            ${escapeHTML(
+                                character.relationships
+                            )}
 
                         </div>
 
@@ -917,12 +1213,16 @@ function renderCharacter(character) {
                     <div class="section">
 
                         <div class="section-title">
+
                             ARCHIVE NOTES
+
                         </div>
 
                         <div class="section-text">
 
-                            ${character.notes}
+                            ${escapeHTML(
+                                character.notes
+                            )}
 
                         </div>
 
@@ -937,7 +1237,9 @@ function renderCharacter(character) {
             <div class="classified">
 
                 ◈ S.H.I.E.L.D. CLASSIFIED
+
                 <br><br>
+
                 UNAUTHORIZED DISTRIBUTION
                 OF THIS FILE IS PROHIBITED.
 
@@ -951,9 +1253,102 @@ function renderCharacter(character) {
 }
 
 
+/* =========================
+   INFO BOX
+   ========================= */
+
+function infoBox(
+    label,
+    value
+) {
+
+    if (
+        !value ||
+        value === "UNKNOWN"
+    ) {
+
+        return "";
+
+    }
+
+
+    return `
+
+        <div class="info-box">
+
+            <div class="info-label">
+
+                ${label}
+
+            </div>
+
+
+            <div class="info-value">
+
+                ${escapeHTML(
+                    value
+                )}
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================
+   SECURITY
+   ========================= */
+
+function escapeHTML(
+    text
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        text;
+
+    return div.innerHTML;
+
+}
+
+
+function escapeAttribute(
+    text
+) {
+
+    return String(text)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        );
+
+}
+
+
 loadCharacter();
 
 </script>
 
+
 </body>
+
 </html>
