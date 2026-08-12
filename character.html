@@ -900,31 +900,159 @@ body::after {
     characters-data.json.
 */
 
-const params =
-    new URLSearchParams(
-        window.location.search
-    );
 
-const characterId =
-    params.get("id");
+const params = new URLSearchParams(window.location.search);
+
+const characterId = params.get("id");
 
 
-/*
-    Поки база порожня,
-    тому показуємо тестовий статус.
-*/
+async function loadCharacter() {
 
-if (!characterId) {
+    if (!characterId) {
 
-    document.getElementById(
-        "character-name"
-    ).textContent =
-        "NO SUBJECT SELECTED";
+        document.getElementById("character-name").textContent =
+            "NO SUBJECT SELECTED";
 
-    document.getElementById(
-        "character-alias"
-    ).textContent =
-        "SELECT A PERSONNEL FILE";
+        document.getElementById("character-alias").textContent =
+            "SELECT A PERSONNEL FILE";
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch("characters-data.json");
+
+        const characters =
+            await response.json();
+
+
+        const character =
+            characters.find(
+                person => person.id === characterId
+            );
+
+
+        if (!character) {
+
+            document.getElementById("character-name").textContent =
+                "FILE NOT FOUND";
+
+            document.getElementById("character-alias").textContent =
+                "DATABASE RECORD DOES NOT EXIST";
+
+            return;
+        }
+
+
+        /*
+        ==========================================
+        BASIC INFORMATION
+        ==========================================
+        */
+
+        document.getElementById("character-name").textContent =
+            character.name || "UNKNOWN SUBJECT";
+
+
+        document.getElementById("character-alias").textContent =
+            character.alias || "CLASSIFIED";
+
+
+        document.getElementById("character-status").textContent =
+            character.status || "—";
+
+
+        document.getElementById("character-affiliation").textContent =
+            character.affiliation || "—";
+
+
+        document.getElementById("character-age").textContent =
+            character.age || "—";
+
+
+        document.getElementById("character-codename").textContent =
+            character.codename || "—";
+
+
+        /*
+        ==========================================
+        TEXT SECTIONS
+        ==========================================
+        */
+
+        document.getElementById("character-biography").textContent =
+            character.biography || "No data available.";
+
+
+        document.getElementById("character-abilities").textContent =
+            character.abilities || "No data available.";
+
+
+        document.getElementById("character-personality").textContent =
+            character.personality || "No data available.";
+
+
+        document.getElementById("character-history").textContent =
+            character.history || "No data available.";
+
+
+        document.getElementById("character-relationships").textContent =
+            character.relationships || "No data available.";
+
+
+        document.getElementById("character-quote").textContent =
+            character.quote
+                ? `"${character.quote}"`
+                : '"NO RECORDED STATEMENT."';
+
+
+        /*
+        ==========================================
+        PHOTO
+        ==========================================
+        */
+
+        if (character.photo) {
+
+            const photo =
+                document.getElementById("character-photo");
+
+            const placeholder =
+                document.getElementById("photo-placeholder");
+
+
+            photo.src =
+                character.photo;
+
+            photo.style.display =
+                "block";
+
+            placeholder.style.display =
+                "none";
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        document.getElementById("character-name").textContent =
+            "DATABASE ERROR";
+
+        document.getElementById("character-alias").textContent =
+            "UNABLE TO ACCESS PERSONNEL DATABASE";
+
+    }
+
+}
+
+
+loadCharacter();
 
 }
 
