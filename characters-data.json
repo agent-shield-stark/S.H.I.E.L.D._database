@@ -1,2 +1,18 @@
 [
+    {
+        "id": "test",
+        "name": "TEST SUBJECT",
+        "alias": "CLASSIFIED",
+        "status": "ACTIVE",
+        "affiliation": "S.H.I.E.L.D.",
+        "age": "UNKNOWN",
+        "codename": "TEST-01",
+        "biography": "This is a test personnel record.",
+        "abilities": "Database integration.",
+        "personality": "Highly cooperative.",
+        "history": "Record successfully created.",
+        "relationships": "None recorded.",
+        "quote": "The system works.",
+        "photo": ""
+    }
 ]
