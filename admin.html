@@ -631,6 +631,74 @@ textarea {
 
 
 /* =========================
+   PHOTO EDITOR
+   ========================= */
+
+#photoFile {
+
+    padding: 10px;
+
+    cursor: pointer;
+
+}
+
+
+.photo-preview {
+
+    margin-top: 15px;
+
+    width: 220px;
+
+    min-height: 120px;
+
+    border:
+        1px solid
+        rgba(25,207,255,.25);
+
+    background:
+        rgba(0,10,15,.7);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+
+}
+
+
+.photo-preview img {
+
+    display: block;
+
+    width: 100%;
+
+    height: auto;
+
+    max-height: 300px;
+
+    object-fit: contain;
+
+}
+
+
+.photo-preview.empty::before {
+
+    content:
+        "NO VISUAL DATA";
+
+    color:
+        var(--muted);
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+}
+      
+/* =========================
    MOBILE
    ========================= */
 
@@ -1286,8 +1354,12 @@ function renderEditor(character) {
 
 
     renderAbilities(
-        character.abilities || []
-    );
+    character.abilities || []
+);
+
+showPhotoPreview(
+    character.photo || ""
+);
 
 }
 
@@ -1441,7 +1513,117 @@ function addAbility(
 
 }
 
+/* =========================================
+   PHOTO UPLOAD
+   ========================================= */
 
+function previewPhoto(event) {
+
+    const file =
+        event.target.files[0];
+
+    if (!file) return;
+
+
+    if (!file.type.startsWith("image/")) {
+
+        alert(
+            "PLEASE SELECT AN IMAGE FILE."
+        );
+
+        return;
+
+    }
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        function(e) {
+
+            const imageData =
+                e.target.result;
+
+
+            const photoField =
+                document.getElementById(
+                    "field-photo"
+                );
+
+
+            if (photoField) {
+
+                photoField.value =
+                    imageData;
+
+            }
+
+
+            showPhotoPreview(
+                imageData
+            );
+
+        };
+
+
+    reader.readAsDataURL(
+        file
+    );
+
+}
+
+
+/* =========================================
+   PHOTO PREVIEW
+   ========================================= */
+
+function showPhotoPreview(
+    imageData
+) {
+
+    const preview =
+        document.getElementById(
+            "photoPreview"
+        );
+
+
+    if (!preview) return;
+
+
+    if (!imageData) {
+
+        preview.classList.add(
+            "empty"
+        );
+
+        preview.innerHTML = "";
+
+        return;
+
+    }
+
+
+    preview.classList.remove(
+        "empty"
+    );
+
+
+    preview.innerHTML = `
+
+        <img
+            src="${escapeAttribute(
+                imageData
+            )}"
+            alt="Personnel photo preview"
+        >
+
+    `;
+
+}
+
+      
 /* =========================================
    SAVE CHARACTER
    ========================================= */
