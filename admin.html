@@ -80,6 +80,7 @@ body::before {
         );
 
     z-index: 999;
+
 }
 
 
@@ -90,7 +91,7 @@ body::before {
 .editor {
 
     width:
-        min(1200px, 100%);
+        min(1250px, 100%);
 
     margin:
         auto;
@@ -510,7 +511,7 @@ select:focus {
 textarea {
 
     min-height:
-        150px;
+        130px;
 
     resize:
         vertical;
@@ -531,7 +532,7 @@ textarea {
         column;
 
     gap:
-        15px;
+        20px;
 
 }
 
@@ -565,7 +566,7 @@ textarea {
         15px;
 
     margin-bottom:
-        18px;
+        20px;
 
 }
 
@@ -577,6 +578,177 @@ textarea {
 
     letter-spacing:
         2px;
+
+}
+
+
+/* =====================================================
+   PHOTO
+===================================================== */
+
+.photo-box {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        150px 1fr;
+
+    gap:
+        20px;
+
+    align-items:
+        center;
+
+    margin-bottom:
+        20px;
+
+    padding:
+        15px;
+
+    border:
+        1px solid #0b4055;
+
+    background:
+        #020b10;
+
+}
+
+
+.photo-preview {
+
+    width:
+        150px;
+
+    height:
+        180px;
+
+    object-fit:
+        cover;
+
+    border:
+        1px solid #0b6385;
+
+    background:
+        #06131a;
+
+    display:
+        block;
+
+}
+
+
+.photo-placeholder {
+
+    width:
+        150px;
+
+    height:
+        180px;
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    text-align:
+        center;
+
+    border:
+        1px dashed #0b6385;
+
+    color:
+        #416b79;
+
+    font-size:
+        10px;
+
+    letter-spacing:
+        1px;
+
+}
+
+
+.photo-controls {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        10px;
+
+}
+
+
+.photo-note {
+
+    color:
+        #557f8e;
+
+    font-size:
+        10px;
+
+    line-height:
+        1.6;
+
+}
+
+
+/* =====================================================
+   ABILITIES
+===================================================== */
+
+.abilities-box {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        10px;
+
+}
+
+
+.ability-row {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr auto;
+
+    gap:
+        10px;
+
+}
+
+
+.ability-row button {
+
+    border:
+        1px solid #0b526c;
+
+    background:
+        #020b10;
+
+    color:
+        #ff7892;
+
+    padding:
+        0 13px;
+
+    cursor:
+        pointer;
 
 }
 
@@ -767,33 +939,6 @@ textarea {
 
 
 /* =====================================================
-   COLOR
-===================================================== */
-
-.color-picker {
-
-    width:
-        40px;
-
-    height:
-        32px;
-
-    padding:
-        2px;
-
-    border:
-        1px solid #0b526c;
-
-    background:
-        #020b10;
-
-    cursor:
-        pointer;
-
-}
-
-
-/* =====================================================
    SAVE
 ===================================================== */
 
@@ -902,7 +1047,7 @@ textarea {
 
 
 /* =====================================================
-   LOADING
+   LOADING / ERROR
 ===================================================== */
 
 .loading {
@@ -973,6 +1118,14 @@ textarea {
 
         grid-column:
             auto;
+
+    }
+
+
+    .photo-box {
+
+        grid-template-columns:
+            1fr;
 
     }
 
@@ -1059,8 +1212,13 @@ textarea {
 
     <div class="notice">
 
-        Existing characters are loaded automatically
-        from <strong>characters-data.json</strong>.
+        CHARACTER DATABASE:
+        <strong>characters-data.json</strong>
+
+        <br><br>
+
+        All existing character fields are preserved
+        when exporting the database.
 
     </div>
 
@@ -1306,7 +1464,7 @@ textarea {
 <script>
 
 /* =====================================================
-   DATABASE ARRAYS
+   DATABASE
 ===================================================== */
 
 let characters = [];
@@ -1317,7 +1475,7 @@ let ruleSections = [];
 
 
 /* =====================================================
-   SWITCH PANELS
+   PANEL SWITCH
 ===================================================== */
 
 function openPanel(
@@ -1362,7 +1520,7 @@ function openPanel(
 
 
 /* =====================================================
-   LOAD ALL DATABASES
+   LOAD DATABASES
 ===================================================== */
 
 async function loadDatabases() {
@@ -1403,20 +1561,6 @@ async function loadCharacters() {
         const data =
             await response.json();
 
-
-        /*
-         * Supports both:
-         *
-         * [
-         *   {...}
-         * ]
-         *
-         * and
-         *
-         * {
-         *   characters: [...]
-         * }
-         */
 
         if (
             Array.isArray(data)
@@ -1478,7 +1622,7 @@ async function loadCharacters() {
 
                 <br><br>
 
-                You can still add new
+                You can still add
                 characters manually.
 
             </div>
@@ -1497,7 +1641,842 @@ async function loadCharacters() {
 
 
 /* =====================================================
-   LOAD STORY
+   CHARACTER RENDER
+===================================================== */
+
+function renderCharacters() {
+
+    const container =
+        document.getElementById(
+            "character-list"
+        );
+
+
+    container.innerHTML =
+        "";
+
+
+    if (
+        characters.length === 0
+    ) {
+
+        container.innerHTML = `
+
+            <div class="notice">
+
+                NO CHARACTERS FOUND.
+
+                <br><br>
+
+                Click
+                <strong>
+                    + ADD CHARACTER
+                </strong>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    characters.forEach(
+        (character, index) => {
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "character-card";
+
+
+            card.innerHTML = `
+
+                <div class="character-card-header">
+
+                    <div class="character-card-title">
+
+                        PERSONNEL FILE //
+                        ${String(index + 1).padStart(3, "0")}
+
+                    </div>
+
+                    <button
+                        class="action-button danger"
+                        onclick="deleteCharacter(${index})"
+                    >
+                        DELETE
+                    </button>
+
+                </div>
+
+
+                <!-- PHOTO -->
+
+                <div class="photo-box">
+
+                    ${
+                        character.photo
+                        ?
+                        `
+                        <img
+                            id="photo-preview-${index}"
+                            class="photo-preview"
+                            src="${escapeAttribute(character.photo)}"
+                            alt=""
+                        >
+                        `
+                        :
+                        `
+                        <div
+                            id="photo-placeholder-${index}"
+                            class="photo-placeholder"
+                        >
+                            NO PHOTO
+                        </div>
+                        `
+                    }
+
+
+                    <div class="photo-controls">
+
+                        <label>
+                            PERSONNEL PHOTO
+                        </label>
+
+
+                        <input
+                            type="text"
+                            value="${escapeAttribute(character.photo || "")}"
+                            placeholder="images/wanda.jpg"
+                            oninput="updateCharacter(${index}, 'photo', this.value); updatePhotoPreview(${index}, this.value)"
+                        >
+
+
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onchange="previewUploadedImage(event, ${index})"
+                        >
+
+
+                        <div class="photo-note">
+
+                            You can enter an existing image
+                            path manually or select an image
+                            from your computer for preview.
+
+                            <br><br>
+
+                            Image upload to the repository
+                            will be connected in the next stage.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BASIC INFORMATION -->
+
+                <div class="form-grid">
+
+
+                    <div class="field">
+
+                        <label>
+                            ID
+                        </label>
+
+                        <input
+                            value="${escapeAttribute(character.id)}"
+                            oninput="updateCharacter(${index}, 'id', this.value)"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            FILE NUMBER
+                        </label>
+
+                        <input
+                            value="${escapeAttribute(character.file)}"
+                            oninput="updateCharacter(${index}, 'file', this.value)"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            NAME
+                        </label>
+
+                        <input
+                            value="${escapeAttribute(character.name)}"
+                            oninput="updateCharacter(${index}, 'name', this.value)"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            FULL NAME
+                        </label>
+
+                        <input
+                            value="${escapeAttribute(character.fullName)}"
+                            oninput="updateCharacter(${index}, 'fullName', this.value)"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            GROUP
+                        </label>
+
+                        <select
+                            onchange="updateCharacter(${index}, 'group', this.value)"
+                        >
+
+                            <option
+                                value="avengers"
+                                ${character.group === "avengers" ? "selected" : ""}
+                            >
+                                AVENGERS
+                            </option>
+
+                            <option
+                                value="agents"
+                                ${character.group === "agents" ? "selected" : ""}
+                            >
+                                AGENTS OF S.H.I.E.L.D.
+                            </option>
+
+                            <option
+                                value="other"
+                                ${character.group === "other" ? "selected" : ""}
+                            >
+                                OTHER
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            STATUS
+                        </label>
+
+                        <input
+                            value="${escapeAttribute(character.status)}"
+                            oninput="updateCharacter(${index}, 'status', this.value)"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            ALIAS
+                        </label>
+
+                        <input
+                            value="${escapeAttribute(character.alias)}"
+                            oninput="updateCharacter(${index}, 'alias', this.value)"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            AGE
+                        </label>
+
+                        <input
+                            value="${escapeAttribute(character.age)}"
+                            oninput="updateCharacter(${index}, 'age', this.value)"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            AFFILIATION
+                        </label>
+
+                        <input
+                            value="${escapeAttribute(character.affiliation)}"
+                            oninput="updateCharacter(${index}, 'affiliation', this.value)"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            ROLE
+                        </label>
+
+                        <input
+                            value="${escapeAttribute(character.role)}"
+                            oninput="updateCharacter(${index}, 'role', this.value)"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            LOCATION
+                        </label>
+
+                        <input
+                            value="${escapeAttribute(character.location)}"
+                            oninput="updateCharacter(${index}, 'location', this.value)"
+                        >
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <label>
+                            DESCRIPTION
+                        </label>
+
+                        <textarea
+                            oninput="updateCharacter(${index}, 'description', this.value)"
+                        >${escapeHTML(character.description)}</textarea>
+
+                    </div>
+
+
+                    <!-- ABILITIES -->
+
+                    <div class="field full">
+
+                        <label>
+                            ABILITIES
+                        </label>
+
+
+                        <div
+                            id="abilities-${index}"
+                            class="abilities-box"
+                        >
+
+                            ${
+                                Array.isArray(character.abilities)
+                                ?
+                                character.abilities.map(
+                                    (ability, abilityIndex) => `
+
+                                        <div class="ability-row">
+
+                                            <input
+                                                value="${escapeAttribute(ability)}"
+                                                oninput="updateAbility(${index}, ${abilityIndex}, this.value)"
+                                            >
+
+                                            <button
+                                                type="button"
+                                                onclick="deleteAbility(${index}, ${abilityIndex})"
+                                            >
+                                                X
+                                            </button>
+
+                                        </div>
+
+                                    `
+                                ).join("")
+                                :
+                                ""
+                            }
+
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="action-button"
+                            onclick="addAbility(${index})"
+                        >
+                            + ADD ABILITY
+                        </button>
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <label>
+                            PERSONALITY
+                        </label>
+
+                        <textarea
+                            oninput="updateCharacter(${index}, 'personality', this.value)"
+                        >${escapeHTML(character.personality)}</textarea>
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <label>
+                            HISTORY
+                        </label>
+
+                        <textarea
+                            oninput="updateCharacter(${index}, 'history', this.value)"
+                        >${escapeHTML(character.history)}</textarea>
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <label>
+                            RELATIONSHIPS
+                        </label>
+
+                        <textarea
+                            oninput="updateCharacter(${index}, 'relationships', this.value)"
+                        >${escapeHTML(character.relationships)}</textarea>
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <label>
+                            NOTES
+                        </label>
+
+                        <textarea
+                            oninput="updateCharacter(${index}, 'notes', this.value)"
+                        >${escapeHTML(character.notes)}</textarea>
+
+                    </div>
+
+
+                </div>
+
+            `;
+
+
+            container.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   UPDATE CHARACTER
+===================================================== */
+
+function updateCharacter(
+    index,
+    field,
+    value
+) {
+
+    characters[index][field] =
+        value;
+
+}
+
+
+/* =====================================================
+   PHOTO PREVIEW
+===================================================== */
+
+function updatePhotoPreview(
+    index,
+    value
+) {
+
+    const oldImage =
+        document.getElementById(
+            "photo-preview-" + index
+        );
+
+
+    const oldPlaceholder =
+        document.getElementById(
+            "photo-placeholder-" + index
+        );
+
+
+    if (!value) {
+
+        if (oldImage) {
+
+            oldImage.remove();
+
+        }
+
+
+        if (!oldPlaceholder) {
+
+            const box =
+                document.querySelector(
+                    `.character-card:nth-child(${index + 1}) .photo-box`
+                );
+
+
+            if (box) {
+
+                const placeholder =
+                    document.createElement(
+                        "div"
+                    );
+
+                placeholder.id =
+                    "photo-placeholder-" +
+                    index;
+
+                placeholder.className =
+                    "photo-placeholder";
+
+                placeholder.textContent =
+                    "NO PHOTO";
+
+                box.prepend(
+                    placeholder
+                );
+
+            }
+
+        }
+
+        return;
+
+    }
+
+
+    if (oldPlaceholder) {
+
+        oldPlaceholder.remove();
+
+    }
+
+
+    if (oldImage) {
+
+        oldImage.src =
+            value;
+
+        return;
+
+    }
+
+
+    const box =
+        document.querySelector(
+            `.character-card:nth-child(${index + 1}) .photo-box`
+        );
+
+
+    if (!box) {
+
+        return;
+
+    }
+
+
+    const image =
+        document.createElement(
+            "img"
+        );
+
+
+    image.id =
+        "photo-preview-" +
+        index;
+
+    image.className =
+        "photo-preview";
+
+    image.src =
+        value;
+
+
+    box.prepend(
+        image
+    );
+
+}
+
+
+/* =====================================================
+   LOCAL IMAGE PREVIEW
+===================================================== */
+
+function previewUploadedImage(
+    event,
+    index
+) {
+
+    const file =
+        event.target.files[0];
+
+
+    if (!file) {
+
+        return;
+
+    }
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        function(e) {
+
+            characters[index].photo =
+                e.target.result;
+
+
+            updatePhotoPreview(
+                index,
+                e.target.result
+            );
+
+        };
+
+
+    reader.readAsDataURL(
+        file
+    );
+
+}
+
+
+/* =====================================================
+   ABILITIES
+===================================================== */
+
+function addAbility(
+    index
+) {
+
+    if (
+        !Array.isArray(
+            characters[index].abilities
+        )
+    ) {
+
+        characters[index].abilities =
+            [];
+
+    }
+
+
+    characters[index].abilities.push(
+        "NEW ABILITY"
+    );
+
+
+    renderCharacters();
+
+}
+
+
+function updateAbility(
+    characterIndex,
+    abilityIndex,
+    value
+) {
+
+    characters[
+        characterIndex
+    ].abilities[
+        abilityIndex
+    ] = value;
+
+}
+
+
+function deleteAbility(
+    characterIndex,
+    abilityIndex
+) {
+
+    characters[
+        characterIndex
+    ].abilities.splice(
+        abilityIndex,
+        1
+    );
+
+
+    renderCharacters();
+
+}
+
+
+/* =====================================================
+   ADD CHARACTER
+===================================================== */
+
+function addCharacter() {
+
+    const nextFile =
+        String(
+            characters.length + 1
+        ).padStart(
+            3,
+            "0"
+        );
+
+
+    characters.push({
+
+        id:
+            "new-character-" +
+            Date.now(),
+
+        file:
+            nextFile,
+
+        name:
+            "CHARACTER NAME",
+
+        fullName:
+            "Classified",
+
+        group:
+            "other",
+
+        status:
+            "CLASSIFIED",
+
+        alias:
+            "UNKNOWN",
+
+        age:
+            "UNKNOWN",
+
+        affiliation:
+            "UNKNOWN",
+
+        role:
+            "UNKNOWN",
+
+        location:
+            "UNKNOWN",
+
+        photo:
+            "",
+
+        description:
+            "Personnel information classified.",
+
+        abilities:
+            [
+                "CLASSIFIED"
+            ],
+
+        personality:
+            "CLASSIFIED.",
+
+        history:
+            "CLASSIFIED.",
+
+        relationships:
+            "CLASSIFIED.",
+
+        notes:
+            "LEVEL 04 CLEARANCE REQUIRED."
+
+    });
+
+
+    renderCharacters();
+
+
+    window.scrollTo({
+        top:
+            document.body.scrollHeight,
+        behavior:
+            "smooth"
+    });
+
+}
+
+
+/* =====================================================
+   DELETE CHARACTER
+===================================================== */
+
+function deleteCharacter(
+    index
+) {
+
+    if (
+        !confirm(
+            "DELETE THIS PERSONNEL FILE?"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    characters.splice(
+        index,
+        1
+    );
+
+
+    renderCharacters();
+
+
+    document.getElementById(
+        "character-status"
+    ).textContent =
+        characters.length +
+        " CHARACTERS";
+
+}
+
+
+/* =====================================================
+   STORY
 ===================================================== */
 
 async function loadStory() {
@@ -1513,9 +2492,7 @@ async function loadStory() {
 
         if (!response.ok) {
 
-            throw new Error(
-                "story-data.json not found"
-            );
+            throw new Error();
 
         }
 
@@ -1557,450 +2534,17 @@ async function loadStory() {
 
     }
 
-    catch (error) {
+    catch {
 
-        console.error(
-            error
-        );
+        storySections =
+            [];
 
-
-        storySections = [];
-
-
-        document.getElementById(
-            "story-list"
-        ).innerHTML = `
-
-            <div class="error-message">
-
-                STORY DATABASE
-                COULD NOT BE LOADED.
-
-                <br><br>
-
-                You can add new sections
-                manually.
-
-            </div>
-
-        `;
-
-
-        document.getElementById(
-            "story-status"
-        ).textContent =
-            "DATABASE NOT FOUND";
+        renderStory();
 
     }
 
 }
 
-
-/* =====================================================
-   LOAD RULES
-===================================================== */
-
-async function loadRules() {
-
-    try {
-
-        const response =
-            await fetch(
-                "rules-data.json?cache=" +
-                Date.now()
-            );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "rules-data.json not found"
-            );
-
-        }
-
-
-        const data =
-            await response.json();
-
-
-        document.getElementById(
-            "rules-title"
-        ).value =
-            data.title ||
-            "PROTOCOL";
-
-
-        document.getElementById(
-            "rules-subtitle"
-        ).value =
-            data.subtitle ||
-            "RULES & REGULATIONS";
-
-
-        ruleSections =
-            Array.isArray(
-                data.sections
-            )
-            ? data.sections
-            : [];
-
-
-        renderRules();
-
-
-        document.getElementById(
-            "rules-status"
-        ).textContent =
-            ruleSections.length +
-            " RULE SECTIONS LOADED";
-
-    }
-
-    catch (error) {
-
-        console.error(
-            error
-        );
-
-
-        ruleSections = [];
-
-
-        document.getElementById(
-            "rules-list"
-        ).innerHTML = `
-
-            <div class="error-message">
-
-                RULES DATABASE
-                COULD NOT BE LOADED.
-
-                <br><br>
-
-                You can add new sections
-                manually.
-
-            </div>
-
-        `;
-
-
-        document.getElementById(
-            "rules-status"
-        ).textContent =
-            "DATABASE NOT FOUND";
-
-    }
-
-}
-
-
-/* =====================================================
-   CHARACTERS
-===================================================== */
-
-function addCharacter(
-    data = {}
-) {
-
-    characters.push({
-
-        id:
-            data.id ||
-            Date.now(),
-
-        name:
-            data.name ||
-            "NEW CHARACTER",
-
-        group:
-            data.group ||
-            "Other",
-
-        image:
-            data.image ||
-            "",
-
-        role:
-            data.role ||
-            "",
-
-        age:
-            data.age ||
-            "",
-
-        affiliation:
-            data.affiliation ||
-            "",
-
-        status:
-            data.status ||
-            "ACTIVE",
-
-        description:
-            data.description ||
-            ""
-
-    });
-
-
-    renderCharacters();
-
-}
-
-
-function renderCharacters() {
-
-    const container =
-        document.getElementById(
-            "character-list"
-        );
-
-
-    container.innerHTML =
-        "";
-
-
-    if (
-        characters.length === 0
-    ) {
-
-        container.innerHTML = `
-
-            <div class="notice">
-
-                NO CHARACTERS FOUND.
-
-                <br><br>
-
-                Click
-                <strong>
-                    + ADD CHARACTER
-                </strong>
-                to create one.
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    characters.forEach(
-        (character, index) => {
-
-            const card =
-                document.createElement(
-                    "div"
-                );
-
-
-            card.className =
-                "character-card";
-
-
-            card.innerHTML = `
-
-                <div class="character-card-header">
-
-                    <div class="character-card-title">
-
-                        CHARACTER //
-                        ${String(index + 1).padStart(2, "0")}
-
-                    </div>
-
-                    <button
-                        class="action-button danger"
-                        onclick="deleteCharacter(${index})"
-                    >
-                        DELETE
-                    </button>
-
-                </div>
-
-
-                <div class="form-grid">
-
-
-                    <div class="field">
-
-                        <label>
-                            NAME
-                        </label>
-
-                        <input
-                            value="${escapeAttribute(character.name)}"
-                            oninput="characters[${index}].name=this.value"
-                        >
-
-                    </div>
-
-
-                    <div class="field">
-
-                        <label>
-                            GROUP
-                        </label>
-
-                        <select
-                            onchange="characters[${index}].group=this.value"
-                        >
-
-                            <option
-                                ${character.group === "Avengers" ? "selected" : ""}
-                            >
-                                Avengers
-                            </option>
-
-                            <option
-                                ${character.group === "Agents of S.H.I.E.L.D." ? "selected" : ""}
-                            >
-                                Agents of S.H.I.E.L.D.
-                            </option>
-
-                            <option
-                                ${character.group === "Other" ? "selected" : ""}
-                            >
-                                Other
-                            </option>
-
-                        </select>
-
-                    </div>
-
-
-                    <div class="field">
-
-                        <label>
-                            IMAGE
-                        </label>
-
-                        <input
-                            value="${escapeAttribute(character.image)}"
-                            placeholder="images/character.jpg"
-                            oninput="characters[${index}].image=this.value"
-                        >
-
-                    </div>
-
-
-                    <div class="field">
-
-                        <label>
-                            ROLE
-                        </label>
-
-                        <input
-                            value="${escapeAttribute(character.role)}"
-                            oninput="characters[${index}].role=this.value"
-                        >
-
-                    </div>
-
-
-                    <div class="field">
-
-                        <label>
-                            AGE
-                        </label>
-
-                        <input
-                            value="${escapeAttribute(character.age)}"
-                            oninput="characters[${index}].age=this.value"
-                        >
-
-                    </div>
-
-
-                    <div class="field">
-
-                        <label>
-                            AFFILIATION
-                        </label>
-
-                        <input
-                            value="${escapeAttribute(character.affiliation)}"
-                            oninput="characters[${index}].affiliation=this.value"
-                        >
-
-                    </div>
-
-
-                    <div class="field">
-
-                        <label>
-                            STATUS
-                        </label>
-
-                        <input
-                            value="${escapeAttribute(character.status)}"
-                            oninput="characters[${index}].status=this.value"
-                        >
-
-                    </div>
-
-
-                    <div class="field full">
-
-                        <label>
-                            DESCRIPTION
-                        </label>
-
-                        <textarea
-                            oninput="characters[${index}].description=this.value"
-                        >${escapeHTML(character.description)}</textarea>
-
-                    </div>
-
-
-                </div>
-
-            `;
-
-
-            container.appendChild(
-                card
-            );
-
-        }
-    );
-
-}
-
-
-function deleteCharacter(
-    index
-) {
-
-    if (
-        !confirm(
-            "Delete this character?"
-        )
-    ) {
-
-        return;
-
-    }
-
-
-    characters.splice(
-        index,
-        1
-    );
-
-
-    renderCharacters();
-
-}
-
-
-/* =====================================================
-   STORY
-===================================================== */
 
 function addStorySection(
     data = {}
@@ -2040,32 +2584,6 @@ function renderStory() {
         "";
 
 
-    if (
-        storySections.length === 0
-    ) {
-
-        container.innerHTML = `
-
-            <div class="notice">
-
-                NO STORY SECTIONS FOUND.
-
-                <br><br>
-
-                Click
-                <strong>
-                    + ADD STORY SECTION
-                </strong>.
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
     storySections.forEach(
         (section, index) => {
 
@@ -2101,7 +2619,6 @@ function renderStory() {
 
 
                 <div class="form-grid">
-
 
                     <div class="field">
 
@@ -2141,38 +2658,24 @@ function renderStory() {
 
                             <button
                                 type="button"
-                                onclick="formatText('bold')"
+                                onclick="document.execCommand('bold')"
                             >
                                 <strong>B</strong>
                             </button>
 
                             <button
                                 type="button"
-                                onclick="formatText('italic')"
+                                onclick="document.execCommand('italic')"
                             >
                                 <em>I</em>
                             </button>
 
                             <button
                                 type="button"
-                                onclick="formatText('bold italic')"
-                            >
-                                <strong><em>BI</em></strong>
-                            </button>
-
-                            <button
-                                type="button"
-                                onclick="formatQuote()"
+                                onclick="document.execCommand('formatBlock', false, 'blockquote')"
                             >
                                 ❝
                             </button>
-
-                            <input
-                                type="color"
-                                class="color-picker"
-                                value="#8be6ff"
-                                onchange="formatColor(this.value)"
-                            >
 
                         </div>
 
@@ -2185,7 +2688,6 @@ function renderStory() {
                         >${section.content || ""}</div>
 
                     </div>
-
 
                 </div>
 
@@ -2248,6 +2750,73 @@ function deleteStorySection(
    RULES
 ===================================================== */
 
+async function loadRules() {
+
+    try {
+
+        const response =
+            await fetch(
+                "rules-data.json?cache=" +
+                Date.now()
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error();
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        document.getElementById(
+            "rules-title"
+        ).value =
+            data.title ||
+            "PROTOCOL";
+
+
+        document.getElementById(
+            "rules-subtitle"
+        ).value =
+            data.subtitle ||
+            "RULES & REGULATIONS";
+
+
+        ruleSections =
+            Array.isArray(
+                data.sections
+            )
+            ? data.sections
+            : [];
+
+
+        renderRules();
+
+
+        document.getElementById(
+            "rules-status"
+        ).textContent =
+            ruleSections.length +
+            " RULE SECTIONS LOADED";
+
+    }
+
+    catch {
+
+        ruleSections =
+            [];
+
+        renderRules();
+
+    }
+
+}
+
+
 function addRuleSection(
     data = {}
 ) {
@@ -2286,32 +2855,6 @@ function renderRules() {
         "";
 
 
-    if (
-        ruleSections.length === 0
-    ) {
-
-        container.innerHTML = `
-
-            <div class="notice">
-
-                NO RULE SECTIONS FOUND.
-
-                <br><br>
-
-                Click
-                <strong>
-                    + ADD RULE SECTION
-                </strong>.
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
     ruleSections.forEach(
         (section, index) => {
 
@@ -2347,7 +2890,6 @@ function renderRules() {
 
 
                 <div class="form-grid">
-
 
                     <div class="field">
 
@@ -2387,38 +2929,24 @@ function renderRules() {
 
                             <button
                                 type="button"
-                                onclick="formatText('bold')"
+                                onclick="document.execCommand('bold')"
                             >
                                 <strong>B</strong>
                             </button>
 
                             <button
                                 type="button"
-                                onclick="formatText('italic')"
+                                onclick="document.execCommand('italic')"
                             >
                                 <em>I</em>
                             </button>
 
                             <button
                                 type="button"
-                                onclick="formatText('bold italic')"
-                            >
-                                <strong><em>BI</em></strong>
-                            </button>
-
-                            <button
-                                type="button"
-                                onclick="formatQuote()"
+                                onclick="document.execCommand('formatBlock', false, 'blockquote')"
                             >
                                 ❝
                             </button>
-
-                            <input
-                                type="color"
-                                class="color-picker"
-                                value="#8be6ff"
-                                onchange="formatColor(this.value)"
-                            >
 
                         </div>
 
@@ -2431,7 +2959,6 @@ function renderRules() {
                         >${section.content || ""}</div>
 
                     </div>
-
 
                 </div>
 
@@ -2486,62 +3013,6 @@ function deleteRuleSection(
 
 
     renderRules();
-
-}
-
-
-/* =====================================================
-   RICH TEXT
-===================================================== */
-
-function formatText(
-    command
-) {
-
-    if (
-        command === "bold italic"
-    ) {
-
-        document.execCommand(
-            "bold"
-        );
-
-        document.execCommand(
-            "italic"
-        );
-
-        return;
-
-    }
-
-
-    document.execCommand(
-        command
-    );
-
-}
-
-
-function formatQuote() {
-
-    document.execCommand(
-        "formatBlock",
-        false,
-        "blockquote"
-    );
-
-}
-
-
-function formatColor(
-    color
-) {
-
-    document.execCommand(
-        "foreColor",
-        false,
-        color
-    );
 
 }
 
@@ -2643,7 +3114,7 @@ function saveRules() {
 
 
 /* =====================================================
-   DOWNLOAD
+   DOWNLOAD JSON
 ===================================================== */
 
 function downloadJSON(
