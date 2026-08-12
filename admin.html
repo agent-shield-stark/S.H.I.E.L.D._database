@@ -23,17 +23,12 @@
     box-sizing: border-box;
 }
 
-
 html,
 body {
-
     margin: 0;
     padding: 0;
-
     min-height: 100%;
-
 }
-
 
 body {
 
@@ -58,7 +53,6 @@ body {
         monospace;
 
     padding: 30px;
-
 }
 
 
@@ -86,7 +80,6 @@ body::before {
         );
 
     z-index: 999;
-
 }
 
 
@@ -96,9 +89,11 @@ body::before {
 
 .editor {
 
-    width: min(1200px, 100%);
+    width:
+        min(1200px, 100%);
 
-    margin: auto;
+    margin:
+        auto;
 
 }
 
@@ -109,7 +104,8 @@ body::before {
 
 .header {
 
-    position: relative;
+    position:
+        relative;
 
     border:
         1px solid #0b6385;
@@ -117,9 +113,11 @@ body::before {
     background:
         rgba(3, 15, 22, 0.96);
 
-    padding: 30px;
+    padding:
+        30px;
 
-    margin-bottom: 20px;
+    margin-bottom:
+        20px;
 
     box-shadow:
         0 0 30px
@@ -132,7 +130,8 @@ body::before {
 
     content: "";
 
-    position: absolute;
+    position:
+        absolute;
 
     left: 0;
     top: 0;
@@ -140,7 +139,8 @@ body::before {
     width: 100%;
     height: 2px;
 
-    background: #39cfff;
+    background:
+        #39cfff;
 
     box-shadow:
         0 0 15px #39cfff;
@@ -150,37 +150,48 @@ body::before {
 
 .system {
 
-    color: #39cfff;
+    color:
+        #39cfff;
 
-    font-size: 11px;
+    font-size:
+        11px;
 
-    letter-spacing: 4px;
+    letter-spacing:
+        4px;
 
 }
 
 
 .title {
 
-    margin-top: 15px;
+    margin-top:
+        15px;
 
-    color: #8be6ff;
+    color:
+        #8be6ff;
 
-    font-size: clamp(30px, 6vw, 55px);
+    font-size:
+        clamp(30px, 6vw, 55px);
 
-    letter-spacing: 5px;
+    letter-spacing:
+        5px;
 
 }
 
 
 .subtitle {
 
-    margin-top: 8px;
+    margin-top:
+        8px;
 
-    color: #5d91a5;
+    color:
+        #5d91a5;
 
-    font-size: 11px;
+    font-size:
+        11px;
 
-    letter-spacing: 2px;
+    letter-spacing:
+        2px;
 
 }
 
@@ -191,14 +202,17 @@ body::before {
 
 .tabs {
 
-    display: grid;
+    display:
+        grid;
 
     grid-template-columns:
         repeat(3, 1fr);
 
-    gap: 10px;
+    gap:
+        10px;
 
-    margin-bottom: 20px;
+    margin-bottom:
+        20px;
 
 }
 
@@ -211,39 +225,49 @@ body::before {
     background:
         rgba(3, 15, 22, 0.95);
 
-    color: #5db7d4;
+    color:
+        #5db7d4;
 
-    padding: 15px;
+    padding:
+        15px;
 
     font-family:
         "Courier New",
         monospace;
 
-    letter-spacing: 2px;
+    letter-spacing:
+        2px;
 
-    cursor: pointer;
+    cursor:
+        pointer;
 
-    transition: .25s ease;
+    transition:
+        .25s ease;
 
 }
 
 
 .tab:hover {
 
-    border-color: #39cfff;
+    border-color:
+        #39cfff;
 
-    color: #8be6ff;
+    color:
+        #8be6ff;
 
 }
 
 
 .tab.active {
 
-    background: #06202b;
+    background:
+        #06202b;
 
-    border-color: #39cfff;
+    border-color:
+        #39cfff;
 
-    color: #8be6ff;
+    color:
+        #8be6ff;
 
     box-shadow:
         0 0 15px
@@ -258,7 +282,8 @@ body::before {
 
 .panel {
 
-    display: none;
+    display:
+        none;
 
     border:
         1px solid #0b526c;
@@ -266,46 +291,57 @@ body::before {
     background:
         rgba(3, 15, 22, 0.96);
 
-    padding: 25px;
+    padding:
+        25px;
 
 }
 
 
 .panel.active {
 
-    display: block;
+    display:
+        block;
 
 }
 
 
 /* =====================================================
-   SECTION HEADER
+   PANEL HEADER
 ===================================================== */
 
 .panel-header {
 
-    display: flex;
+    display:
+        flex;
 
-    justify-content: space-between;
+    justify-content:
+        space-between;
 
-    align-items: center;
+    align-items:
+        center;
 
-    gap: 15px;
+    gap:
+        15px;
 
-    margin-bottom: 20px;
+    margin-bottom:
+        20px;
 
-    flex-wrap: wrap;
+    flex-wrap:
+        wrap;
 
 }
 
 
 .panel-title {
 
-    color: #8be6ff;
+    color:
+        #8be6ff;
 
-    font-size: 20px;
+    font-size:
+        20px;
 
-    letter-spacing: 3px;
+    letter-spacing:
+        3px;
 
 }
 
@@ -331,16 +367,20 @@ button {
     background:
         rgba(3, 15, 22, .95);
 
-    color: #65c9e8;
+    color:
+        #65c9e8;
 
     padding:
         10px 15px;
 
-    cursor: pointer;
+    cursor:
+        pointer;
 
-    letter-spacing: 1px;
+    letter-spacing:
+        1px;
 
-    transition: .2s ease;
+    transition:
+        .2s ease;
 
 }
 
@@ -376,23 +416,28 @@ button {
 
 .form-grid {
 
-    display: grid;
+    display:
+        grid;
 
     grid-template-columns:
         repeat(2, 1fr);
 
-    gap: 15px;
+    gap:
+        15px;
 
 }
 
 
 .field {
 
-    display: flex;
+    display:
+        flex;
 
-    flex-direction: column;
+    flex-direction:
+        column;
 
-    gap: 7px;
+    gap:
+        7px;
 
 }
 
@@ -407,11 +452,14 @@ button {
 
 label {
 
-    color: #5db7d4;
+    color:
+        #5db7d4;
 
-    font-size: 10px;
+    font-size:
+        10px;
 
-    letter-spacing: 2px;
+    letter-spacing:
+        2px;
 
 }
 
@@ -420,7 +468,8 @@ input,
 textarea,
 select {
 
-    width: 100%;
+    width:
+        100%;
 
     border:
         1px solid #0b526c;
@@ -438,7 +487,8 @@ select {
         "Courier New",
         monospace;
 
-    outline: none;
+    outline:
+        none;
 
 }
 
@@ -480,7 +530,8 @@ textarea {
     flex-direction:
         column;
 
-    gap: 15px;
+    gap:
+        15px;
 
 }
 
@@ -510,7 +561,8 @@ textarea {
     align-items:
         center;
 
-    gap: 15px;
+    gap:
+        15px;
 
     margin-bottom:
         18px;
@@ -530,7 +582,7 @@ textarea {
 
 
 /* =====================================================
-   STORY / RULE BLOCKS
+   CONTENT CARDS
 ===================================================== */
 
 .content-list {
@@ -596,7 +648,7 @@ textarea {
 
 
 /* =====================================================
-   TEXT EDITOR
+   RICH EDITOR
 ===================================================== */
 
 .rich-toolbar {
@@ -715,7 +767,7 @@ textarea {
 
 
 /* =====================================================
-   COLOR PICKER
+   COLOR
 ===================================================== */
 
 .color-picker {
@@ -742,7 +794,7 @@ textarea {
 
 
 /* =====================================================
-   SAVE AREA
+   SAVE
 ===================================================== */
 
 .save-area {
@@ -808,10 +860,6 @@ textarea {
     letter-spacing:
         2px;
 
-    box-shadow:
-        0 0 12px
-        rgba(57,207,255,.08);
-
 }
 
 
@@ -819,10 +867,6 @@ textarea {
 
     background:
         #0a2d3a;
-
-    box-shadow:
-        0 0 20px
-        rgba(57,207,255,.15);
 
 }
 
@@ -850,6 +894,44 @@ textarea {
 
     font-size:
         11px;
+
+    line-height:
+        1.7;
+
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.loading {
+
+    padding:
+        30px;
+
+    text-align:
+        center;
+
+    color:
+        #39cfff;
+
+    letter-spacing:
+        3px;
+
+}
+
+
+.error-message {
+
+    padding:
+        20px;
+
+    border:
+        1px solid #ff5577;
+
+    color:
+        #ff7892;
 
     line-height:
         1.7;
@@ -907,10 +989,6 @@ textarea {
 <div class="editor">
 
 
-<!-- =====================================================
-     HEADER
-===================================================== -->
-
 <header class="header">
 
     <div class="system">
@@ -928,10 +1006,6 @@ textarea {
 </header>
 
 
-<!-- =====================================================
-     TABS
-===================================================== -->
-
 <div class="tabs">
 
     <button
@@ -941,14 +1015,12 @@ textarea {
         CHARACTERS
     </button>
 
-
     <button
         class="tab"
         onclick="openPanel('story', this)"
     >
         STORY
     </button>
-
 
     <button
         class="tab"
@@ -987,9 +1059,8 @@ textarea {
 
     <div class="notice">
 
-        Add, edit or remove characters here.
-        Changes are exported as
-        <strong>characters-data.json</strong>.
+        Existing characters are loaded automatically
+        from <strong>characters-data.json</strong>.
 
     </div>
 
@@ -997,7 +1068,13 @@ textarea {
     <div
         id="character-list"
         class="character-list"
-    ></div>
+    >
+
+        <div class="loading">
+            LOADING CHARACTER DATABASE...
+        </div>
+
+    </div>
 
 
     <div class="save-area">
@@ -1006,7 +1083,7 @@ textarea {
             id="character-status"
             class="status"
         >
-            READY
+            DATABASE LOADING...
         </div>
 
         <button
@@ -1048,9 +1125,8 @@ textarea {
 
     <div class="notice">
 
-        Edit the story directly from this panel.
-        Each block becomes a separate section
-        in <strong>story-data.json</strong>.
+        Existing story data is loaded automatically
+        from <strong>story-data.json</strong>.
 
     </div>
 
@@ -1093,7 +1169,13 @@ textarea {
     <div
         id="story-list"
         class="content-list"
-    ></div>
+    >
+
+        <div class="loading">
+            LOADING STORY DATABASE...
+        </div>
+
+    </div>
 
 
     <div class="save-area">
@@ -1102,7 +1184,7 @@ textarea {
             id="story-status"
             class="status"
         >
-            READY
+            DATABASE LOADING...
         </div>
 
         <button
@@ -1144,9 +1226,8 @@ textarea {
 
     <div class="notice">
 
-        Edit the roleplay rules here.
-        Each block becomes a separate section
-        in <strong>rules-data.json</strong>.
+        Existing rules are loaded automatically
+        from <strong>rules-data.json</strong>.
 
     </div>
 
@@ -1189,7 +1270,13 @@ textarea {
     <div
         id="rules-list"
         class="content-list"
-    ></div>
+    >
+
+        <div class="loading">
+            LOADING RULES DATABASE...
+        </div>
+
+    </div>
 
 
     <div class="save-area">
@@ -1198,7 +1285,7 @@ textarea {
             id="rules-status"
             class="status"
         >
-            READY
+            DATABASE LOADING...
         </div>
 
         <button
@@ -1219,7 +1306,7 @@ textarea {
 <script>
 
 /* =====================================================
-   DATA
+   DATABASE ARRAYS
 ===================================================== */
 
 let characters = [];
@@ -1230,7 +1317,7 @@ let ruleSections = [];
 
 
 /* =====================================================
-   PANEL SWITCHING
+   SWITCH PANELS
 ===================================================== */
 
 function openPanel(
@@ -1275,7 +1362,342 @@ function openPanel(
 
 
 /* =====================================================
-   CHARACTER EDITOR
+   LOAD ALL DATABASES
+===================================================== */
+
+async function loadDatabases() {
+
+    await Promise.all([
+        loadCharacters(),
+        loadStory(),
+        loadRules()
+    ]);
+
+}
+
+
+/* =====================================================
+   LOAD CHARACTERS
+===================================================== */
+
+async function loadCharacters() {
+
+    try {
+
+        const response =
+            await fetch(
+                "characters-data.json?cache=" +
+                Date.now()
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "characters-data.json not found"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        /*
+         * Supports both:
+         *
+         * [
+         *   {...}
+         * ]
+         *
+         * and
+         *
+         * {
+         *   characters: [...]
+         * }
+         */
+
+        if (
+            Array.isArray(data)
+        ) {
+
+            characters =
+                data;
+
+        }
+
+        else if (
+            Array.isArray(
+                data.characters
+            )
+        ) {
+
+            characters =
+                data.characters;
+
+        }
+
+        else {
+
+            characters =
+                [];
+
+        }
+
+
+        renderCharacters();
+
+
+        document.getElementById(
+            "character-status"
+        ).textContent =
+            characters.length +
+            " CHARACTERS LOADED";
+
+    }
+
+    catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        characters = [];
+
+
+        document.getElementById(
+            "character-list"
+        ).innerHTML = `
+
+            <div class="error-message">
+
+                CHARACTER DATABASE
+                COULD NOT BE LOADED.
+
+                <br><br>
+
+                You can still add new
+                characters manually.
+
+            </div>
+
+        `;
+
+
+        document.getElementById(
+            "character-status"
+        ).textContent =
+            "DATABASE NOT FOUND";
+
+    }
+
+}
+
+
+/* =====================================================
+   LOAD STORY
+===================================================== */
+
+async function loadStory() {
+
+    try {
+
+        const response =
+            await fetch(
+                "story-data.json?cache=" +
+                Date.now()
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "story-data.json not found"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        document.getElementById(
+            "story-title"
+        ).value =
+            data.title ||
+            "STORY";
+
+
+        document.getElementById(
+            "story-subtitle"
+        ).value =
+            data.subtitle ||
+            "CLASSIFIED STORY DATABASE";
+
+
+        storySections =
+            Array.isArray(
+                data.sections
+            )
+            ? data.sections
+            : [];
+
+
+        renderStory();
+
+
+        document.getElementById(
+            "story-status"
+        ).textContent =
+            storySections.length +
+            " STORY SECTIONS LOADED";
+
+    }
+
+    catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        storySections = [];
+
+
+        document.getElementById(
+            "story-list"
+        ).innerHTML = `
+
+            <div class="error-message">
+
+                STORY DATABASE
+                COULD NOT BE LOADED.
+
+                <br><br>
+
+                You can add new sections
+                manually.
+
+            </div>
+
+        `;
+
+
+        document.getElementById(
+            "story-status"
+        ).textContent =
+            "DATABASE NOT FOUND";
+
+    }
+
+}
+
+
+/* =====================================================
+   LOAD RULES
+===================================================== */
+
+async function loadRules() {
+
+    try {
+
+        const response =
+            await fetch(
+                "rules-data.json?cache=" +
+                Date.now()
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "rules-data.json not found"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        document.getElementById(
+            "rules-title"
+        ).value =
+            data.title ||
+            "PROTOCOL";
+
+
+        document.getElementById(
+            "rules-subtitle"
+        ).value =
+            data.subtitle ||
+            "RULES & REGULATIONS";
+
+
+        ruleSections =
+            Array.isArray(
+                data.sections
+            )
+            ? data.sections
+            : [];
+
+
+        renderRules();
+
+
+        document.getElementById(
+            "rules-status"
+        ).textContent =
+            ruleSections.length +
+            " RULE SECTIONS LOADED";
+
+    }
+
+    catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        ruleSections = [];
+
+
+        document.getElementById(
+            "rules-list"
+        ).innerHTML = `
+
+            <div class="error-message">
+
+                RULES DATABASE
+                COULD NOT BE LOADED.
+
+                <br><br>
+
+                You can add new sections
+                manually.
+
+            </div>
+
+        `;
+
+
+        document.getElementById(
+            "rules-status"
+        ).textContent =
+            "DATABASE NOT FOUND";
+
+    }
+
+}
+
+
+/* =====================================================
+   CHARACTERS
 ===================================================== */
 
 function addCharacter(
@@ -1338,6 +1760,33 @@ function renderCharacters() {
 
     container.innerHTML =
         "";
+
+
+    if (
+        characters.length === 0
+    ) {
+
+        container.innerHTML = `
+
+            <div class="notice">
+
+                NO CHARACTERS FOUND.
+
+                <br><br>
+
+                Click
+                <strong>
+                    + ADD CHARACTER
+                </strong>
+                to create one.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
 
 
     characters.forEach(
@@ -1591,6 +2040,32 @@ function renderStory() {
         "";
 
 
+    if (
+        storySections.length === 0
+    ) {
+
+        container.innerHTML = `
+
+            <div class="notice">
+
+                NO STORY SECTIONS FOUND.
+
+                <br><br>
+
+                Click
+                <strong>
+                    + ADD STORY SECTION
+                </strong>.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
     storySections.forEach(
         (section, index) => {
 
@@ -1662,9 +2137,7 @@ function renderStory() {
                             CONTENT
                         </label>
 
-                        <div
-                            class="rich-toolbar"
-                        >
+                        <div class="rich-toolbar">
 
                             <button
                                 type="button"
@@ -1699,7 +2172,6 @@ function renderStory() {
                                 class="color-picker"
                                 value="#8be6ff"
                                 onchange="formatColor(this.value)"
-                                title="TEXT COLOR"
                             >
 
                         </div>
@@ -1814,6 +2286,32 @@ function renderRules() {
         "";
 
 
+    if (
+        ruleSections.length === 0
+    ) {
+
+        container.innerHTML = `
+
+            <div class="notice">
+
+                NO RULE SECTIONS FOUND.
+
+                <br><br>
+
+                Click
+                <strong>
+                    + ADD RULE SECTION
+                </strong>.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
     ruleSections.forEach(
         (section, index) => {
 
@@ -1885,9 +2383,7 @@ function renderRules() {
                             RULE CONTENT
                         </label>
 
-                        <div
-                            class="rich-toolbar"
-                        >
+                        <div class="rich-toolbar">
 
                             <button
                                 type="button"
@@ -1922,7 +2418,6 @@ function renderRules() {
                                 class="color-picker"
                                 value="#8be6ff"
                                 onchange="formatColor(this.value)"
-                                title="TEXT COLOR"
                             >
 
                         </div>
@@ -2148,7 +2643,7 @@ function saveRules() {
 
 
 /* =====================================================
-   DOWNLOAD JSON
+   DOWNLOAD
 ===================================================== */
 
 function downloadJSON(
@@ -2266,14 +2761,10 @@ function escapeAttribute(
 
 
 /* =====================================================
-   START WITH ONE EMPTY BLOCK
+   START
 ===================================================== */
 
-addCharacter();
-
-addStorySection();
-
-addRuleSection();
+loadDatabases();
 
 </script>
 
