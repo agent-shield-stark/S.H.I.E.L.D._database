@@ -1,0 +1,1939 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>S.H.I.E.L.D. // ADMIN TERMINAL</title>
+
+
+<style>
+
+:root {
+
+    --bg: #02080d;
+
+    --panel: #06131b;
+
+    --panel2: #081923;
+
+    --cyan: #19cfff;
+
+    --cyan-soft: #5edfff;
+
+    --text: #d9f3ff;
+
+    --muted: #7194a5;
+
+    --green: #5df2ae;
+
+    --red: #ff5c6c;
+
+}
+
+
+* {
+
+    box-sizing: border-box;
+
+}
+
+
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    background:
+
+        linear-gradient(
+            rgba(20,130,170,.035) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(20,130,170,.035) 1px,
+            transparent 1px
+        ),
+
+        var(--bg);
+
+    background-size: 50px 50px;
+
+    color: var(--text);
+
+    font-family:
+        "Courier New",
+        monospace;
+
+}
+
+
+/* =========================
+   HEADER
+   ========================= */
+
+.header {
+
+    border-bottom:
+        1px solid
+        rgba(25,207,255,.35);
+
+    padding:
+        28px
+        clamp(20px,5vw,70px);
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(10,40,55,.4),
+            transparent
+        );
+
+}
+
+
+.system {
+
+    color: var(--cyan);
+
+    font-size: 11px;
+
+    letter-spacing: 4px;
+
+    margin-bottom: 25px;
+
+}
+
+
+h1 {
+
+    margin: 0;
+
+    font-weight: 300;
+
+    letter-spacing: 5px;
+
+    font-size:
+        clamp(30px,6vw,65px);
+
+}
+
+
+.subtitle {
+
+    margin-top: 12px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+}
+
+
+/* =========================
+   CONTAINER
+   ========================= */
+
+.container {
+
+    width:
+        min(1200px,92%);
+
+    margin:
+        45px auto 100px;
+
+}
+
+
+/* =========================
+   TERMINAL
+   ========================= */
+
+.terminal {
+
+    border:
+        1px solid
+        rgba(25,207,255,.4);
+
+    background:
+        rgba(3,13,19,.85);
+
+    padding: 25px;
+
+    margin-bottom: 30px;
+
+}
+
+
+.terminal-title {
+
+    color: var(--cyan);
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 15px;
+
+}
+
+
+.status {
+
+    color: var(--green);
+
+    font-size: 12px;
+
+}
+
+
+/* =========================
+   BUTTONS
+   ========================= */
+
+button {
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    cursor: pointer;
+
+}
+
+
+.primary {
+
+    background:
+        rgba(25,207,255,.08);
+
+    color: var(--cyan);
+
+    border:
+        1px solid
+        rgba(25,207,255,.5);
+
+    padding:
+        13px 18px;
+
+    letter-spacing: 2px;
+
+    font-size: 11px;
+
+    transition: .2s;
+
+}
+
+
+.primary:hover {
+
+    background:
+        rgba(25,207,255,.16);
+
+    border-color:
+        var(--cyan);
+
+}
+
+
+.danger {
+
+    background:
+        rgba(255,92,108,.05);
+
+    color: var(--red);
+
+    border:
+        1px solid
+        rgba(255,92,108,.35);
+
+    padding:
+        11px 15px;
+
+    letter-spacing: 2px;
+
+    font-size: 10px;
+
+}
+
+
+.danger:hover {
+
+    background:
+        rgba(255,92,108,.12);
+
+}
+
+
+/* =========================
+   DATABASE
+   ========================= */
+
+.database {
+
+    display: grid;
+
+    grid-template-columns:
+        300px 1fr;
+
+    gap: 25px;
+
+}
+
+
+/* =========================
+   CHARACTER LIST
+   ========================= */
+
+.list {
+
+    border:
+        1px solid
+        rgba(25,207,255,.3);
+
+    background:
+        rgba(3,13,19,.8);
+
+    padding: 18px;
+
+}
+
+
+.list-title {
+
+    color: var(--cyan);
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    padding-bottom: 15px;
+
+    border-bottom:
+        1px solid
+        rgba(25,207,255,.2);
+
+    margin-bottom: 15px;
+
+}
+
+
+.character-item {
+
+    width: 100%;
+
+    text-align: left;
+
+    background:
+        rgba(10,30,40,.4);
+
+    border:
+        1px solid
+        rgba(25,207,255,.12);
+
+    color: var(--text);
+
+    padding: 14px;
+
+    margin-bottom: 8px;
+
+    transition: .2s;
+
+}
+
+
+.character-item:hover {
+
+    border-color:
+        rgba(25,207,255,.5);
+
+    background:
+        rgba(25,207,255,.06);
+
+}
+
+
+.character-item.active {
+
+    border-left:
+        3px solid
+        var(--cyan);
+
+    background:
+        rgba(25,207,255,.08);
+
+}
+
+
+.character-name {
+
+    display: block;
+
+    font-size: 12px;
+
+    letter-spacing: 1px;
+
+}
+
+
+.character-group {
+
+    display: block;
+
+    margin-top: 6px;
+
+    color: var(--muted);
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+}
+
+
+/* =========================
+   EDITOR
+   ========================= */
+
+.editor {
+
+    border:
+        1px solid
+        rgba(25,207,255,.3);
+
+    background:
+        rgba(3,13,19,.8);
+
+    padding:
+        clamp(20px,4vw,35px);
+
+}
+
+
+.editor-title {
+
+    color: var(--cyan);
+
+    font-size: 12px;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 25px;
+
+}
+
+
+.form-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0,1fr)
+        );
+
+    gap: 18px;
+
+}
+
+
+.field {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+}
+
+
+.field.full {
+
+    grid-column:
+        1 / -1;
+
+}
+
+
+label {
+
+    color: var(--muted);
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+}
+
+
+input,
+select,
+textarea {
+
+    width: 100%;
+
+    background:
+        #030d13;
+
+    border:
+        1px solid
+        rgba(25,207,255,.25);
+
+    color:
+        var(--text);
+
+    padding:
+        12px 13px;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 13px;
+
+    outline: none;
+
+}
+
+
+input:focus,
+select:focus,
+textarea:focus {
+
+    border-color:
+        var(--cyan);
+
+    box-shadow:
+        0 0 10px
+        rgba(25,207,255,.08);
+
+}
+
+
+textarea {
+
+    min-height: 140px;
+
+    resize: vertical;
+
+    line-height: 1.6;
+
+}
+
+
+/* =========================
+   ABILITIES
+   ========================= */
+
+.abilities-editor {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+}
+
+
+.ability-row {
+
+    display: flex;
+
+    gap: 8px;
+
+}
+
+
+.ability-row input {
+
+    flex: 1;
+
+}
+
+
+.remove-ability {
+
+    width: 42px;
+
+    color: var(--red);
+
+    border:
+        1px solid
+        rgba(255,92,108,.3);
+
+    background:
+        transparent;
+
+}
+
+
+.add-ability {
+
+    align-self: flex-start;
+
+    margin-top: 5px;
+
+}
+
+
+/* =========================
+   ACTIONS
+   ========================= */
+
+.actions {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-top: 30px;
+
+    padding-top: 25px;
+
+    border-top:
+        1px solid
+        rgba(25,207,255,.2);
+
+}
+
+
+/* =========================
+   EMPTY
+   ========================= */
+
+.empty {
+
+    color: var(--muted);
+
+    text-align: center;
+
+    padding: 80px 20px;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+}
+
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media(max-width:800px) {
+
+    .database {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+
+@media(max-width:600px) {
+
+    .form-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .field.full {
+
+        grid-column:
+            auto;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header class="header">
+
+    <div class="system">
+
+        S.H.I.E.L.D. //
+        SECURE ADMINISTRATIVE TERMINAL
+
+    </div>
+
+
+    <h1>
+
+        DATABASE CONTROL
+
+    </h1>
+
+
+    <div class="subtitle">
+
+        PERSONNEL DATABASE MANAGEMENT //
+        LEVEL 07 CLEARANCE
+
+    </div>
+
+</header>
+
+
+
+<main class="container">
+
+
+<!-- =========================
+     TERMINAL
+     ========================= -->
+
+<div class="terminal">
+
+    <div class="terminal-title">
+
+        SYSTEM STATUS
+
+    </div>
+
+
+    <div
+        id="systemStatus"
+        class="status"
+    >
+
+        > INITIALIZING DATABASE...
+
+    </div>
+
+
+    <br>
+
+
+    <button
+        class="primary"
+        onclick="createNewCharacter()"
+    >
+
+        + ADD NEW CHARACTER
+
+    </button>
+
+
+    <button
+        class="primary"
+        onclick="downloadDatabase()"
+    >
+
+        ↓ EXPORT DATABASE
+
+    </button>
+
+
+    <input
+        type="file"
+        id="jsonFile"
+        accept=".json"
+        style="display:none"
+        onchange="importDatabase(event)"
+    >
+
+
+    <button
+        class="primary"
+        onclick="document.getElementById('jsonFile').click()"
+    >
+
+        ↑ IMPORT DATABASE
+
+    </button>
+
+</div>
+
+
+
+<!-- =========================
+     DATABASE
+     ========================= -->
+
+<div class="database">
+
+
+    <aside class="list">
+
+        <div class="list-title">
+
+            PERSONNEL FILES
+
+        </div>
+
+
+        <div id="characterList">
+
+            <div class="empty">
+
+                LOADING...
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <section class="editor">
+
+        <div
+            id="editorContent"
+        >
+
+            <div class="empty">
+
+                SELECT PERSONNEL FILE
+
+                <br><br>
+
+                OR CREATE NEW CHARACTER
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+</div>
+
+
+</main>
+
+
+
+<script>
+
+
+/* =========================================
+   DATABASE
+   ========================================= */
+
+let characters = [];
+
+let selectedIndex = null;
+
+
+/* =========================================
+   LOAD DATABASE
+   ========================================= */
+
+async function loadDatabase() {
+
+    try {
+
+        const response =
+            await fetch(
+                "characters-data.json?cache=" +
+                Date.now()
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Database unavailable"
+            );
+
+        }
+
+
+        characters =
+            await response.json();
+
+
+        renderList();
+
+
+        document.getElementById(
+            "systemStatus"
+        ).textContent =
+            "> DATABASE ONLINE // " +
+            characters.length +
+            " PERSONNEL FILES LOADED";
+
+
+    } catch(error) {
+
+        console.error(error);
+
+
+        document.getElementById(
+            "systemStatus"
+        ).textContent =
+            "> DATABASE CONNECTION FAILED";
+
+    }
+
+}
+
+
+/* =========================================
+   CHARACTER LIST
+   ========================================= */
+
+function renderList() {
+
+    const list =
+        document.getElementById(
+            "characterList"
+        );
+
+
+    if (!characters.length) {
+
+        list.innerHTML = `
+
+            <div class="empty">
+
+                NO PERSONNEL FILES
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    list.innerHTML =
+        characters
+        .map(
+            (character,index) => `
+
+                <button
+                    class="character-item ${
+                        index === selectedIndex
+                            ? "active"
+                            : ""
+                    }"
+                    onclick="selectCharacter(${index})"
+                >
+
+                    <span class="character-name">
+
+                        ${escapeHTML(
+                            character.name ||
+                            "CLASSIFIED"
+                        )}
+
+                    </span>
+
+
+                    <span class="character-group">
+
+                        ${
+                            character.group ||
+                            "UNASSIGNED"
+                        }
+
+                    </span>
+
+                </button>
+
+            `
+        )
+        .join("");
+
+}
+
+
+/* =========================================
+   SELECT
+   ========================================= */
+
+function selectCharacter(index) {
+
+    selectedIndex = index;
+
+    renderList();
+
+    renderEditor(
+        characters[index]
+    );
+
+}
+
+
+/* =========================================
+   EDITOR
+   ========================================= */
+
+function renderEditor(character) {
+
+    const editor =
+        document.getElementById(
+            "editorContent"
+        );
+
+
+    editor.innerHTML = `
+
+        <div class="editor-title">
+
+            PERSONNEL FILE //
+            ${escapeHTML(
+                character.file ||
+                "NEW"
+            )}
+
+        </div>
+
+
+        <div class="form-grid">
+
+
+            ${field(
+                "FILE NUMBER",
+                "file",
+                character.file
+            )}
+
+
+            ${field(
+                "DATABASE ID",
+                "id",
+                character.id
+            )}
+
+
+            ${field(
+                "DISPLAY NAME",
+                "name",
+                character.name
+            )}
+
+
+            ${field(
+                "FULL NAME",
+                "fullName",
+                character.fullName
+            )}
+
+
+            ${field(
+                "ALIAS",
+                "alias",
+                character.alias
+            )}
+
+
+            ${field(
+                "AGE",
+                "age",
+                character.age
+            )}
+
+
+            ${field(
+                "AFFILIATION",
+                "affiliation",
+                character.affiliation
+            )}
+
+
+            ${field(
+                "ROLE",
+                "role",
+                character.role
+            )}
+
+
+            ${field(
+                "LOCATION",
+                "location",
+                character.location
+            )}
+
+
+            ${field(
+                "PHOTO URL",
+                "photo",
+                character.photo
+            )}
+
+
+            <div class="field">
+
+                <label>
+                    GROUP
+                </label>
+
+                <select
+                    id="field-group"
+                >
+
+                    <option
+                        value="avengers"
+                        ${character.group === "avengers"
+                            ? "selected"
+                            : ""}
+                    >
+                        AVENGERS
+                    </option>
+
+                    <option
+                        value="agents"
+                        ${character.group === "agents"
+                            ? "selected"
+                            : ""}
+                    >
+                        AGENTS OF S.H.I.E.L.D.
+                    </option>
+
+                    <option
+                        value="other"
+                        ${character.group === "other"
+                            ? "selected"
+                            : ""}
+                    >
+                        OTHER
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    STATUS
+                </label>
+
+                <select
+                    id="field-status"
+                >
+
+                    <option
+                        value="ACTIVE"
+                        ${character.status === "ACTIVE"
+                            ? "selected"
+                            : ""}
+                    >
+                        ACTIVE
+                    </option>
+
+                    <option
+                        value="INACTIVE"
+                        ${character.status === "INACTIVE"
+                            ? "selected"
+                            : ""}
+                    >
+                        INACTIVE
+                    </option>
+
+                    <option
+                        value="MISSING"
+                        ${character.status === "MISSING"
+                            ? "selected"
+                            : ""}
+                    >
+                        MISSING
+                    </option>
+
+                    <option
+                        value="CLASSIFIED"
+                        ${character.status === "CLASSIFIED"
+                            ? "selected"
+                            : ""}
+                    >
+                        CLASSIFIED
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            ${textareaField(
+                "PERSONNEL SUMMARY",
+                "description",
+                character.description
+            )}
+
+
+            <div class="field full">
+
+                <label>
+                    ABILITIES
+                </label>
+
+
+                <div
+                    id="abilitiesEditor"
+                    class="abilities-editor"
+                >
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="primary add-ability"
+                    onclick="addAbility()"
+                >
+
+                    + ADD ABILITY
+
+                </button>
+
+            </div>
+
+
+            ${textareaField(
+                "PSYCHOLOGICAL PROFILE",
+                "personality",
+                character.personality
+            )}
+
+
+            ${textareaField(
+                "HISTORY",
+                "history",
+                character.history
+            )}
+
+
+            ${textareaField(
+                "RELATIONSHIPS",
+                "relationships",
+                character.relationships
+            )}
+
+
+            ${textareaField(
+                "ARCHIVE NOTES",
+                "notes",
+                character.notes
+            )}
+
+        </div>
+
+
+        <div class="actions">
+
+            <button
+                class="primary"
+                onclick="saveCharacter()"
+            >
+
+                ✓ SAVE CHANGES
+
+            </button>
+
+
+            <button
+                class="danger"
+                onclick="deleteCharacter()"
+            >
+
+                DELETE FILE
+
+            </button>
+
+        </div>
+
+    `;
+
+
+    renderAbilities(
+        character.abilities || []
+    );
+
+}
+
+
+/* =========================================
+   FIELD
+   ========================================= */
+
+function field(
+    label,
+    key,
+    value
+) {
+
+    return `
+
+        <div class="field">
+
+            <label>
+
+                ${label}
+
+            </label>
+
+
+            <input
+                id="field-${key}"
+                value="${escapeAttribute(
+                    value || ""
+                )}"
+            >
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================
+   TEXTAREA
+   ========================================= */
+
+function textareaField(
+    label,
+    key,
+    value
+) {
+
+    return `
+
+        <div class="field full">
+
+            <label>
+
+                ${label}
+
+            </label>
+
+
+            <textarea
+                id="field-${key}"
+            >${escapeHTML(
+                value || ""
+            )}</textarea>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================
+   ABILITIES
+   ========================================= */
+
+function renderAbilities(
+    abilities
+) {
+
+    const container =
+        document.getElementById(
+            "abilitiesEditor"
+        );
+
+
+    container.innerHTML = "";
+
+
+    abilities.forEach(
+        ability =>
+            addAbility(
+                ability
+            )
+    );
+
+}
+
+
+function addAbility(
+    value = ""
+) {
+
+    const container =
+        document.getElementById(
+            "abilitiesEditor"
+        );
+
+
+    if (!container) return;
+
+
+    const row =
+        document.createElement(
+            "div"
+        );
+
+
+    row.className =
+        "ability-row";
+
+
+    row.innerHTML = `
+
+        <input
+            class="ability-input"
+            value="${escapeAttribute(
+                value
+            )}"
+            placeholder="ABILITY"
+        >
+
+
+        <button
+            type="button"
+            class="remove-ability"
+            onclick="this.parentElement.remove()"
+        >
+
+            ×
+
+        </button>
+
+    `;
+
+
+    container.appendChild(
+        row
+    );
+
+}
+
+
+/* =========================================
+   SAVE CHARACTER
+   ========================================= */
+
+function saveCharacter() {
+
+    if (
+        selectedIndex === null
+    ) {
+
+        return;
+
+    }
+
+
+    const character =
+        characters[selectedIndex];
+
+
+    character.file =
+        getValue("file");
+
+
+    character.id =
+        getValue("id");
+
+
+    character.name =
+        getValue("name");
+
+
+    character.fullName =
+        getValue("fullName");
+
+
+    character.alias =
+        getValue("alias");
+
+
+    character.age =
+        getValue("age");
+
+
+    character.affiliation =
+        getValue("affiliation");
+
+
+    character.role =
+        getValue("role");
+
+
+    character.location =
+        getValue("location");
+
+
+    character.photo =
+        getValue("photo");
+
+
+    character.group =
+        document.getElementById(
+            "field-group"
+        ).value;
+
+
+    character.status =
+        document.getElementById(
+            "field-status"
+        ).value;
+
+
+    character.description =
+        getValue("description");
+
+
+    character.personality =
+        getValue("personality");
+
+
+    character.history =
+        getValue("history");
+
+
+    character.relationships =
+        getValue("relationships");
+
+
+    character.notes =
+        getValue("notes");
+
+
+    character.abilities =
+        Array.from(
+            document.querySelectorAll(
+                ".ability-input"
+            )
+        )
+        .map(
+            input =>
+                input.value.trim()
+        )
+        .filter(
+            value => value
+        );
+
+
+    renderList();
+
+
+    document.getElementById(
+        "systemStatus"
+    ).textContent =
+        "> FILE UPDATED // EXPORT DATABASE TO SAVE CHANGES";
+
+
+    alert(
+        "PERSONNEL FILE UPDATED.\n\n" +
+        "Press EXPORT DATABASE to download the updated JSON."
+    );
+
+}
+
+
+/* =========================================
+   NEW CHARACTER
+   ========================================= */
+
+function createNewCharacter() {
+
+    const newCharacter = {
+
+        id:
+            "new-character-" +
+            Date.now(),
+
+        file:
+            String(
+                characters.length + 1
+            ).padStart(
+                3,
+                "0"
+            ),
+
+        name:
+            "NEW CHARACTER",
+
+        fullName:
+            "",
+
+        group:
+            "other",
+
+        status:
+            "CLASSIFIED",
+
+        alias:
+            "",
+
+        age:
+            "",
+
+        affiliation:
+            "",
+
+        role:
+            "",
+
+        location:
+            "",
+
+        photo:
+            "",
+
+        description:
+            "",
+
+        abilities:
+            [],
+
+        personality:
+            "",
+
+        history:
+            "",
+
+        relationships:
+            "",
+
+        notes:
+            ""
+
+    };
+
+
+    characters.push(
+        newCharacter
+    );
+
+
+    selectedIndex =
+        characters.length - 1;
+
+
+    renderList();
+
+    renderEditor(
+        newCharacter
+    );
+
+
+    document.getElementById(
+        "systemStatus"
+    ).textContent =
+        "> NEW PERSONNEL FILE CREATED // UNSAVED";
+
+
+}
+
+
+/* =========================================
+   DELETE
+   ========================================= */
+
+function deleteCharacter() {
+
+    if (
+        selectedIndex === null
+    ) {
+
+        return;
+
+    }
+
+
+    const character =
+        characters[selectedIndex];
+
+
+    const confirmed =
+        confirm(
+            "DELETE PERSONNEL FILE?\n\n" +
+            character.name
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    characters.splice(
+        selectedIndex,
+        1
+    );
+
+
+    selectedIndex = null;
+
+
+    renderList();
+
+
+    document.getElementById(
+        "editorContent"
+    ).innerHTML = `
+
+        <div class="empty">
+
+            PERSONNEL FILE DELETED
+
+        </div>
+
+    `;
+
+
+    document.getElementById(
+        "systemStatus"
+    ).textContent =
+        "> FILE DELETED // EXPORT DATABASE TO SAVE CHANGES";
+
+}
+
+
+/* =========================================
+   EXPORT
+   ========================================= */
+
+function downloadDatabase() {
+
+    const json =
+        JSON.stringify(
+            characters,
+            null,
+            2
+        );
+
+
+    const blob =
+        new Blob(
+            [json],
+            {
+                type:
+                    "application/json"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+
+    link.href = url;
+
+    link.download =
+        "characters-data.json";
+
+
+    link.click();
+
+
+    URL.revokeObjectURL(
+        url
+    );
+
+
+    document.getElementById(
+        "systemStatus"
+    ).textContent =
+        "> DATABASE EXPORTED // UPLOAD FILE TO GITHUB";
+
+}
+
+
+/* =========================================
+   IMPORT
+   ========================================= */
+
+function importDatabase(
+    event
+) {
+
+    const file =
+        event.target.files[0];
+
+
+    if (!file) return;
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        function(e) {
+
+            try {
+
+                const data =
+                    JSON.parse(
+                        e.target.result
+                    );
+
+
+                if (
+                    !Array.isArray(data)
+                ) {
+
+                    throw new Error(
+                        "Invalid database"
+                    );
+
+                }
+
+
+                characters =
+                    data;
+
+
+                selectedIndex =
+                    null;
+
+
+                renderList();
+
+
+                document.getElementById(
+                    "editorContent"
+                ).innerHTML = `
+
+                    <div class="empty">
+
+                        DATABASE IMPORTED
+
+                        <br><br>
+
+                        SELECT PERSONNEL FILE
+
+                    </div>
+
+                `;
+
+
+                document.getElementById(
+                    "systemStatus"
+                ).textContent =
+                    "> DATABASE IMPORTED // " +
+                    characters.length +
+                    " FILES LOADED";
+
+
+            } catch(error) {
+
+                alert(
+                    "ERROR: INVALID JSON DATABASE."
+                );
+
+            }
+
+        };
+
+
+    reader.readAsText(
+        file
+    );
+
+}
+
+
+/* =========================================
+   HELPERS
+   ========================================= */
+
+function getValue(
+    key
+) {
+
+    const element =
+        document.getElementById(
+            "field-" + key
+        );
+
+
+    return element
+        ? element.value.trim()
+        : "";
+
+}
+
+
+function escapeHTML(
+    text
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        text;
+
+
+    return div.innerHTML;
+
+}
+
+
+function escapeAttribute(
+    text
+) {
+
+    return String(
+        text || ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    );
+
+}
+
+
+/* =========================================
+   START
+   ========================================= */
+
+loadDatabase();
+
+</script>
+
+
+</body>
+
+</html>
