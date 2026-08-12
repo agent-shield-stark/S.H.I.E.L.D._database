@@ -1,25 +1,41 @@
 <!DOCTYPE html>
 <html lang="uk">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>S.H.I.E.L.D. // PERSONNEL DATABASE</title>
 
 <style>
 
+/* =========================================================
+   S.H.I.E.L.D. PERSONNEL DATABASE
+   ========================================================= */
+
 :root {
+
     --bg: #020609;
     --panel: #061019;
     --panel2: #091823;
+
     --blue: #36c7ff;
     --blue-light: #9be8ff;
+
     --text: #d8f4ff;
     --muted: #6f92a2;
+
     --green: #68e0a0;
     --red: #ff5364;
 }
+
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
 
 * {
     box-sizing: border-box;
@@ -32,6 +48,7 @@ html {
 body {
 
     margin: 0;
+
     min-height: 100vh;
 
     background:
@@ -52,11 +69,15 @@ body {
     overflow-x: hidden;
 }
 
+
+/* BACKGROUND GRID */
+
 body::before {
 
     content: "";
 
     position: fixed;
+
     inset: 0;
 
     background-image:
@@ -78,6 +99,9 @@ body::before {
 
     z-index: -2;
 }
+
+
+/* SCANNING LINE */
 
 body::after {
 
@@ -103,12 +127,14 @@ body::after {
     box-shadow:
         0 0 12px var(--blue);
 
-    animation: scan 8s linear infinite;
+    animation:
+        scan 8s linear infinite;
 
     pointer-events: none;
 
     z-index: 100;
 }
+
 
 @keyframes scan {
 
@@ -122,14 +148,20 @@ body::after {
 }
 
 
-/* TERMINAL */
+/* =========================================================
+   TERMINAL
+   ========================================================= */
 
 .terminal {
 
     width:
-        min(1120px, calc(100% - 24px));
+        min(
+            1120px,
+            calc(100% - 24px)
+        );
 
-    margin: 12px auto 40px;
+    margin:
+        12px auto 40px;
 
     min-height: 90vh;
 
@@ -148,7 +180,9 @@ body::after {
 }
 
 
-/* TOP BAR */
+/* =========================================================
+   TOP BAR
+   ========================================================= */
 
 .topbar {
 
@@ -168,12 +202,15 @@ body::after {
     background:
         rgba(7,20,29,.95);
 
-    font-family: Consolas, monospace;
+    font-family:
+        Consolas,
+        monospace;
 
     font-size: 11px;
 
     letter-spacing: 1.5px;
 }
+
 
 .system-name {
 
@@ -183,7 +220,8 @@ body::after {
         0 0 9px rgba(54,199,255,.65);
 }
 
-.status {
+
+.database-status {
 
     color: var(--green);
 
@@ -194,6 +232,7 @@ body::after {
     gap: 8px;
 }
 
+
 .dot {
 
     width: 7px;
@@ -201,13 +240,16 @@ body::after {
 
     border-radius: 50%;
 
-    background: var(--green);
+    background:
+        var(--green);
 
     box-shadow:
         0 0 10px var(--green);
 
-    animation: pulse 1.7s infinite;
+    animation:
+        pulse 1.7s infinite;
 }
+
 
 @keyframes pulse {
 
@@ -217,16 +259,24 @@ body::after {
 }
 
 
-/* CONTENT */
+/* =========================================================
+   CONTENT
+   ========================================================= */
 
 .content {
 
     padding:
-        clamp(25px, 5vw, 65px);
+        clamp(
+            25px,
+            5vw,
+            65px
+        );
 }
 
 
-/* RETURN */
+/* =========================================================
+   RETURN BUTTON
+   ========================================================= */
 
 .return {
 
@@ -238,7 +288,9 @@ body::after {
 
     text-decoration: none;
 
-    font-family: Consolas, monospace;
+    font-family:
+        Consolas,
+        monospace;
 
     font-size: 10px;
 
@@ -247,10 +299,13 @@ body::after {
     border:
         1px solid rgba(54,199,255,.2);
 
-    padding: 10px 15px;
+    padding:
+        10px 15px;
 
-    transition: .25s;
+    transition:
+        .25s;
 }
+
 
 .return:hover {
 
@@ -262,13 +317,17 @@ body::after {
 }
 
 
-/* HEADER */
+/* =========================================================
+   HEADER
+   ========================================================= */
 
 .classification {
 
     color: var(--blue);
 
-    font-family: Consolas, monospace;
+    font-family:
+        Consolas,
+        monospace;
 
     font-size: 10px;
 
@@ -277,12 +336,17 @@ body::after {
     margin-bottom: 15px;
 }
 
+
 h1 {
 
     margin: 0;
 
     font-size:
-        clamp(32px, 7vw, 62px);
+        clamp(
+            32px,
+            7vw,
+            62px
+        );
 
     font-weight: 300;
 
@@ -292,13 +356,16 @@ h1 {
         0 0 12px rgba(54,199,255,.45);
 }
 
+
 .subtitle {
 
     margin-top: 12px;
 
     color: var(--muted);
 
-    font-family: Consolas, monospace;
+    font-family:
+        Consolas,
+        monospace;
 
     font-size: 11px;
 
@@ -306,13 +373,16 @@ h1 {
 }
 
 
-/* DIVIDER */
+/* =========================================================
+   DIVIDER
+   ========================================================= */
 
 .divider {
 
     height: 1px;
 
-    margin: 45px 0;
+    margin:
+        45px 0;
 
     background:
         linear-gradient(
@@ -327,18 +397,24 @@ h1 {
 }
 
 
-/* CATEGORY */
+/* =========================================================
+   CATEGORY
+   ========================================================= */
 
 .category {
 
-    margin-bottom: 45px;
+    margin-bottom: 48px;
 }
+
 
 .category-title {
 
-    font-family: Consolas, monospace;
+    font-family:
+        Consolas,
+        monospace;
 
-    color: var(--blue);
+    color:
+        var(--blue);
 
     font-size: 11px;
 
@@ -348,7 +424,9 @@ h1 {
 }
 
 
-/* CHARACTER CARDS */
+/* =========================================================
+   CHARACTER GRID
+   ========================================================= */
 
 .characters {
 
@@ -357,11 +435,19 @@ h1 {
     grid-template-columns:
         repeat(
             auto-fit,
-            minmax(230px, 1fr)
+            minmax(
+                210px,
+                1fr
+            )
         );
 
-    gap: 15px;
+    gap: 14px;
 }
+
+
+/* =========================================================
+   CHARACTER CARD
+   ========================================================= */
 
 .character {
 
@@ -371,9 +457,9 @@ h1 {
 
     color: var(--text);
 
-    padding: 22px;
+    padding: 18px;
 
-    min-height: 150px;
+    min-height: 125px;
 
     background:
         linear-gradient(
@@ -396,6 +482,9 @@ h1 {
         .3s ease;
 }
 
+
+/* ANIMATED BOTTOM LINE */
+
 .character::after {
 
     content: "";
@@ -410,13 +499,16 @@ h1 {
 
     height: 1px;
 
-    background: var(--blue);
+    background:
+        var(--blue);
 
     box-shadow:
         0 0 12px var(--blue);
 
-    transition: .5s;
+    transition:
+        .5s;
 }
+
 
 .character:hover {
 
@@ -430,46 +522,121 @@ h1 {
         0 0 25px rgba(54,199,255,.08);
 }
 
+
 .character:hover::after {
 
     left: 0;
 }
 
+
+/* =========================================================
+   CARD NUMBER
+   ========================================================= */
+
 .number {
 
-    color: var(--blue);
+    color:
+        var(--blue);
 
-    font-family: Consolas, monospace;
+    font-family:
+        Consolas,
+        monospace;
 
     font-size: 9px;
 
     letter-spacing: 2px;
 
-    margin-bottom: 18px;
+    margin-bottom: 14px;
 }
+
+
+/* =========================================================
+   CHARACTER NAME
+   ========================================================= */
 
 .name {
 
-    font-size: 20px;
+    font-size: 18px;
 
     letter-spacing: 1px;
 
     margin-bottom: 8px;
 }
 
-.status {
 
-    font-family: Consolas, monospace;
+/* =========================================================
+   CHARACTER STATUS
+   ========================================================= */
+
+.card-status {
+
+    font-family:
+        Consolas,
+        monospace;
 
     font-size: 9px;
 
     letter-spacing: 1px;
 
-    color: var(--green);
+    color:
+        var(--green);
 }
 
 
-/* FOOTER */
+/* =========================================================
+   EMPTY CATEGORY
+   ========================================================= */
+
+.empty-category {
+
+    padding: 20px;
+
+    border:
+        1px solid rgba(54,199,255,.1);
+
+    color:
+        var(--muted);
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.database-error {
+
+    padding: 25px;
+
+    border:
+        1px solid rgba(255,83,100,.35);
+
+    color:
+        var(--red);
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: 10px;
+
+    line-height: 1.8;
+
+    background:
+        rgba(255,83,100,.03);
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
 
 .footer {
 
@@ -488,14 +655,22 @@ h1 {
 
     gap: 15px;
 
-    color: #466a7a;
+    color:
+        #466a7a;
 
-    font-family: Consolas, monospace;
+    font-family:
+        Consolas,
+        monospace;
 
     font-size: 9px;
 
     letter-spacing: 1.5px;
 }
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
 @media(max-width:650px) {
 
@@ -504,206 +679,608 @@ h1 {
         width:
             calc(100% - 10px);
 
-        margin: 5px auto 20px;
+        margin:
+            5px auto 20px;
     }
+
 
     .topbar {
 
-        padding: 0 11px;
+        padding:
+            0 11px;
 
         font-size: 8px;
     }
 
+
     .content {
 
-        padding: 25px 17px;
+        padding:
+            25px 17px;
     }
+
+
+    .characters {
+
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .character {
+
+        min-height:
+            115px;
+    }
+
 
     .footer {
 
-        flex-direction: column;
+        flex-direction:
+            column;
     }
+
 }
 
 </style>
 
 </head>
 
+
 <body>
 
+
 <div class="terminal">
+
+
+    <!-- =====================================================
+         TOP BAR
+         ===================================================== -->
 
     <div class="topbar">
 
         <div class="system-name">
-            S.H.I.E.L.D. // SECURE TERMINAL
+
+            S.H.I.E.L.D. //
+            SECURE TERMINAL
+
         </div>
 
-        <div class="status">
+
+        <div class="database-status">
+
             <span class="dot"></span>
+
             DATABASE ONLINE
+
         </div>
 
     </div>
 
 
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
     <main class="content">
+
+
+        <!-- RETURN -->
 
         <a
             href="index.html"
             class="return"
         >
+
             &lt; RETURN TO MAIN DATABASE
+
         </a>
 
 
+        <!-- HEADER -->
+
         <div class="classification">
-            S.H.I.E.L.D. // PERSONNEL FILES
+
+            S.H.I.E.L.D. //
+            PERSONNEL FILES
+
         </div>
 
+
         <h1>
+
             PERSONNEL
+
         </h1>
 
+
         <div class="subtitle">
-            CLASSIFIED PERSONNEL DATABASE // LEVEL 04
+
+            CLASSIFIED PERSONNEL DATABASE //
+            LEVEL 04
+
         </div>
 
 
         <div class="divider"></div>
 
 
-        <!-- AVENGERS -->
+        <!-- =================================================
+             AVENGERS
+             ================================================= -->
 
         <section class="category">
 
+
             <div class="category-title">
+
                 [ AVENGERS ]
-            </div>
-
-
-            <div class="characters">
-
-
-                <a
-                    href="#"
-                    class="character"
-                >
-
-                    <div class="number">
-                        FILE // 001
-                    </div>
-
-                    <div class="name">
-                        WANDA MAXIMOFF
-                    </div>
-
-                    <div class="status">
-                        ● ACTIVE
-                    </div>
-
-                </a>
-
-
-                <a
-                    href="#"
-                    class="character"
-                >
-
-                    <div class="number">
-                        FILE // 002
-                    </div>
-
-                    <div class="name">
-                        YELENA BELOVA
-                    </div>
-
-                    <div class="status">
-                        ● ACTIVE
-                    </div>
-
-                </a>
-
-
-                <a
-                    href="#"
-                    class="character"
-                >
-
-                    <div class="number">
-                        FILE // 003
-                    </div>
-
-                    <div class="name">
-                        CHARACTER NAME
-                    </div>
-
-                    <div class="status">
-                        ● ACTIVE
-                    </div>
-
-                </a>
-
 
             </div>
+
+
+            <div
+                class="characters"
+                id="avengers-container"
+            >
+
+                <div class="empty-category">
+
+                    &gt; LOADING PERSONNEL FILES...
+
+                </div>
+
+            </div>
+
 
         </section>
 
 
-        <!-- OTHER -->
+        <!-- =================================================
+             AGENTS OF S.H.I.E.L.D.
+             ================================================= -->
 
         <section class="category">
 
+
             <div class="category-title">
-                [ OTHER PERSONNEL ]
-            </div>
 
-
-            <div class="characters">
-
-                <a
-                    href="#"
-                    class="character"
-                >
-
-                    <div class="number">
-                        FILE // 004
-                    </div>
-
-                    <div class="name">
-                        CHARACTER NAME
-                    </div>
-
-                    <div class="status">
-                        ● CLASSIFIED
-                    </div>
-
-                </a>
+                [ AGENTS OF S.H.I.E.L.D. ]
 
             </div>
+
+
+            <div
+                class="characters"
+                id="agents-container"
+            >
+
+                <div class="empty-category">
+
+                    &gt; LOADING PERSONNEL FILES...
+
+                </div>
+
+            </div>
+
 
         </section>
 
+
+        <!-- =================================================
+             OTHER PERSONNEL
+             ================================================= -->
+
+        <section class="category">
+
+
+            <div class="category-title">
+
+                [ OTHER PERSONNEL ]
+
+            </div>
+
+
+            <div
+                class="characters"
+                id="other-container"
+            >
+
+                <div class="empty-category">
+
+                    &gt; LOADING PERSONNEL FILES...
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             FOOTER
+             ================================================= -->
 
         <footer class="footer">
 
-            <span>
-                S.H.I.E.L.D. PERSONNEL DATABASE
-            </span>
 
             <span>
+
+                S.H.I.E.L.D.
+                PERSONNEL DATABASE
+
+            </span>
+
+
+            <span>
+
                 ACCESS: GRANTED
+
             </span>
 
+
             <span>
+
                 RECORDS: ENCRYPTED
+
             </span>
+
 
         </footer>
 
+
     </main>
+
 
 </div>
 
+
+<!-- =========================================================
+     DATABASE ENGINE
+     ========================================================= -->
+
+<script>
+
+async function loadCharacters() {
+
+
+    const avengersContainer =
+        document.getElementById(
+            "avengers-container"
+        );
+
+
+    const agentsContainer =
+        document.getElementById(
+            "agents-container"
+        );
+
+
+    const otherContainer =
+        document.getElementById(
+            "other-container"
+        );
+
+
+    try {
+
+
+        /* ---------------------------------------------
+           CONNECT TO DATABASE
+           --------------------------------------------- */
+
+        const response =
+            await fetch(
+                "characters-data.json"
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "DATABASE CONNECTION FAILED"
+            );
+
+        }
+
+
+        const characters =
+            await response.json();
+
+
+        /* ---------------------------------------------
+           CLEAR LOADING MESSAGES
+           --------------------------------------------- */
+
+        avengersContainer.innerHTML = "";
+
+        agentsContainer.innerHTML = "";
+
+        otherContainer.innerHTML = "";
+
+
+        /* ---------------------------------------------
+           CHARACTER COUNTER
+           --------------------------------------------- */
+
+        let fileNumber = 1;
+
+
+        /* ---------------------------------------------
+           CREATE CHARACTER CARD
+           --------------------------------------------- */
+
+        characters.forEach(
+            character => {
+
+
+                const card =
+                    document.createElement(
+                        "a"
+                    );
+
+
+                card.className =
+                    "character";
+
+
+                /*
+                   Every character receives
+                   their own ID.
+
+                   Example:
+
+                   character.html?id=wanda
+                */
+
+                card.href =
+                    "character.html?id=" +
+                    encodeURIComponent(
+                        character.id
+                    );
+
+
+                const number =
+                    String(
+                        fileNumber
+                    ).padStart(
+                        3,
+                        "0"
+                    );
+
+
+                card.innerHTML = `
+
+                    <div class="number">
+
+                        FILE // ${number}
+
+                    </div>
+
+
+                    <div class="name">
+
+                        ${escapeHTML(
+                            character.name ||
+                            "CLASSIFIED"
+                        )}
+
+                    </div>
+
+
+                    <div class="card-status">
+
+                        ●
+
+                        ${escapeHTML(
+                            character.status ||
+                            "CLASSIFIED"
+                        )}
+
+                    </div>
+
+                `;
+
+
+                /*
+                   ---------------------------------
+                   DETERMINE CATEGORY
+                   ---------------------------------
+
+                   group values:
+
+                   avengers
+                   agents
+                   other
+                */
+
+                const group =
+                    String(
+                        character.group ||
+                        "other"
+                    )
+                    .toLowerCase()
+                    .trim();
+
+
+                if (
+                    group === "avengers"
+                ) {
+
+
+                    avengersContainer
+                        .appendChild(
+                            card
+                        );
+
+
+                } else if (
+                    group === "agents"
+                    ||
+                    group ===
+                    "agents of s.h.i.e.l.d."
+                    ||
+                    group ===
+                    "agent"
+                ) {
+
+
+                    agentsContainer
+                        .appendChild(
+                            card
+                        );
+
+
+                } else {
+
+
+                    otherContainer
+                        .appendChild(
+                            card
+                        );
+
+                }
+
+
+                fileNumber++;
+
+            }
+        );
+
+
+        /* ---------------------------------------------
+           EMPTY SECTIONS
+           --------------------------------------------- */
+
+        showEmptyMessage(
+            avengersContainer,
+            "NO AVENGERS RECORDS FOUND."
+        );
+
+
+        showEmptyMessage(
+            agentsContainer,
+            "NO S.H.I.E.L.D. AGENT RECORDS FOUND."
+        );
+
+
+        showEmptyMessage(
+            otherContainer,
+            "NO OTHER PERSONNEL RECORDS FOUND."
+        );
+
+
+    } catch (error) {
+
+
+        console.error(
+            error
+        );
+
+
+        const errorMessage = `
+
+            <div class="database-error">
+
+                &gt; ERROR:
+                PERSONNEL DATABASE OFFLINE.
+
+                <br>
+
+                &gt; ${escapeHTML(
+                    error.message
+                )}
+
+                <br>
+
+                &gt; CHECK:
+                characters-data.json
+
+            </div>
+
+        `;
+
+
+        avengersContainer.innerHTML =
+            errorMessage;
+
+
+        agentsContainer.innerHTML =
+            "";
+
+
+        otherContainer.innerHTML =
+            "";
+
+    }
+
+}
+
+
+/* =========================================================
+   EMPTY SECTION HELPER
+   ========================================================= */
+
+function showEmptyMessage(
+    container,
+    message
+) {
+
+
+    if (
+        container.children.length === 0
+    ) {
+
+
+        container.innerHTML = `
+
+            <div class="empty-category">
+
+                &gt; ${message}
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   HTML SAFETY
+   ========================================================= */
+
+function escapeHTML(
+    text
+) {
+
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        text;
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   START DATABASE
+   ========================================================= */
+
+loadCharacters();
+
+</script>
+
+
 </body>
+
 </html>
