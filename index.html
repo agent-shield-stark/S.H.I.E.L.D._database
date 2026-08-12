@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>S.H.I.E.L.D. // PROTOCOL</title>
+
+<style>
+/* =========================================================
+   S.H.I.E.L.D. TERMINAL — MAIN STYLE
+   ========================================================= */
+
+:root {
+    --bg: #03070b;
+    --panel: #071018;
+    --panel-2: #09151f;
+    --blue: #39bfff;
+    --blue-soft: #168ac2;
+    --blue-dim: #176083;
+    --text: #d9f4ff;
+    --muted: #7195a7;
+    --danger: #ff5364;
+    --border: rgba(57,191,255,.28);
+    --glow: rgba(57,191,255,.45);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(20,100,145,.13), transparent 45%),
+        #03070b;
+    color: var(--text);
+    font-family: "Segoe UI", Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+/* ---------------------------------------------------------
+   BACKGROUND GRID
+   --------------------------------------------------------- */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -3;
+
+    background-image:
+        linear-gradient(rgba(57,191,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(57,191,255,.035) 1px, transparent 1px);
+
+    background-size: 45px 45px;
+}
+
+/* ---------------------------------------------------------
+   SCANLINE
+   --------------------------------------------------------- */
+
+body::after {
+    content: "";
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: -20%;
+    height: 2px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(57,191,255,.7),
+        transparent
+    );
+
+    box-shadow:
+        0 0 12px rgba(57,191,255,.6),
+        0 0 30px rgba(57,191,255,.3);
+
+    animation: scan 7s linear infinite;
+    pointer-events: none;
+    z-index: 100;
+}
+
+@keyframes scan {
+    from {
+        top: -10%;
+    }
+    to {
+        top: 110%;
+    }
+}
+
+/* ---------------------------------------------------------
+   TERMINAL WRAPPER
+   --------------------------------------------------------- */
+
+.terminal {
+    width: min(1100px, calc(100% - 30px));
+    margin: 30px auto;
+    border: 1px solid var(--border);
+    background: rgba(3,9,14,.94);
+
+    box-shadow:
+        0 0 25px rgba(0,130,200,.08),
+        inset 0 0 80px rgba(0,100,160,.04);
+
+    position: relative;
+    overflow: hidden;
+}
+
+/* glowing animated borders */
+
+.terminal::before,
+.terminal::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+}
+
+.terminal::before {
+    inset: 8px;
+    border: 1px solid rgba(57,191,255,.08);
+}
+
+.terminal::after {
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 1px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--blue),
+        transparent
+    );
+
+    box-shadow: 0 0 12px var(--blue);
+    animation: pulseLine 3s ease-in-out infinite;
+}
+
+@keyframes pulseLine {
+    0%, 100% {
+        opacity: .25;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/* ---------------------------------------------------------
+   TOP TERMINAL BAR
+   --------------------------------------------------------- */
+
+.topbar {
+    height: 54px;
+    padding: 0 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid var(--border);
+    background: rgba(8,20,29,.9);
+
+    font-family: Consolas, monospace;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+}
+
+.system-name {
+    color: var(--blue);
+    text-shadow: 0 0 8px rgba(57,191,255,.6);
+}
+
+.status {
+    color: #68d7a0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #68d7a0;
+    box-shadow: 0 0 10px #68d7a0;
+    animation: statusPulse 1.7s infinite;
+}
+
+@keyframes statusPulse {
+    50% {
+        opacity: .35;
+        box-shadow: 0 0 3px #68d7a0;
+    }
+}
+
+/* ---------------------------------------------------------
+   ACCESS SCREEN
+   --------------------------------------------------------- */
+
+.boot-screen {
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    padding: 40px;
+}
+
+.boot-inner {
+    width: min(600px, 100%);
+    font-family: Consolas, monospace;
+    color: var(--blue);
+}
+
+.boot-title {
+    font-size: clamp(24px, 5vw, 44px);
+    letter-spacing: 5px;
+    margin-bottom: 25px;
+    text-shadow:
+        0 0 8px rgba(57,191,255,.7),
+        0 0 25px rgba(57,191,255,.25);
+}
+
+.boot-line {
+    opacity: 0;
+    margin: 10px 0;
+    color: #91bfd0;
+}
+
+.boot-line::before {
+    content: "> ";
+    color: var(--blue);
+}
+
+.boot-line.show {
+    opacity: 1;
+}
+
+.access-granted {
+    color: #68d7a0 !important;
+    text-shadow: 0 0 10px rgba(104,215,160,.5);
+}
+
+/* ---------------------------------------------------------
+   MAIN CONTENT
+   --------------------------------------------------------- */
+
+.content {
+    display: none;
+    padding: clamp(25px, 5vw, 60px);
+}
+
+.content.visible {
+    display: block;
+}
+
+.document-header {
+    text-align: center;
+    margin-bottom: 55px;
+}
+
+.classification {
+    font-family: Consolas, monospace;
+    color: var(--blue);
+    font-size: 11px;
+    letter-spacing: 4px;
+    opacity: .75;
+    margin-bottom: 18px;
+}
+
+.document-title {
+    font-size: clamp(30px, 6vw, 58px);
+    letter-spacing: 6px;
+    font-weight: 300;
+    margin: 0;
+
+    color: #e6f8ff;
+
+    text-shadow:
+        0 0 8px rgba(57,191,255,.55),
+        0 0 35px rgba(57,191,255,.18);
+}
+
+.document-subtitle {
+    margin-top: 14px;
+    color: var(--muted);
+    font-family: Consolas, monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+/* ---------------------------------------------------------
+   TECHNICAL DIVIDER
+   --------------------------------------------------------- */
+
+.divider {
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--blue-dim),
+        var(--blue),
+        var(--blue-dim),
+        transparent
+    );
+
+    box-shadow: 0 0 8px rgba(57,191,255,.25);
+    margin: 35px 0;
+    position: relative;
+}
+
+.divider::after {
+    content: "◇";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0 12px;
+
+    background: var(--bg);
+    color: var(--blue);
+    text-shadow: 0 0 8px var(--blue);
+}
+
+/* ---------------------------------------------------------
+   RULE SECTIONS
+   --------------------------------------------------------- */
+
+.rule-section {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(8,22,32,.88),
+            rgba(4,11,17,.95)
+        );
+
+    border: 1px solid rgba(57,191,255,.18);
+    border-left: 2px solid var(--blue-dim);
+
+    padding: clamp(20px, 4vw, 35px);
+    margin: 25px 0;
+
+    position: relative;
+
+    transition:
+        border-color .25s,
+        box-shadow .25s,
+        transform .25s;
+}
+
+.rule-section:hover {
+    border-color: rgba(57,191,255,.42);
+
+    box-shadow:
+        0 0 18px rgba(57,191,255,.07),
+        inset 0 0 25px rgba(57,191,255,.025);
+
+    transform: translateX(2px);
+}
+
+.rule-number {
+    font-family: Consolas, monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--blue);
+    margin-bottom: 10px;
+    opacity: .8;
+}
+
+.rule-title {
+    font-size: 23px;
+    margin: 0 0 20px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.rule-text {
+    color: #bfd8e2;
+    line-height: 1.8;
+    font-size: 16px;
+}
+
+.rule-text strong {
+    color: #e9faff;
+}
+
+.rule-text em {
+    color: #a7dfff;
+}
+
+.blue {
+    color: #39bfff;
+}
+
+.green {
+    color: #68d7a0;
+}
+
+.red {
+    color: #ff5364;
+}
+
+.yellow {
+    color: #ffd66b;
+}
+
+/* ---------------------------------------------------------
+   QUOTES
+   --------------------------------------------------------- */
+
+blockquote {
+    margin: 25px 0;
+    padding: 18px 22px;
+
+    border-left: 2px solid var(--blue);
+    background: rgba(57,191,255,.045);
+
+    color: #a9d9eb;
+    font-style: italic;
+
+    box-shadow:
+        inset 0 0 25px rgba(57,191,255,.025);
+}
+
+blockquote::before {
+    content: "◈  ARCHIVE NOTE";
+    display: block;
+
+    font-family: Consolas, monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+
+    color: var(--blue);
+    font-style: normal;
+
+    margin-bottom: 10px;
+}
+
+/* ---------------------------------------------------------
+   EDITOR
+   --------------------------------------------------------- */
+
+.editor-panel {
+    display: none;
+
+    position: sticky;
+    top: 15px;
+    z-index: 50;
+
+    margin: -30px -30px 35px;
+    padding: 12px;
+
+    background: rgba(5,15,22,.97);
+    border: 1px solid var(--border);
+
+    box-shadow:
+        0 0 25px rgba(0,100,160,.12);
+}
+
+.editor-panel.visible {
+    display: block;
+}
+
+.editor-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.editor-btn {
+    min-width: 38px;
+    height: 34px;
+
+    padding: 0 10px;
+
+    border: 1px solid rgba(57,191,255,.2);
+    background: rgba(12,29,40,.9);
+
+    color: #9bd8ef;
+
+    font-family: Consolas, monospace;
+    font-size: 12px;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.editor-btn:hover {
+    border-color: var(--blue);
+    color: white;
+
+    box-shadow:
+        0 0 10px rgba(57,191,255,.2);
+}
+
+.editor-btn.active {
+    background: rgba(57,191,255,.15);
+    border-color: var(--blue);
+    color: white;
+}
+
+.color-picker {
+    width: 38px;
+    height: 34px;
+
+    padding: 2px;
+
+    background: #071018;
+    border: 1px solid rgba(57,191,255,.2);
+
+    cursor: pointer;
+}
+
+.editor-status {
+    margin-top: 8px;
+
+    color: #638b9b;
+    font-family: Consolas, monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+/* editable state */
+
+.editing .rule-text,
+.editing .rule-title,
+.editing .document-title,
+.editing .document-subtitle {
+    outline: 1px dashed rgba(57,191,255,.2);
+    outline-offset: 4px;
+}
+
+.editing [contenteditable="true"]:focus {
+    outline: 1px solid rgba(57,191,255,.45);
+    box-shadow: 0 0 12px rgba(57,191,255,.08);
+}
+
+/* ---------------------------------------------------------
+   BOTTOM INFO
+   --------------------------------------------------------- */
+
+.footer {
+    margin-top: 60px;
+    padding-top: 25px;
+
+    border-top: 1px solid rgba(57,191,255,.14);
+
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+
+    font-family: Consolas, monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+
+    color: #466a7a;
+}
+
+.footer .access {
+    color: #68d7a0;
+}
+
+/* ---------------------------------------------------------
+   CONTROL BUTTON
+   --------------------------------------------------------- */
+
+.mode-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 200;
+
+    padding: 10px 14px;
+
+    border: 1px solid rgba(57,191,255,.25);
+    background: rgba(3,12,18,.92);
+
+    color: #6598aa;
+
+    font-family: Consolas, monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.mode-button:hover {
+    color: var(--blue);
+    border-color: var(--blue);
+
+    box-shadow:
+        0 0 15px rgba(57,191,255,.2);
+}
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------- */
+
+@media (max-width: 650px) {
+
+    .terminal {
+        width: calc(100% - 14px);
+        margin: 7px auto;
+    }
+
+    .topbar {
+        padding: 0 12px;
+        font-size: 9px;
+    }
+
+    .content {
+        padding: 25px 17px;
+    }
+
+    .document-title {
+        letter-spacing: 3px;
+    }
+
+    .rule-section {
+        padding: 20px 16px;
+    }
+
+    .rule-text {
+        font-size: 15px;
+    }
+
+    .editor-panel {
+        margin: -15px -10px 25px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="terminal">
+
+    <!-- =====================================================
+         TOP BAR
+         ===================================================== -->
+
+    <div class="topbar">
+
+        <div class="system-name">
+            S.H.I.E.L.D. // SECURE TERMINAL
+        </div>
+
+        <div class="status">
+            <span class="status-dot"></span>
+            SYSTEM ONLINE
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         BOOT SCREEN
+         ===================================================== -->
+
+    <section class="boot-screen" id="bootScreen">
+
+        <div class="boot-inner">
+
+            <div class="boot-title">
+                S.H.I.E.L.D.
+            </div>
+
+            <div class="boot-line" id="boot1">
+                INITIALIZING SECURE DATABASE...
+            </div>
+
+            <div class="boot-line" id="boot2">
+                VERIFYING ACCESS CREDENTIALS...
+            </div>
+
+            <div class="boot-line" id="boot3">
+                DECRYPTING PROTOCOL FILE...
+            </div>
+
+            <div class="boot-line access-granted" id="boot4">
+                ACCESS GRANTED.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         MAIN DOCUMENT
+         ===================================================== -->
+
+    <main class="content" id="content">
+
+
+        <!-- EDITOR -->
+
+        <div class="editor-panel" id="editorPanel">
+
+            <div class="editor-toolbar">
+
+                <button class="editor-btn" onclick="format('bold')">
+                    <b>B</b>
+                </button>
+
+                <button class="editor-btn" onclick="format('italic')">
+                    <i>I</i>
+                </button>
+
+                <button class="editor-btn" onclick="boldItalic()">
+                    <b><i>BI</i></b>
+                </button>
+
+                <button class="editor-btn" onclick="format('underline')">
+                    <u>U</u>
+                </button>
+
+                <button class="editor-btn" onclick="format('strikeThrough')">
+                    <s>S</s>
+                </button>
+
+                <button class="editor-btn" onclick="format('justifyLeft')">
+                    ←
+                </button>
+
+                <button class="editor-btn" onclick="format('justifyCenter')">
+                    ↔
+                </button>
+
+                <button class="editor-btn" onclick="format('justifyRight')">
+                    →
+                </button>
+
+                <button class="editor-btn" onclick="makeQuote()">
+                    ❝
+                </button>
+
+                <button class="editor-btn" onclick="format('insertUnorderedList')">
+                    • LIST
+                </button>
+
+                <button class="editor-btn" onclick="format('insertOrderedList')">
+                    1. LIST
+                </button>
+
+                <button class="editor-btn" onclick="insertDivider()">
+                    ─
+                </button>
+
+                <label class="editor-btn" style="display:flex;align-items:center;justify-content:center;">
+                    A
+                    <input
+                        class="color-picker"
+                        type="color"
+                        value="#39bfff"
+                        onchange="changeColor(this.value)"
+                        title="Text color"
+                    >
+                </label>
+
+                <button class="editor-btn" onclick="saveChanges()">
+                    SAVE
+                </button>
+
+                <button class="editor-btn" onclick="exportPage()">
+                    EXPORT
+                </button>
+
+                <button class="editor-btn" onclick="resetPage()">
+                    RESET
+                </button>
+
+            </div>
+
+            <div class="editor-status" id="editorStatus">
+                EDIT MODE // LOCAL STORAGE ENABLED
+            </div>
+
+        </div>
+
+
+        <!-- DOCUMENT HEADER -->
+
+        <header class="document-header">
+
+            <div
+                class="classification"
+                contenteditable="true"
+            >
+                S.H.I.E.L.D. // CLASSIFIED DOCUMENT
+            </div>
+
+            <h1
+                class="document-title"
+                contenteditable="true"
+            >
+                PROTOCOL
+            </h1>
+
+            <div
+                class="document-subtitle"
+                contenteditable="true"
+            >
+                RULES &amp; REGULATIONS
+            </div>
+
+        </header>
+
+
+        <div class="divider"></div>
+
+
+        <!-- =====================================================
+             RULES
+             ===================================================== -->
+
+        <section class="rule-section">
+
+            <div class="rule-number">
+                FILE // 01
+            </div>
+
+            <h2
+                class="rule-title"
+                contenteditable="true"
+            >
+                ЗАГАЛЬНІ ПОЛОЖЕННЯ
+            </h2>
+
+            <div
+                class="rule-text"
+                contenteditable="true"
+            >
+                <p>
+                    Тут буде твій текст правил.
+                    Просто заміни цей текст своїм.
+                </p>
+
+                <p>
+                    Окремі слова можна буде
+                    <strong>виділяти жирним</strong>,
+                    <em>курсивом</em> або
+                    <span class="blue">кольором.</span>
+                </p>
+
+                <blockquote>
+                    Тут можна розміщувати важливі цитати,
+                    попередження або внутрішні положення.
+                </blockquote>
+
+            </div>
+
+        </section>
+
+
+        <section class="rule-section">
+
+            <div class="rule-number">
+                FILE // 02
+            </div>
+
+            <h2
+                class="rule-title"
+                contenteditable="true"
+            >
+                ПОВЕДІНКА ГРАВЦІВ
+            </h2>
+
+            <div
+                class="rule-text"
+                contenteditable="true"
+            >
+                <p>
+                    Тут буде другий розділ твоїх правил.
+                </p>
+            </div>
+
+        </section>
+
+
+        <section class="rule-section">
+
+            <div class="rule-number">
+                FILE // 03
+            </div>
+
+            <h2
+                class="rule-title"
+                contenteditable="true"
+            >
+                РОЛЬОВА ГРА
+            </h2>
+
+            <div
+                class="rule-text"
+                contenteditable="true"
+            >
+                <p>
+                    Тут буде третій розділ.
+                </p>
+            </div>
+
+        </section>
+
+
+        <div class="divider"></div>
+
+
+        <!-- FOOTER -->
+
+        <footer class="footer">
+
+            <span>
+                S.H.I.E.L.D. DATABASE
+            </span>
+
+            <span class="access">
+                ACCESS: GRANTED
+            </span>
+
+            <span>
+                PROTOCOL // SECURE
+            </span>
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+<!-- EDITOR MODE BUTTON -->
+
+<button
+    class="mode-button"
+    onclick="toggleEditor()"
+>
+    ◈ EDIT MODE
+</button>
+
+
+<script>
+
+/* =========================================================
+   BOOT ANIMATION
+   ========================================================= */
+
+const bootLines = [
+    document.getElementById("boot1"),
+    document.getElementById("boot2"),
+    document.getElementById("boot3"),
+    document.getElementById("boot4")
+];
+
+const bootScreen = document.getElementById("bootScreen");
+const content = document.getElementById("content");
+
+bootLines.forEach((line, index) => {
+
+    setTimeout(() => {
+
+        line.classList.add("show");
+
+    }, 650 + index * 650);
+
+});
+
+
+setTimeout(() => {
+
+    bootScreen.style.display = "none";
+    content.classList.add("visible");
+
+}, 3400);
+
+
+/* =========================================================
+   EDIT MODE
+   ========================================================= */
+
+let editMode = false;
+
+function toggleEditor() {
+
+    editMode = !editMode;
+
+    const panel = document.getElementById("editorPanel");
+
+    if (editMode) {
+
+        panel.classList.add("visible");
+        document.body.classList.add("editing");
+
+        setEditable(true);
+
+        document.getElementById("editorStatus").textContent =
+            "EDIT MODE // SELECT TEXT AND USE THE TERMINAL CONTROLS";
+
+    } else {
+
+        panel.classList.remove("visible");
+        document.body.classList.remove("editing");
+
+        setEditable(false);
+
+        document.getElementById("editorStatus").textContent =
+            "EDIT MODE DISABLED";
+
+    }
+
+}
+
+
+function setEditable(state) {
+
+    document
+        .querySelectorAll("[contenteditable]")
+        .forEach(element => {
+            element.setAttribute("contenteditable", state);
+        });
+
+}
+
+
+/* =========================================================
+   TEXT FORMATTING
+   ========================================================= */
+
+function format(command, value = null) {
+
+    document.execCommand(command, false, value);
+
+}
+
+
+/* Bold + italic */
+
+function boldItalic() {
+
+    document.execCommand("bold", false, null);
+    document.execCommand("italic", false, null);
+
+}
+
+
+/* Text color */
+
+function changeColor(color) {
+
+    document.execCommand(
+        "foreColor",
+        false,
+        color
+    );
+
+}
+
+
+/* Quote */
+
+function makeQuote() {
+
+    document.execCommand(
+        "formatBlock",
+        false,
+        "blockquote"
+    );
+
+}
+
+
+/* Divider */
+
+function insertDivider() {
+
+    document.execCommand(
+        "insertHTML",
+        false,
+        '<div class="divider"></div>'
+    );
+
+}
+
+
+/* =========================================================
+   SAVE
+   ========================================================= */
+
+function saveChanges() {
+
+    const contentHTML =
+        document.getElementById("content").innerHTML;
+
+    localStorage.setItem(
+        "shield_protocol_content",
+        contentHTML
+    );
+
+    document.getElementById("editorStatus").textContent =
+        "CHANGES SAVED // LOCAL STORAGE";
+
+}
+
+
+/* =========================================================
+   LOAD SAVED CONTENT
+   ========================================================= */
+
+window.addEventListener("load", () => {
+
+    const saved =
+        localStorage.getItem(
+            "shield_protocol_content"
+        );
+
+    if (saved) {
+
+        document.getElementById("content").innerHTML =
+            saved;
+
+    }
+
+});
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+function resetPage() {
+
+    const confirmation =
+        confirm(
+            "Reset local changes and restore the original document?"
+        );
+
+    if (!confirmation) return;
+
+    localStorage.removeItem(
+        "shield_protocol_content"
+    );
+
+    location.reload();
+
+}
+
+
+/* =========================================================
+   EXPORT
+   ========================================================= */
+
+function exportPage() {
+
+    const clone =
+        document.documentElement.cloneNode(true);
+
+    /* Remove editor */
+
+    const editor =
+        clone.querySelector("#editorPanel");
+
+    if (editor) {
+        editor.remove();
+    }
+
+    const editButton =
+        clone.querySelector(".mode-button");
+
+    if (editButton) {
+        editButton.remove();
+    }
+
+    /* Remove contenteditable */
+
+    clone
+        .querySelectorAll("[contenteditable]")
+        .forEach(element => {
+            element.removeAttribute("contenteditable");
+        });
+
+
+    /* Create final HTML */
+
+    const finalHTML =
+        "<!DOCTYPE html>\n" +
+        clone.outerHTML;
+
+
+    const blob =
+        new Blob(
+            [finalHTML],
+            {type: "text/html"}
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "shield-protocol-rules.html";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    URL.revokeObjectURL(url);
+
+
+    document.getElementById("editorStatus").textContent =
+        "EXPORT COMPLETE // FILE GENERATED";
+
+}
+
+</script>
+
+</body>
+</html>
