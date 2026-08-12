@@ -1,0 +1,61 @@
+{
+  "main": {
+    "title": "S.H.I.E.L.D. // PROTOCOL",
+    "subtitle": "SECURE DATABASE",
+    "description": "CLASSIFIED DATABASE // AUTHORIZED PERSONNEL ONLY"
+  },
+
+  "story": {
+    "title": "STORY",
+    "subtitle": "CLASSIFIED NARRATIVE",
+    "sections": [
+      {
+        "id": "prologue",
+        "title": "ПРОЛОГ",
+        "text": "Тут буде текст прологу."
+      },
+      {
+        "id": "act-1",
+        "title": "АКТ I. ДОВІРА",
+        "text": "Тут буде текст першого акту."
+      },
+      {
+        "id": "act-2",
+        "title": "АКТ II. КОНФЛІКТ",
+        "text": "Тут буде текст другого акту."
+      },
+      {
+        "id": "act-3",
+        "title": "АКТ III. РОЗКОЛ",
+        "text": "Тут буде текст третього акту."
+      }
+    ]
+  },
+
+  "rules": {
+    "title": "PROTOCOL",
+    "subtitle": "RULES & REGULATIONS",
+    "sections": [
+      {
+        "id": "general",
+        "title": "ЗАГАЛЬНІ ПОЛОЖЕННЯ",
+        "text": "Тут буде твій текст правил."
+      },
+      {
+        "id": "roleplay",
+        "title": "ПРАВИЛА РОЛЬОВОЇ",
+        "text": "Тут будуть правила рольової."
+      },
+      {
+        "id": "characters",
+        "title": "ПЕРСОНАЖІ",
+        "text": "Тут будуть правила щодо персонажів."
+      },
+      {
+        "id": "communication",
+        "title": "КОМУНІКАЦІЯ",
+        "text": "Тут будуть правила спілкування."
+      }
+    ]
+  }
+}
