@@ -1,1431 +1,2283 @@
 <!DOCTYPE html>
 <html lang="uk">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>S.H.I.E.L.D. // ADMIN</title>
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>S.H.I.E.L.D. // DATABASE EDITOR</title>
+
 
 <style>
+
+/* =====================================================
+   BASE
+===================================================== */
 
 * {
     box-sizing: border-box;
 }
 
-:root {
-    --bg: #02080d;
-    --panel: #06131b;
-    --panel2: #081a24;
-    --line: #0b6385;
-    --cyan: #39cfff;
-    --cyan2: #8be6ff;
-    --green: #5df2a4;
-    --red: #ff5577;
-    --text: #c9e7f2;
-    --muted: #5d91a5;
+
+html,
+body {
+
+    margin: 0;
+    padding: 0;
+
+    min-height: 100%;
+
 }
+
 
 body {
-    margin: 0;
+
     background:
-        linear-gradient(rgba(15, 75, 100, .08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(15, 75, 100, .08) 1px, transparent 1px),
-        var(--bg);
+        linear-gradient(
+            rgba(0, 80, 120, 0.055) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(0, 80, 120, 0.055) 1px,
+            transparent 1px
+        ),
+        #02080d;
+
     background-size: 32px 32px;
-    color: var(--text);
-    font-family: "Courier New", monospace;
-    min-height: 100vh;
+
+    color: #c9e8f2;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    padding: 30px;
+
 }
+
+
+/* =====================================================
+   SCANLINES
+===================================================== */
 
 body::before {
+
     content: "";
+
     position: fixed;
+
     inset: 0;
+
     pointer-events: none;
-    background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,.55));
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(255,255,255,0.012) 0px,
+            rgba(255,255,255,0.012) 1px,
+            transparent 1px,
+            transparent 4px
+        );
+
+    z-index: 999;
+
 }
 
-.container {
-    width: min(1200px, 94%);
-    margin: 0 auto;
-    padding: 35px 0 80px;
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.editor {
+
+    width: min(1200px, 100%);
+
+    margin: auto;
+
 }
 
-/* HEADER */
+
+/* =====================================================
+   HEADER
+===================================================== */
 
 .header {
-    border: 1px solid var(--line);
-    padding: 28px;
-    margin-bottom: 25px;
-    background: rgba(3, 15, 22, .9);
-    box-shadow: 0 0 30px rgba(0, 180, 255, .08);
+
+    position: relative;
+
+    border:
+        1px solid #0b6385;
+
+    background:
+        rgba(3, 15, 22, 0.96);
+
+    padding: 30px;
+
+    margin-bottom: 20px;
+
+    box-shadow:
+        0 0 30px
+        rgba(0, 180, 255, 0.08);
+
 }
+
+
+.header::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 2px;
+
+    background: #39cfff;
+
+    box-shadow:
+        0 0 15px #39cfff;
+
+}
+
 
 .system {
-    color: var(--cyan);
+
+    color: #39cfff;
+
+    font-size: 11px;
+
     letter-spacing: 4px;
-    font-size: 13px;
+
 }
+
 
 .title {
-    font-size: clamp(32px, 6vw, 68px);
-    letter-spacing: 8px;
-    margin: 22px 0 5px;
-    color: var(--cyan2);
-    text-shadow: 0 0 15px rgba(57,207,255,.35);
+
+    margin-top: 15px;
+
+    color: #8be6ff;
+
+    font-size: clamp(30px, 6vw, 55px);
+
+    letter-spacing: 5px;
+
 }
+
 
 .subtitle {
-    color: var(--muted);
-    letter-spacing: 3px;
+
+    margin-top: 8px;
+
+    color: #5d91a5;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
 }
 
-/* NAV */
+
+/* =====================================================
+   TABS
+===================================================== */
 
 .tabs {
+
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+
     margin-bottom: 20px;
+
 }
+
 
 .tab {
-    background: #041018;
-    border: 1px solid #0b4e67;
-    color: #69a9bd;
-    padding: 16px;
-    font-family: inherit;
-    cursor: pointer;
+
+    border:
+        1px solid #0b6385;
+
+    background:
+        rgba(3, 15, 22, 0.95);
+
+    color: #5db7d4;
+
+    padding: 15px;
+
+    font-family:
+        "Courier New",
+        monospace;
+
     letter-spacing: 2px;
-    transition: .2s;
+
+    cursor: pointer;
+
+    transition: .25s ease;
+
 }
 
-.tab:hover,
+
+.tab:hover {
+
+    border-color: #39cfff;
+
+    color: #8be6ff;
+
+}
+
+
 .tab.active {
-    border-color: var(--cyan);
-    color: var(--cyan);
+
     background: #06202b;
-    box-shadow: 0 0 15px rgba(57,207,255,.1);
+
+    border-color: #39cfff;
+
+    color: #8be6ff;
+
+    box-shadow:
+        0 0 15px
+        rgba(57,207,255,.12);
+
 }
 
-/* PANELS */
+
+/* =====================================================
+   PANELS
+===================================================== */
 
 .panel {
+
     display: none;
-    border: 1px solid #0b4e67;
-    background: rgba(4,16,23,.94);
+
+    border:
+        1px solid #0b526c;
+
+    background:
+        rgba(3, 15, 22, 0.96);
+
     padding: 25px;
+
 }
+
 
 .panel.active {
+
     display: block;
+
 }
+
+
+/* =====================================================
+   SECTION HEADER
+===================================================== */
+
+.panel-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+
+    flex-wrap: wrap;
+
+}
+
 
 .panel-title {
-    color: var(--cyan);
-    letter-spacing: 4px;
-    margin-bottom: 25px;
+
+    color: #8be6ff;
+
     font-size: 20px;
+
+    letter-spacing: 3px;
+
 }
 
-.section {
-    border: 1px solid #0b4055;
-    padding: 20px;
-    margin-bottom: 20px;
-    background: rgba(5,20,28,.7);
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+button {
+
+    font-family:
+        "Courier New",
+        monospace;
+
 }
 
-/* FORM */
+
+.action-button {
+
+    border:
+        1px solid #0b6385;
+
+    background:
+        rgba(3, 15, 22, .95);
+
+    color: #65c9e8;
+
+    padding:
+        10px 15px;
+
+    cursor: pointer;
+
+    letter-spacing: 1px;
+
+    transition: .2s ease;
+
+}
+
+
+.action-button:hover {
+
+    border-color:
+        #39cfff;
+
+    color:
+        #8be6ff;
+
+    background:
+        #06202b;
+
+}
+
+
+.danger:hover {
+
+    border-color:
+        #ff5577;
+
+    color:
+        #ff7892;
+
+}
+
+
+/* =====================================================
+   FORM
+===================================================== */
+
+.form-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 15px;
+
+}
+
+
+.field {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+}
+
+
+.field.full {
+
+    grid-column:
+        1 / -1;
+
+}
+
 
 label {
-    display: block;
-    color: #67a8bb;
-    font-size: 12px;
+
+    color: #5db7d4;
+
+    font-size: 10px;
+
     letter-spacing: 2px;
-    margin-bottom: 7px;
+
 }
+
 
 input,
 textarea,
 select {
+
     width: 100%;
-    border: 1px solid #0b526c;
-    background: #020b11;
-    color: var(--text);
-    padding: 13px;
-    font-family: inherit;
-    font-size: 14px;
+
+    border:
+        1px solid #0b526c;
+
+    background:
+        #020b10;
+
+    color:
+        #c9e8f2;
+
+    padding:
+        11px;
+
+    font-family:
+        "Courier New",
+        monospace;
+
     outline: none;
-    margin-bottom: 18px;
+
 }
+
 
 input:focus,
 textarea:focus,
 select:focus {
-    border-color: var(--cyan);
-    box-shadow: 0 0 10px rgba(57,207,255,.1);
+
+    border-color:
+        #39cfff;
+
+    box-shadow:
+        0 0 10px
+        rgba(57,207,255,.08);
+
 }
+
 
 textarea {
-    min-height: 130px;
-    resize: vertical;
-    line-height: 1.6;
+
+    min-height:
+        150px;
+
+    resize:
+        vertical;
+
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
-}
 
-.full {
-    grid-column: 1 / -1;
-}
-
-/* BUTTONS */
-
-.buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-button {
-    border: 1px solid var(--cyan);
-    background: #04131b;
-    color: var(--cyan);
-    padding: 13px 18px;
-    font-family: inherit;
-    letter-spacing: 2px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #073040;
-    box-shadow: 0 0 15px rgba(57,207,255,.15);
-}
-
-button.green {
-    border-color: var(--green);
-    color: var(--green);
-}
-
-button.red {
-    border-color: var(--red);
-    color: var(--red);
-}
-
-button.gray {
-    border-color: #446675;
-    color: #7fa2ae;
-}
-
-/* CHARACTER LIST */
+/* =====================================================
+   CHARACTER CARDS
+===================================================== */
 
 .character-list {
-    display: grid;
-    gap: 10px;
-}
 
-.character-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
     gap: 15px;
-    padding: 15px;
-    border: 1px solid #0b4055;
-    background: #031018;
+
 }
 
-.character-info strong {
-    color: var(--cyan2);
+
+.character-card {
+
+    border:
+        1px solid #0b526c;
+
+    background:
+        rgba(2, 11, 16, .95);
+
+    padding:
+        20px;
+
 }
 
-.character-info small {
-    color: var(--muted);
+
+.character-card-header {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    gap: 15px;
+
+    margin-bottom:
+        18px;
+
 }
 
-.character-item button {
-    padding: 8px 12px;
-    font-size: 11px;
+
+.character-card-title {
+
+    color:
+        #39cfff;
+
+    letter-spacing:
+        2px;
+
 }
 
-/* STATUS */
+
+/* =====================================================
+   STORY / RULE BLOCKS
+===================================================== */
+
+.content-list {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        15px;
+
+}
+
+
+.content-card {
+
+    border:
+        1px solid #0b526c;
+
+    background:
+        rgba(2, 11, 16, .95);
+
+    padding:
+        20px;
+
+}
+
+
+.content-card-header {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    gap:
+        15px;
+
+    margin-bottom:
+        15px;
+
+}
+
+
+.content-card-number {
+
+    color:
+        #39cfff;
+
+    font-size:
+        11px;
+
+    letter-spacing:
+        3px;
+
+}
+
+
+/* =====================================================
+   TEXT EDITOR
+===================================================== */
+
+.rich-toolbar {
+
+    display:
+        flex;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        5px;
+
+    padding:
+        8px;
+
+    border:
+        1px solid #0b526c;
+
+    border-bottom:
+        none;
+
+    background:
+        #04131b;
+
+}
+
+
+.rich-toolbar button {
+
+    min-width:
+        34px;
+
+    height:
+        32px;
+
+    border:
+        1px solid #0b526c;
+
+    background:
+        #020b10;
+
+    color:
+        #75cce6;
+
+    cursor:
+        pointer;
+
+}
+
+
+.rich-toolbar button:hover {
+
+    border-color:
+        #39cfff;
+
+    color:
+        #8be6ff;
+
+}
+
+
+.editor-area {
+
+    min-height:
+        180px;
+
+    padding:
+        15px;
+
+    border:
+        1px solid #0b526c;
+
+    background:
+        #020b10;
+
+    color:
+        #c9e8f2;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    line-height:
+        1.7;
+
+    outline:
+        none;
+
+}
+
+
+.editor-area:focus {
+
+    border-color:
+        #39cfff;
+
+}
+
+
+.editor-area blockquote {
+
+    border-left:
+        3px solid #39cfff;
+
+    margin:
+        15px 0;
+
+    padding-left:
+        15px;
+
+    color:
+        #72c8df;
+
+}
+
+
+/* =====================================================
+   COLOR PICKER
+===================================================== */
+
+.color-picker {
+
+    width:
+        40px;
+
+    height:
+        32px;
+
+    padding:
+        2px;
+
+    border:
+        1px solid #0b526c;
+
+    background:
+        #020b10;
+
+    cursor:
+        pointer;
+
+}
+
+
+/* =====================================================
+   SAVE AREA
+===================================================== */
+
+.save-area {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    gap:
+        15px;
+
+    margin-top:
+        25px;
+
+    padding-top:
+        20px;
+
+    border-top:
+        1px solid #0b4055;
+
+    flex-wrap:
+        wrap;
+
+}
+
 
 .status {
-    margin-top: 20px;
-    padding: 15px;
-    border: 1px solid #164b5d;
-    color: var(--green);
-    min-height: 48px;
+
+    color:
+        #4f8798;
+
+    font-size:
+        10px;
+
+    letter-spacing:
+        1px;
+
 }
 
-/* STORY / RULES */
 
-.content-row {
-    border: 1px solid #0b4055;
-    padding: 20px;
-    margin-bottom: 15px;
-    background: #031018;
+.save-button {
+
+    border:
+        1px solid #39cfff;
+
+    background:
+        #06202b;
+
+    color:
+        #8be6ff;
+
+    padding:
+        13px 22px;
+
+    cursor:
+        pointer;
+
+    letter-spacing:
+        2px;
+
+    box-shadow:
+        0 0 12px
+        rgba(57,207,255,.08);
+
 }
 
-.row-head {
-    display: flex;
-    justify-content: space-between;
-    gap: 15px;
-    align-items: center;
-    margin-bottom: 15px;
+
+.save-button:hover {
+
+    background:
+        #0a2d3a;
+
+    box-shadow:
+        0 0 20px
+        rgba(57,207,255,.15);
+
 }
 
-.row-number {
-    color: var(--cyan);
-    letter-spacing: 2px;
+
+/* =====================================================
+   NOTICE
+===================================================== */
+
+.notice {
+
+    margin-bottom:
+        20px;
+
+    padding:
+        15px;
+
+    border:
+        1px solid #0b526c;
+
+    background:
+        rgba(0,80,120,.06);
+
+    color:
+        #6fa8ba;
+
+    font-size:
+        11px;
+
+    line-height:
+        1.7;
+
 }
 
-/* MOBILE */
 
-@media(max-width: 700px) {
+/* =====================================================
+   MOBILE
+===================================================== */
 
-    .grid {
-        grid-template-columns: 1fr;
+@media (max-width: 700px) {
+
+    body {
+
+        padding:
+            15px;
+
     }
+
 
     .tabs {
-        grid-template-columns: 1fr 1fr;
+
+        grid-template-columns:
+            1fr;
+
     }
 
-    .character-item {
-        flex-direction: column;
-        align-items: flex-start;
+
+    .form-grid {
+
+        grid-template-columns:
+            1fr;
+
     }
 
-    .title {
-        letter-spacing: 4px;
+
+    .field.full {
+
+        grid-column:
+            auto;
+
     }
+
 }
 
 </style>
+
 </head>
+
 
 <body>
 
-<div class="container">
 
-    <div class="header">
-        <div class="system">
-            S.H.I.E.L.D. // SECURE ADMIN TERMINAL
+<div class="editor">
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+    <div class="system">
+        S.H.I.E.L.D. // ADMIN TERMINAL
+    </div>
+
+    <div class="title">
+        DATABASE EDITOR
+    </div>
+
+    <div class="subtitle">
+        AUTHORIZED PERSONNEL ONLY
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     TABS
+===================================================== -->
+
+<div class="tabs">
+
+    <button
+        class="tab active"
+        onclick="openPanel('characters', this)"
+    >
+        CHARACTERS
+    </button>
+
+
+    <button
+        class="tab"
+        onclick="openPanel('story', this)"
+    >
+        STORY
+    </button>
+
+
+    <button
+        class="tab"
+        onclick="openPanel('rules', this)"
+    >
+        RULES
+    </button>
+
+</div>
+
+
+<!-- =====================================================
+     CHARACTERS
+===================================================== -->
+
+<section
+    id="characters"
+    class="panel active"
+>
+
+    <div class="panel-header">
+
+        <div class="panel-title">
+            CHARACTER DATABASE
         </div>
 
-        <div class="title">
-            ADMIN
-        </div>
+        <button
+            class="action-button"
+            onclick="addCharacter()"
+        >
+            + ADD CHARACTER
+        </button>
 
-        <div class="subtitle">
-            CONTENT MANAGEMENT SYSTEM // LEVEL 10
-        </div>
     </div>
 
 
-    <!-- TABS -->
+    <div class="notice">
 
-    <div class="tabs">
+        Add, edit or remove characters here.
+        Changes are exported as
+        <strong>characters-data.json</strong>.
 
-        <button class="tab active" data-tab="personnel">
-            PERSONNEL
+    </div>
+
+
+    <div
+        id="character-list"
+        class="character-list"
+    ></div>
+
+
+    <div class="save-area">
+
+        <div
+            id="character-status"
+            class="status"
+        >
+            READY
+        </div>
+
+        <button
+            class="save-button"
+            onclick="saveCharacters()"
+        >
+            SAVE CHARACTERS
         </button>
 
-        <button class="tab" data-tab="story">
-            STORY
-        </button>
+    </div>
 
-        <button class="tab" data-tab="rules">
-            RULES
-        </button>
+</section>
 
-        <button class="tab" data-tab="main">
-            MAIN DATABASE
+
+<!-- =====================================================
+     STORY
+===================================================== -->
+
+<section
+    id="story"
+    class="panel"
+>
+
+    <div class="panel-header">
+
+        <div class="panel-title">
+            STORY DATABASE
+        </div>
+
+        <button
+            class="action-button"
+            onclick="addStorySection()"
+        >
+            + ADD STORY SECTION
         </button>
 
     </div>
 
 
-    <!-- ================= PERSONNEL ================= -->
+    <div class="notice">
 
-    <section id="personnel" class="panel active">
+        Edit the story directly from this panel.
+        Each block becomes a separate section
+        in <strong>story-data.json</strong>.
+
+    </div>
+
+
+    <div class="form-grid">
+
+        <div class="field">
+
+            <label>
+                PAGE TITLE
+            </label>
+
+            <input
+                id="story-title"
+                value="STORY"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                PAGE SUBTITLE
+            </label>
+
+            <input
+                id="story-subtitle"
+                value="CLASSIFIED STORY DATABASE"
+            >
+
+        </div>
+
+    </div>
+
+
+    <br>
+
+
+    <div
+        id="story-list"
+        class="content-list"
+    ></div>
+
+
+    <div class="save-area">
+
+        <div
+            id="story-status"
+            class="status"
+        >
+            READY
+        </div>
+
+        <button
+            class="save-button"
+            onclick="saveStory()"
+        >
+            SAVE STORY
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     RULES
+===================================================== -->
+
+<section
+    id="rules"
+    class="panel"
+>
+
+    <div class="panel-header">
 
         <div class="panel-title">
-            // PERSONNEL DATABASE
+            RULES DATABASE
         </div>
 
-        <div class="section">
+        <button
+            class="action-button"
+            onclick="addRuleSection()"
+        >
+            + ADD RULE SECTION
+        </button>
 
-            <label>SELECT PERSONNEL FILE</label>
+    </div>
 
-            <select id="characterSelect">
-                <option value="">— NEW CHARACTER —</option>
-            </select>
 
-            <div class="grid">
+    <div class="notice">
 
-                <div>
-                    <label>FILE NUMBER</label>
-                    <input id="charFile" placeholder="001">
-                </div>
+        Edit the roleplay rules here.
+        Each block becomes a separate section
+        in <strong>rules-data.json</strong>.
 
-                <div>
-                    <label>NAME</label>
-                    <input id="charName" placeholder="WANDA MAXIMOFF">
-                </div>
+    </div>
 
-                <div>
-                    <label>STATUS</label>
-                    <input id="charStatus" placeholder="ACTIVE">
-                </div>
 
-                <div>
-                    <label>SECTION</label>
+    <div class="form-grid">
 
-                    <select id="charSection">
-                        <option>Avengers</option>
-                        <option>Agents of S.H.I.E.L.D.</option>
-                        <option>Other</option>
-                    </select>
+        <div class="field">
 
-                </div>
+            <label>
+                PAGE TITLE
+            </label>
 
-                <div class="full">
-                    <label>IMAGE PATH</label>
-                    <input id="charImage" placeholder="images/wanda.jpg">
-                </div>
-
-                <div class="full">
-                    <label>SHORT DESCRIPTION</label>
-                    <textarea id="charDescription"></textarea>
-                </div>
-
-                <div class="full">
-                    <label>HISTORY</label>
-                    <textarea id="charHistory"></textarea>
-                </div>
-
-                <div class="full">
-                    <label>ABILITIES</label>
-                    <textarea id="charAbilities"></textarea>
-                </div>
-
-                <div class="full">
-                    <label>ARCHIVE NOTES</label>
-                    <textarea id="charNotes"></textarea>
-                </div>
-
-            </div>
-
-            <div class="buttons">
-
-                <button class="green" onclick="saveCharacter()">
-                    ✓ SAVE CHARACTER
-                </button>
-
-                <button class="red" onclick="deleteCharacter()">
-                    ✕ DELETE CHARACTER
-                </button>
-
-                <button class="gray" onclick="clearCharacterForm()">
-                    CLEAR
-                </button>
-
-            </div>
+            <input
+                id="rules-title"
+                value="PROTOCOL"
+            >
 
         </div>
 
 
-        <div class="section">
+        <div class="field">
 
-            <div class="panel-title">
-                CURRENT PERSONNEL
-            </div>
+            <label>
+                PAGE SUBTITLE
+            </label>
 
-            <div id="characterList" class="character-list">
-                Loading...
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- ================= STORY ================= -->
-
-    <section id="story" class="panel">
-
-        <div class="panel-title">
-            // STORY DATABASE
-        </div>
-
-        <div class="section">
-
-            <label>STORY TITLE</label>
-            <input id="storyTitle">
-
-            <label>STORY SUBTITLE</label>
-            <input id="storySubtitle">
+            <input
+                id="rules-subtitle"
+                value="RULES & REGULATIONS"
+            >
 
         </div>
 
-        <div id="storySections"></div>
+    </div>
 
-        <div class="buttons">
 
-            <button onclick="addStorySection()">
-                + ADD STORY SECTION
-            </button>
+    <br>
 
+
+    <div
+        id="rules-list"
+        class="content-list"
+    ></div>
+
+
+    <div class="save-area">
+
+        <div
+            id="rules-status"
+            class="status"
+        >
+            READY
         </div>
 
-    </section>
+        <button
+            class="save-button"
+            onclick="saveRules()"
+        >
+            SAVE RULES
+        </button>
 
+    </div>
 
-    <!-- ================= RULES ================= -->
+</section>
 
-    <section id="rules" class="panel">
-
-        <div class="panel-title">
-            // PROTOCOL RULES
-        </div>
-
-        <div class="section">
-
-            <label>RULES TITLE</label>
-            <input id="rulesTitle">
-
-            <label>RULES SUBTITLE</label>
-            <input id="rulesSubtitle">
-
-        </div>
-
-        <div id="rulesSections"></div>
-
-        <div class="buttons">
-
-            <button onclick="addRuleSection()">
-                + ADD RULE SECTION
-            </button>
-
-        </div>
-
-    </section>
-
-
-    <!-- ================= MAIN ================= -->
-
-    <section id="main" class="panel">
-
-        <div class="panel-title">
-            // MAIN DATABASE
-        </div>
-
-        <div class="section">
-
-            <label>MAIN TITLE</label>
-            <input id="mainTitle">
-
-            <label>MAIN SUBTITLE</label>
-            <input id="mainSubtitle">
-
-            <label>MAIN DESCRIPTION</label>
-            <textarea id="mainDescription"></textarea>
-
-        </div>
-
-    </section>
-
-
-    <!-- ================= EXPORT ================= -->
-
-    <section class="section">
-
-        <div class="panel-title">
-            // DATABASE CONTROL
-        </div>
-
-        <div class="buttons">
-
-            <button class="green" onclick="exportCharacters()">
-                EXPORT PERSONNEL DATABASE
-            </button>
-
-            <button class="green" onclick="exportSite()">
-                EXPORT SITE DATABASE
-            </button>
-
-            <button onclick="exportEverything()">
-                EXPORT ALL DATABASES
-            </button>
-
-        </div>
-
-        <div id="status" class="status">
-            SYSTEM READY.
-        </div>
-
-    </section>
 
 </div>
 
 
 <script>
 
-/* =========================================================
-   DATABASE
-========================================================= */
+/* =====================================================
+   DATA
+===================================================== */
 
-let charactersData = {
-    characters: []
-};
+let characters = [];
 
-let siteData = {
-    main: {
-        title: "",
-        subtitle: "",
-        description: ""
-    },
+let storySections = [];
 
-    story: {
-        title: "",
-        subtitle: "",
-        sections: []
-    },
-
-    rules: {
-        title: "",
-        subtitle: "",
-        sections: []
-    }
-};
+let ruleSections = [];
 
 
-/* =========================================================
-   LOAD DATABASES
-========================================================= */
+/* =====================================================
+   PANEL SWITCHING
+===================================================== */
 
-async function loadDatabases() {
+function openPanel(
+    panelId,
+    button
+) {
 
-    try {
+    document
+        .querySelectorAll(".panel")
+        .forEach(panel => {
 
-        const charactersResponse =
-            await fetch("characters-data.json?cache=" + Date.now());
+            panel.classList.remove(
+                "active"
+            );
 
-        if (charactersResponse.ok) {
-            charactersData = await charactersResponse.json();
-        }
-
-    } catch (error) {
-
-        console.log("Characters database not loaded.");
-
-    }
+        });
 
 
-    try {
+    document
+        .querySelectorAll(".tab")
+        .forEach(tab => {
 
-        const siteResponse =
-            await fetch("site-data.json?cache=" + Date.now());
+            tab.classList.remove(
+                "active"
+            );
 
-        if (siteResponse.ok) {
-            siteData = await siteResponse.json();
-        }
-
-    } catch (error) {
-
-        console.log("Site database not loaded.");
-
-    }
+        });
 
 
-    normalizeData();
+    document
+        .getElementById(panelId)
+        .classList.add(
+            "active"
+        );
 
-    populateCharacterSelect();
 
-    populateCharacterList();
-
-    populateSiteEditor();
-
-    setStatus("DATABASES LOADED.");
+    button.classList.add(
+        "active"
+    );
 
 }
 
 
-/* =========================================================
-   NORMALIZE
-========================================================= */
+/* =====================================================
+   CHARACTER EDITOR
+===================================================== */
 
-function normalizeData() {
+function addCharacter(
+    data = {}
+) {
 
-    if (!Array.isArray(charactersData.characters)) {
+    characters.push({
 
-        if (Array.isArray(charactersData)) {
-            charactersData = {
-                characters: charactersData
-            };
-        } else {
-            charactersData.characters = [];
-        }
+        id:
+            data.id ||
+            Date.now(),
 
-    }
+        name:
+            data.name ||
+            "NEW CHARACTER",
 
+        group:
+            data.group ||
+            "Other",
 
-    if (!siteData.main) {
+        image:
+            data.image ||
+            "",
 
-        siteData.main = {
-            title: "",
-            subtitle: "",
-            description: ""
-        };
+        role:
+            data.role ||
+            "",
 
-    }
+        age:
+            data.age ||
+            "",
 
+        affiliation:
+            data.affiliation ||
+            "",
 
-    if (!siteData.story) {
+        status:
+            data.status ||
+            "ACTIVE",
 
-        siteData.story = {
-            title: "STORY",
-            subtitle: "",
-            sections: []
-        };
-
-    }
-
-
-    if (!Array.isArray(siteData.story.sections)) {
-        siteData.story.sections = [];
-    }
-
-
-    if (!siteData.rules) {
-
-        siteData.rules = {
-            title: "PROTOCOL",
-            subtitle: "",
-            sections: []
-        };
-
-    }
-
-
-    if (!Array.isArray(siteData.rules.sections)) {
-        siteData.rules.sections = [];
-    }
-
-}
-
-
-/* =========================================================
-   TABS
-========================================================= */
-
-document.querySelectorAll(".tab").forEach(button => {
-
-    button.addEventListener("click", () => {
-
-        document.querySelectorAll(".tab")
-            .forEach(btn => btn.classList.remove("active"));
-
-        document.querySelectorAll(".panel")
-            .forEach(panel => panel.classList.remove("active"));
-
-        button.classList.add("active");
-
-        document.getElementById(button.dataset.tab)
-            .classList.add("active");
+        description:
+            data.description ||
+            ""
 
     });
 
-});
 
-
-/* =========================================================
-   CHARACTERS
-========================================================= */
-
-function populateCharacterSelect() {
-
-    const select = document.getElementById("characterSelect");
-
-    select.innerHTML =
-        '<option value="">— NEW CHARACTER —</option>';
-
-    charactersData.characters.forEach((character, index) => {
-
-        const option = document.createElement("option");
-
-        option.value = index;
-
-        option.textContent =
-            `${character.file || String(index + 1).padStart(3, "0")} // ${character.name || "CHARACTER"}`;
-
-        select.appendChild(option);
-
-    });
+    renderCharacters();
 
 }
 
 
-document.getElementById("characterSelect")
-.addEventListener("change", function() {
+function renderCharacters() {
 
-    if (this.value === "") {
+    const container =
+        document.getElementById(
+            "character-list"
+        );
 
-        clearCharacterForm();
+
+    container.innerHTML =
+        "";
+
+
+    characters.forEach(
+        (character, index) => {
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "character-card";
+
+
+            card.innerHTML = `
+
+                <div class="character-card-header">
+
+                    <div class="character-card-title">
+
+                        CHARACTER //
+                        ${String(index + 1).padStart(2, "0")}
+
+                    </div>
+
+                    <button
+                        class="action-button danger"
+                        onclick="deleteCharacter(${index})"
+                    >
+                        DELETE
+                    </button>
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <div class="field">
+
+                        <label>
+                            NAME
+                        </label>
+
+                        <input
+                            value="${escapeAttribute(character.name)}"
+                            oninput="characters[${index}].name=this.value"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            GROUP
+                        </label>
+
+                        <select
+                            onchange="characters[${index}].group=this.value"
+                        >
+
+                            <option
+                                ${character.group === "Avengers" ? "selected" : ""}
+                            >
+                                Avengers
+                            </option>
+
+                            <option
+                                ${character.group === "Agents of S.H.I.E.L.D." ? "selected" : ""}
+                            >
+                                Agents of S.H.I.E.L.D.
+                            </option>
+
+                            <option
+                                ${character.group === "Other" ? "selected" : ""}
+                            >
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            IMAGE
+                        </label>
+
+                        <input
+                            value="${escapeAttribute(character.image)}"
+                            placeholder="images/character.jpg"
+                            oninput="characters[${index}].image=this.value"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            ROLE
+                        </label>
+
+                        <input
+                            value="${escapeAttribute(character.role)}"
+                            oninput="characters[${index}].role=this.value"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            AGE
+                        </label>
+
+                        <input
+                            value="${escapeAttribute(character.age)}"
+                            oninput="characters[${index}].age=this.value"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            AFFILIATION
+                        </label>
+
+                        <input
+                            value="${escapeAttribute(character.affiliation)}"
+                            oninput="characters[${index}].affiliation=this.value"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            STATUS
+                        </label>
+
+                        <input
+                            value="${escapeAttribute(character.status)}"
+                            oninput="characters[${index}].status=this.value"
+                        >
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <label>
+                            DESCRIPTION
+                        </label>
+
+                        <textarea
+                            oninput="characters[${index}].description=this.value"
+                        >${escapeHTML(character.description)}</textarea>
+
+                    </div>
+
+
+                </div>
+
+            `;
+
+
+            container.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+function deleteCharacter(
+    index
+) {
+
+    if (
+        !confirm(
+            "Delete this character?"
+        )
+    ) {
+
         return;
 
     }
 
-    const character =
-        charactersData.characters[Number(this.value)];
 
-    if (!character) return;
-
-    document.getElementById("charFile").value =
-        character.file || "";
-
-    document.getElementById("charName").value =
-        character.name || "";
-
-    document.getElementById("charStatus").value =
-        character.status || "";
-
-    document.getElementById("charSection").value =
-        character.section || "Other";
-
-    document.getElementById("charImage").value =
-        character.image || "";
-
-    document.getElementById("charDescription").value =
-        character.description || "";
-
-    document.getElementById("charHistory").value =
-        character.history || "";
-
-    document.getElementById("charAbilities").value =
-        character.abilities || "";
-
-    document.getElementById("charNotes").value =
-        character.notes || "";
-
-});
+    characters.splice(
+        index,
+        1
+    );
 
 
-function saveCharacter() {
+    renderCharacters();
 
-    const select =
-        document.getElementById("characterSelect");
+}
 
-    const character = {
 
-        id:
-            slugify(
-                document.getElementById("charName").value
-            ),
+/* =====================================================
+   STORY
+===================================================== */
 
-        file:
-            document.getElementById("charFile").value,
+function addStorySection(
+    data = {}
+) {
 
-        name:
-            document.getElementById("charName").value,
+    storySections.push({
 
-        status:
-            document.getElementById("charStatus").value,
+        number:
+            data.number ||
+            storySections.length + 1,
 
-        section:
-            document.getElementById("charSection").value,
+        title:
+            data.title ||
+            "NEW STORY SECTION",
 
-        image:
-            document.getElementById("charImage").value,
+        content:
+            data.content ||
+            ""
 
-        description:
-            document.getElementById("charDescription").value,
+    });
 
-        history:
-            document.getElementById("charHistory").value,
 
-        abilities:
-            document.getElementById("charAbilities").value,
+    renderStory();
 
-        notes:
-            document.getElementById("charNotes").value
+}
+
+
+function renderStory() {
+
+    const container =
+        document.getElementById(
+            "story-list"
+        );
+
+
+    container.innerHTML =
+        "";
+
+
+    storySections.forEach(
+        (section, index) => {
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "content-card";
+
+
+            card.innerHTML = `
+
+                <div class="content-card-header">
+
+                    <div class="content-card-number">
+
+                        FILE //
+                        ${String(index + 1).padStart(2, "0")}
+
+                    </div>
+
+                    <button
+                        class="action-button danger"
+                        onclick="deleteStorySection(${index})"
+                    >
+                        DELETE
+                    </button>
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <div class="field">
+
+                        <label>
+                            SECTION NUMBER
+                        </label>
+
+                        <input
+                            value="${escapeAttribute(section.number)}"
+                            oninput="storySections[${index}].number=this.value"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            SECTION TITLE
+                        </label>
+
+                        <input
+                            value="${escapeAttribute(section.title)}"
+                            oninput="storySections[${index}].title=this.value"
+                        >
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <label>
+                            CONTENT
+                        </label>
+
+                        <div
+                            class="rich-toolbar"
+                        >
+
+                            <button
+                                type="button"
+                                onclick="formatText('bold')"
+                            >
+                                <strong>B</strong>
+                            </button>
+
+                            <button
+                                type="button"
+                                onclick="formatText('italic')"
+                            >
+                                <em>I</em>
+                            </button>
+
+                            <button
+                                type="button"
+                                onclick="formatText('bold italic')"
+                            >
+                                <strong><em>BI</em></strong>
+                            </button>
+
+                            <button
+                                type="button"
+                                onclick="formatQuote()"
+                            >
+                                ❝
+                            </button>
+
+                            <input
+                                type="color"
+                                class="color-picker"
+                                value="#8be6ff"
+                                onchange="formatColor(this.value)"
+                                title="TEXT COLOR"
+                            >
+
+                        </div>
+
+
+                        <div
+                            class="editor-area"
+                            contenteditable="true"
+                            data-index="${index}"
+                            oninput="updateStoryContent(this)"
+                        >${section.content || ""}</div>
+
+                    </div>
+
+
+                </div>
+
+            `;
+
+
+            container.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+function updateStoryContent(
+    element
+) {
+
+    const index =
+        Number(
+            element.dataset.index
+        );
+
+
+    storySections[index].content =
+        element.innerHTML;
+
+}
+
+
+function deleteStorySection(
+    index
+) {
+
+    if (
+        !confirm(
+            "Delete this story section?"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    storySections.splice(
+        index,
+        1
+    );
+
+
+    renderStory();
+
+}
+
+
+/* =====================================================
+   RULES
+===================================================== */
+
+function addRuleSection(
+    data = {}
+) {
+
+    ruleSections.push({
+
+        number:
+            data.number ||
+            ruleSections.length + 1,
+
+        title:
+            data.title ||
+            "NEW RULE SECTION",
+
+        content:
+            data.content ||
+            ""
+
+    });
+
+
+    renderRules();
+
+}
+
+
+function renderRules() {
+
+    const container =
+        document.getElementById(
+            "rules-list"
+        );
+
+
+    container.innerHTML =
+        "";
+
+
+    ruleSections.forEach(
+        (section, index) => {
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "content-card";
+
+
+            card.innerHTML = `
+
+                <div class="content-card-header">
+
+                    <div class="content-card-number">
+
+                        PROTOCOL //
+                        ${String(index + 1).padStart(2, "0")}
+
+                    </div>
+
+                    <button
+                        class="action-button danger"
+                        onclick="deleteRuleSection(${index})"
+                    >
+                        DELETE
+                    </button>
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <div class="field">
+
+                        <label>
+                            RULE NUMBER
+                        </label>
+
+                        <input
+                            value="${escapeAttribute(section.number)}"
+                            oninput="ruleSections[${index}].number=this.value"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            RULE TITLE
+                        </label>
+
+                        <input
+                            value="${escapeAttribute(section.title)}"
+                            oninput="ruleSections[${index}].title=this.value"
+                        >
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <label>
+                            RULE CONTENT
+                        </label>
+
+                        <div
+                            class="rich-toolbar"
+                        >
+
+                            <button
+                                type="button"
+                                onclick="formatText('bold')"
+                            >
+                                <strong>B</strong>
+                            </button>
+
+                            <button
+                                type="button"
+                                onclick="formatText('italic')"
+                            >
+                                <em>I</em>
+                            </button>
+
+                            <button
+                                type="button"
+                                onclick="formatText('bold italic')"
+                            >
+                                <strong><em>BI</em></strong>
+                            </button>
+
+                            <button
+                                type="button"
+                                onclick="formatQuote()"
+                            >
+                                ❝
+                            </button>
+
+                            <input
+                                type="color"
+                                class="color-picker"
+                                value="#8be6ff"
+                                onchange="formatColor(this.value)"
+                                title="TEXT COLOR"
+                            >
+
+                        </div>
+
+
+                        <div
+                            class="editor-area"
+                            contenteditable="true"
+                            data-rule-index="${index}"
+                            oninput="updateRuleContent(this)"
+                        >${section.content || ""}</div>
+
+                    </div>
+
+
+                </div>
+
+            `;
+
+
+            container.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+function updateRuleContent(
+    element
+) {
+
+    const index =
+        Number(
+            element.dataset.ruleIndex
+        );
+
+
+    ruleSections[index].content =
+        element.innerHTML;
+
+}
+
+
+function deleteRuleSection(
+    index
+) {
+
+    if (
+        !confirm(
+            "Delete this rule section?"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    ruleSections.splice(
+        index,
+        1
+    );
+
+
+    renderRules();
+
+}
+
+
+/* =====================================================
+   RICH TEXT
+===================================================== */
+
+function formatText(
+    command
+) {
+
+    if (
+        command === "bold italic"
+    ) {
+
+        document.execCommand(
+            "bold"
+        );
+
+        document.execCommand(
+            "italic"
+        );
+
+        return;
+
+    }
+
+
+    document.execCommand(
+        command
+    );
+
+}
+
+
+function formatQuote() {
+
+    document.execCommand(
+        "formatBlock",
+        false,
+        "blockquote"
+    );
+
+}
+
+
+function formatColor(
+    color
+) {
+
+    document.execCommand(
+        "foreColor",
+        false,
+        color
+    );
+
+}
+
+
+/* =====================================================
+   SAVE CHARACTERS
+===================================================== */
+
+function saveCharacters() {
+
+    downloadJSON(
+        characters,
+        "characters-data.json"
+    );
+
+
+    document.getElementById(
+        "character-status"
+    ).textContent =
+        "CHARACTERS EXPORTED SUCCESSFULLY";
+
+}
+
+
+/* =====================================================
+   SAVE STORY
+===================================================== */
+
+function saveStory() {
+
+    const data = {
+
+        title:
+            document.getElementById(
+                "story-title"
+            ).value,
+
+        subtitle:
+            document.getElementById(
+                "story-subtitle"
+            ).value,
+
+        sections:
+            storySections
 
     };
 
 
-    if (!character.name.trim()) {
-
-        alert("CHARACTER NAME REQUIRED.");
-        return;
-
-    }
+    downloadJSON(
+        data,
+        "story-data.json"
+    );
 
 
-    if (select.value === "") {
-
-        charactersData.characters.push(character);
-
-        setStatus("NEW PERSONNEL FILE CREATED.");
-
-    } else {
-
-        const index = Number(select.value);
-
-        charactersData.characters[index] =
-            character;
-
-        setStatus("PERSONNEL FILE UPDATED.");
-
-    }
-
-
-    populateCharacterSelect();
-
-    populateCharacterList();
-
-    clearCharacterForm(false);
+    document.getElementById(
+        "story-status"
+    ).textContent =
+        "STORY EXPORTED SUCCESSFULLY";
 
 }
 
 
-function deleteCharacter() {
+/* =====================================================
+   SAVE RULES
+===================================================== */
 
-    const select =
-        document.getElementById("characterSelect");
+function saveRules() {
 
-    if (select.value === "") {
+    const data = {
 
-        alert("SELECT A CHARACTER FIRST.");
-        return;
+        title:
+            document.getElementById(
+                "rules-title"
+            ).value,
 
-    }
+        subtitle:
+            document.getElementById(
+                "rules-subtitle"
+            ).value,
 
-    const index = Number(select.value);
+        sections:
+            ruleSections
 
-    const character =
-        charactersData.characters[index];
-
-    if (!confirm(
-        `DELETE ${character.name || "THIS FILE"}?`
-    )) return;
-
-
-    charactersData.characters.splice(index, 1);
-
-    populateCharacterSelect();
-
-    populateCharacterList();
-
-    clearCharacterForm(false);
-
-    setStatus("PERSONNEL FILE DELETED.");
-
-}
+    };
 
 
-function clearCharacterForm(changeSelect = true) {
+    downloadJSON(
+        data,
+        "rules-data.json"
+    );
 
-    if (changeSelect) {
 
-        document.getElementById("characterSelect").value = "";
-
-    }
-
-    document.getElementById("charFile").value = "";
-
-    document.getElementById("charName").value = "";
-
-    document.getElementById("charStatus").value = "";
-
-    document.getElementById("charSection").value =
-        "Avengers";
-
-    document.getElementById("charImage").value = "";
-
-    document.getElementById("charDescription").value = "";
-
-    document.getElementById("charHistory").value = "";
-
-    document.getElementById("charAbilities").value = "";
-
-    document.getElementById("charNotes").value = "";
+    document.getElementById(
+        "rules-status"
+    ).textContent =
+        "RULES EXPORTED SUCCESSFULLY";
 
 }
 
 
-function populateCharacterList() {
-
-    const list =
-        document.getElementById("characterList");
-
-    list.innerHTML = "";
-
-    if (!charactersData.characters.length) {
-
-        list.innerHTML =
-            "<div>NO PERSONNEL FILES.</div>";
-
-        return;
-
-    }
-
-
-    charactersData.characters.forEach((character, index) => {
-
-        const item =
-            document.createElement("div");
-
-        item.className = "character-item";
-
-        item.innerHTML = `
-
-            <div class="character-info">
-
-                <strong>
-                    ${escapeHtml(character.name || "UNKNOWN")}
-                </strong>
-
-                <br>
-
-                <small>
-                    FILE // ${escapeHtml(character.file || "---")}
-                    &nbsp; | &nbsp;
-                    ${escapeHtml(character.section || "Other")}
-                    &nbsp; | &nbsp;
-                    ${escapeHtml(character.status || "---")}
-                </small>
-
-            </div>
-
-            <button onclick="editCharacter(${index})">
-                EDIT
-            </button>
-
-        `;
-
-        list.appendChild(item);
-
-    });
-
-}
-
-
-function editCharacter(index) {
-
-    document.getElementById("characterSelect").value =
-        index;
-
-    document.getElementById("characterSelect")
-        .dispatchEvent(new Event("change"));
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
-}
-
-
-/* =========================================================
-   STORY
-========================================================= */
-
-function populateSiteEditor() {
-
-    document.getElementById("mainTitle").value =
-        siteData.main.title || "";
-
-    document.getElementById("mainSubtitle").value =
-        siteData.main.subtitle || "";
-
-    document.getElementById("mainDescription").value =
-        siteData.main.description || "";
-
-
-    document.getElementById("storyTitle").value =
-        siteData.story.title || "";
-
-    document.getElementById("storySubtitle").value =
-        siteData.story.subtitle || "";
-
-
-    document.getElementById("rulesTitle").value =
-        siteData.rules.title || "";
-
-    document.getElementById("rulesSubtitle").value =
-        siteData.rules.subtitle || "";
-
-
-    renderStorySections();
-
-    renderRuleSections();
-
-}
-
-
-function renderStorySections() {
-
-    const container =
-        document.getElementById("storySections");
-
-    container.innerHTML = "";
-
-    siteData.story.sections.forEach((section, index) => {
-
-        const div =
-            document.createElement("div");
-
-        div.className = "content-row";
-
-        div.innerHTML = `
-
-            <div class="row-head">
-
-                <div class="row-number">
-                    STORY FILE // ${String(index + 1).padStart(2, "0")}
-                </div>
-
-                <button
-                    class="red"
-                    onclick="removeStorySection(${index})">
-                    DELETE
-                </button>
-
-            </div>
-
-            <label>SECTION TITLE</label>
-
-            <input
-                value="${escapeAttribute(section.title || "")}"
-                oninput="siteData.story.sections[${index}].title = this.value">
-
-            <label>SECTION TEXT</label>
-
-            <textarea
-                oninput="siteData.story.sections[${index}].text = this.value"
-            >${escapeHtml(section.text || "")}</textarea>
-
-        `;
-
-        container.appendChild(div);
-
-    });
-
-}
-
-
-function addStorySection() {
-
-    siteData.story.sections.push({
-
-        id: "section-" + Date.now(),
-
-        title: "НОВА СЕКЦІЯ",
-
-        text: ""
-
-    });
-
-    renderStorySections();
-
-}
-
-
-function removeStorySection(index) {
-
-    if (!confirm("DELETE THIS STORY SECTION?")) return;
-
-    siteData.story.sections.splice(index, 1);
-
-    renderStorySections();
-
-}
-
-
-/* =========================================================
-   RULES
-========================================================= */
-
-function renderRuleSections() {
-
-    const container =
-        document.getElementById("rulesSections");
-
-    container.innerHTML = "";
-
-    siteData.rules.sections.forEach((section, index) => {
-
-        const div =
-            document.createElement("div");
-
-        div.className = "content-row";
-
-        div.innerHTML = `
-
-            <div class="row-head">
-
-                <div class="row-number">
-                    RULE FILE // ${String(index + 1).padStart(2, "0")}
-                </div>
-
-                <button
-                    class="red"
-                    onclick="removeRuleSection(${index})">
-                    DELETE
-                </button>
-
-            </div>
-
-            <label>SECTION TITLE</label>
-
-            <input
-                value="${escapeAttribute(section.title || "")}"
-                oninput="siteData.rules.sections[${index}].title = this.value">
-
-            <label>SECTION TEXT</label>
-
-            <textarea
-                oninput="siteData.rules.sections[${index}].text = this.value"
-            >${escapeHtml(section.text || "")}</textarea>
-
-        `;
-
-        container.appendChild(div);
-
-    });
-
-}
-
-
-function addRuleSection() {
-
-    siteData.rules.sections.push({
-
-        id: "rule-" + Date.now(),
-
-        title: "НОВЕ ПРАВИЛО",
-
-        text: ""
-
-    });
-
-    renderRuleSections();
-
-}
-
-
-function removeRuleSection(index) {
-
-    if (!confirm("DELETE THIS RULE SECTION?")) return;
-
-    siteData.rules.sections.splice(index, 1);
-
-    renderRuleSections();
-
-}
-
-
-/* =========================================================
-   MAIN DATABASE
-========================================================= */
-
-document.getElementById("mainTitle")
-.addEventListener("input", function() {
-
-    siteData.main.title = this.value;
-
-});
-
-
-document.getElementById("mainSubtitle")
-.addEventListener("input", function() {
-
-    siteData.main.subtitle = this.value;
-
-});
-
-
-document.getElementById("mainDescription")
-.addEventListener("input", function() {
-
-    siteData.main.description = this.value;
-
-});
-
-
-document.getElementById("storyTitle")
-.addEventListener("input", function() {
-
-    siteData.story.title = this.value;
-
-});
-
-
-document.getElementById("storySubtitle")
-.addEventListener("input", function() {
-
-    siteData.story.subtitle = this.value;
-
-});
-
-
-document.getElementById("rulesTitle")
-.addEventListener("input", function() {
-
-    siteData.rules.title = this.value;
-
-});
-
-
-document.getElementById("rulesSubtitle")
-.addEventListener("input", function() {
-
-    siteData.rules.subtitle = this.value;
-
-});
-
-
-/* =========================================================
-   EXPORT
-========================================================= */
-
-function downloadJSON(data, filename) {
-
-    const json =
-        JSON.stringify(data, null, 2);
+/* =====================================================
+   DOWNLOAD JSON
+===================================================== */
+
+function downloadJSON(
+    data,
+    filename
+) {
 
     const blob =
         new Blob(
-            [json],
-            { type: "application/json" }
+            [
+                JSON.stringify(
+                    data,
+                    null,
+                    4
+                )
+            ],
+            {
+                type:
+                    "application/json"
+            }
         );
 
+
     const url =
-        URL.createObjectURL(blob);
+        URL.createObjectURL(
+            blob
+        );
+
 
     const link =
-        document.createElement("a");
+        document.createElement(
+            "a"
+        );
 
-    link.href = url;
 
-    link.download = filename;
+    link.href =
+        url;
 
-    document.body.appendChild(link);
+    link.download =
+        filename;
+
+
+    document.body.appendChild(
+        link
+    );
+
 
     link.click();
 
-    link.remove();
 
-    URL.revokeObjectURL(url);
-
-}
-
-
-function exportCharacters() {
-
-    downloadJSON(
-        charactersData,
-        "characters-data.json"
+    document.body.removeChild(
+        link
     );
 
-    setStatus(
-        "PERSONNEL DATABASE EXPORTED."
+
+    URL.revokeObjectURL(
+        url
     );
 
 }
 
 
-function exportSite() {
+/* =====================================================
+   HELPERS
+===================================================== */
 
-    downloadJSON(
-        siteData,
-        "site-data.json"
-    );
+function escapeHTML(
+    value
+) {
 
-    setStatus(
-        "SITE DATABASE EXPORTED."
-    );
-
-}
-
-
-function exportEverything() {
-
-    downloadJSON(
-        charactersData,
-        "characters-data.json"
-    );
-
-    setTimeout(() => {
-
-        downloadJSON(
-            siteData,
-            "site-data.json"
+    return String(
+        value || ""
+    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
         );
 
-    }, 500);
+}
 
-    setStatus(
-        "ALL DATABASES EXPORTED."
-    );
+
+function escapeAttribute(
+    value
+) {
+
+    return String(
+        value || ""
+    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        );
 
 }
 
 
-/* =========================================================
-   HELPERS
-========================================================= */
+/* =====================================================
+   START WITH ONE EMPTY BLOCK
+===================================================== */
 
-function slugify(text) {
+addCharacter();
 
-    return text
-        .toLowerCase()
-        .trim()
-        .replace(/[^a-z0-9а-яіїєґ]+/gi, "-")
-        .replace(/^-+|-+$/g, "");
+addStorySection();
 
-}
-
-
-function escapeHtml(text) {
-
-    return String(text)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
-
-}
-
-
-function escapeAttribute(text) {
-
-    return escapeHtml(text)
-        .replace(/"/g, "&quot;");
-
-}
-
-
-function setStatus(message) {
-
-    document.getElementById("status")
-        .textContent =
-        "> " + message;
-
-}
-
-
-/* =========================================================
-   START
-========================================================= */
-
-loadDatabases();
+addRuleSection();
 
 </script>
 
+
 </body>
+
 </html>
