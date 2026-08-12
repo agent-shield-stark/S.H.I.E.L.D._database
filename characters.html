@@ -1278,6 +1278,57 @@ function escapeHTML(
 
 loadCharacters();
 
+/* ================================= */
+/* CHARACTER DOSSIER LINKS */
+/* ================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const cards =
+        document.querySelectorAll(".character");
+
+
+    cards.forEach(card => {
+
+        const nameElement =
+            card.querySelector(".name");
+
+
+        if (!nameElement) return;
+
+
+        const name =
+            nameElement.textContent
+                .trim()
+                .toLowerCase();
+
+
+        /*
+            Перетворюємо ім'я
+            на ID.
+
+            WANDA MAXIMOFF
+            ↓
+            wanda-maximoff
+
+            YELENA BELOVA
+            ↓
+            yelena-belova
+        */
+
+        const id =
+            name
+                .replace(/[^a-zа-яіїєґ0-9]+/gi, "-")
+                .replace(/^-+|-+$/g, "");
+
+
+        card.href =
+            `character.html?id=${encodeURIComponent(id)}`;
+
+    });
+
+});
+      
 </script>
 
 
