@@ -1,29 +1,43 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>S.H.I.E.L.D. // PROTOCOL</title>
 
 <style>
+
 /* =========================================================
-   S.H.I.E.L.D. TERMINAL — MAIN STYLE
+   S.H.I.E.L.D. SECURE TERMINAL
+   PUBLIC READ-ONLY INTERFACE
    ========================================================= */
 
 :root {
-    --bg: #03070b;
-    --panel: #071018;
-    --panel-2: #09151f;
-    --blue: #39bfff;
-    --blue-soft: #168ac2;
-    --blue-dim: #176083;
-    --text: #d9f4ff;
-    --muted: #7195a7;
-    --danger: #ff5364;
-    --border: rgba(57,191,255,.28);
-    --glow: rgba(57,191,255,.45);
+
+    --background: #020609;
+    --panel: #061019;
+    --panel-light: #091823;
+
+    --blue: #36c7ff;
+    --blue-light: #8ee4ff;
+    --blue-dark: #126083;
+
+    --text: #d8f4ff;
+    --text-muted: #769aaa;
+
+    --green: #68e0a0;
+    --red: #ff5364;
+
+    --border: rgba(54,199,255,.24);
+
 }
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
 
 * {
     box-sizing: border-box;
@@ -34,625 +48,1286 @@ html {
 }
 
 body {
+
     margin: 0;
+
     min-height: 100vh;
+
     background:
-        radial-gradient(circle at 50% 0%, rgba(20,100,145,.13), transparent 45%),
-        #03070b;
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(25,130,180,.14),
+            transparent 48%
+        ),
+        #020609;
+
     color: var(--text);
-    font-family: "Segoe UI", Arial, sans-serif;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
     overflow-x: hidden;
+
 }
 
-/* ---------------------------------------------------------
-   BACKGROUND GRID
-   --------------------------------------------------------- */
+
+/* =========================================================
+   TECHNICAL GRID
+   ========================================================= */
 
 body::before {
+
     content: "";
+
     position: fixed;
+
     inset: 0;
+
     pointer-events: none;
-    z-index: -3;
+
+    z-index: -5;
 
     background-image:
-        linear-gradient(rgba(57,191,255,.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(57,191,255,.035) 1px, transparent 1px);
+
+        linear-gradient(
+            rgba(54,199,255,.035) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(54,199,255,.035) 1px,
+            transparent 1px
+        );
 
     background-size: 45px 45px;
+
 }
 
-/* ---------------------------------------------------------
-   SCANLINE
-   --------------------------------------------------------- */
+
+/* =========================================================
+   SCANNING LINE
+   ========================================================= */
 
 body::after {
+
     content: "";
+
     position: fixed;
+
     left: 0;
     right: 0;
-    top: -20%;
+
+    top: -10%;
+
     height: 2px;
 
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(57,191,255,.7),
-        transparent
-    );
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(54,199,255,.8),
+            transparent
+        );
 
     box-shadow:
-        0 0 12px rgba(57,191,255,.6),
-        0 0 30px rgba(57,191,255,.3);
 
-    animation: scan 7s linear infinite;
+        0 0 10px rgba(54,199,255,.8),
+        0 0 35px rgba(54,199,255,.35);
+
+    animation:
+
+        scan 8s linear infinite;
+
     pointer-events: none;
-    z-index: 100;
+
+    z-index: 1000;
+
 }
 
+
 @keyframes scan {
+
     from {
         top: -10%;
     }
+
     to {
         top: 110%;
     }
+
 }
 
-/* ---------------------------------------------------------
-   TERMINAL WRAPPER
-   --------------------------------------------------------- */
+
+/* =========================================================
+   TERMINAL FRAME
+   ========================================================= */
 
 .terminal {
-    width: min(1100px, calc(100% - 30px));
-    margin: 30px auto;
-    border: 1px solid var(--border);
-    background: rgba(3,9,14,.94);
 
-    box-shadow:
-        0 0 25px rgba(0,130,200,.08),
-        inset 0 0 80px rgba(0,100,160,.04);
+    width:
+        min(
+            1120px,
+            calc(100% - 24px)
+        );
+
+    min-height: 90vh;
+
+    margin:
+        12px auto 40px;
+
+    background:
+        rgba(3,10,15,.96);
+
+    border:
+        1px solid var(--border);
 
     position: relative;
+
     overflow: hidden;
+
+    box-shadow:
+
+        0 0 30px
+        rgba(0,140,210,.08),
+
+        inset 0 0 100px
+        rgba(0,100,150,.035);
+
 }
 
-/* glowing animated borders */
 
-.terminal::before,
+/* =========================================================
+   ANIMATED TOP EDGE
+   ========================================================= */
+
 .terminal::after {
+
     content: "";
+
     position: absolute;
-    pointer-events: none;
-}
 
-.terminal::before {
-    inset: 8px;
-    border: 1px solid rgba(57,191,255,.08);
-}
-
-.terminal::after {
+    top: 0;
     left: 0;
     right: 0;
-    top: 0;
+
     height: 1px;
 
-    background: linear-gradient(
-        90deg,
-        transparent,
-        var(--blue),
-        transparent
-    );
+    background:
 
-    box-shadow: 0 0 12px var(--blue);
-    animation: pulseLine 3s ease-in-out infinite;
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--blue),
+            transparent
+        );
+
+    box-shadow:
+        0 0 14px var(--blue);
+
+    animation:
+        edgePulse 3s ease-in-out infinite;
+
 }
 
-@keyframes pulseLine {
-    0%, 100% {
+
+@keyframes edgePulse {
+
+    0%,100% {
         opacity: .25;
     }
+
     50% {
         opacity: 1;
     }
+
 }
 
-/* ---------------------------------------------------------
-   TOP TERMINAL BAR
-   --------------------------------------------------------- */
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
 
 .topbar {
-    height: 54px;
-    padding: 0 22px;
+
+    height: 56px;
+
+    padding:
+        0 20px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
-    border-bottom: 1px solid var(--border);
-    background: rgba(8,20,29,.9);
+    border-bottom:
+        1px solid var(--border);
 
-    font-family: Consolas, monospace;
-    font-size: 12px;
+    background:
+        rgba(7,20,29,.94);
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: 11px;
+
     letter-spacing: 1.5px;
+
 }
+
 
 .system-name {
-    color: var(--blue);
-    text-shadow: 0 0 8px rgba(57,191,255,.6);
+
+    color:
+        var(--blue);
+
+    text-shadow:
+        0 0 9px
+        rgba(54,199,255,.65);
+
 }
 
-.status {
-    color: #68d7a0;
+
+.system-status {
+
     display: flex;
+
     align-items: center;
+
     gap: 8px;
+
+    color:
+        var(--green);
+
 }
+
 
 .status-dot {
+
     width: 7px;
     height: 7px;
+
     border-radius: 50%;
-    background: #68d7a0;
-    box-shadow: 0 0 10px #68d7a0;
-    animation: statusPulse 1.7s infinite;
+
+    background:
+        var(--green);
+
+    box-shadow:
+        0 0 10px
+        var(--green);
+
+    animation:
+        statusPulse 1.7s infinite;
+
 }
+
 
 @keyframes statusPulse {
+
     50% {
+
         opacity: .35;
-        box-shadow: 0 0 3px #68d7a0;
+
+        box-shadow:
+            0 0 3px
+            var(--green);
+
     }
+
 }
 
-/* ---------------------------------------------------------
-   ACCESS SCREEN
-   --------------------------------------------------------- */
+
+/* =========================================================
+   BOOT SCREEN
+   ========================================================= */
 
 .boot-screen {
-    min-height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: left;
-    padding: 40px;
+
+    min-height:
+        calc(90vh - 56px);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        40px 25px;
+
 }
 
-.boot-inner {
-    width: min(600px, 100%);
-    font-family: Consolas, monospace;
-    color: var(--blue);
+
+.boot-window {
+
+    width:
+        min(
+            680px,
+            100%
+        );
+
+    font-family:
+        Consolas,
+        monospace;
+
 }
+
+
+.boot-logo {
+
+    width: 100px;
+    height: 100px;
+
+    margin:
+        0 auto 35px;
+
+    border:
+        1px solid
+        rgba(54,199,255,.35);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    color:
+        var(--blue);
+
+    font-size: 11px;
+
+    letter-spacing:
+        2px;
+
+    position:
+        relative;
+
+    box-shadow:
+
+        0 0 25px
+        rgba(54,199,255,.08);
+
+}
+
+
+/*
+   Temporary SHIELD logo placeholder.
+   We replace this later with the real graphic.
+*/
+
+.boot-logo::before {
+
+    content:
+        "S.H.I.E.L.D.";
+
+    position:
+        absolute;
+
+    inset:
+        8px;
+
+    border:
+        1px solid
+        rgba(54,199,255,.2);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    font-size:
+        8px;
+
+    color:
+        var(--blue-light);
+
+}
+
 
 .boot-title {
-    font-size: clamp(24px, 5vw, 44px);
-    letter-spacing: 5px;
-    margin-bottom: 25px;
+
+    text-align:
+        center;
+
+    color:
+        var(--blue);
+
+    font-size:
+        clamp(
+            27px,
+            6vw,
+            48px
+        );
+
+    letter-spacing:
+        7px;
+
+    margin-bottom:
+        35px;
+
     text-shadow:
-        0 0 8px rgba(57,191,255,.7),
-        0 0 25px rgba(57,191,255,.25);
+
+        0 0 9px
+        rgba(54,199,255,.7),
+
+        0 0 35px
+        rgba(54,199,255,.2);
+
 }
+
 
 .boot-line {
-    opacity: 0;
-    margin: 10px 0;
-    color: #91bfd0;
+
+    margin:
+        12px 0;
+
+    color:
+        #7da9ba;
+
+    opacity:
+        0;
+
+    transform:
+        translateX(-8px);
+
+    transition:
+        .35s;
+
 }
+
+
+.boot-line.visible {
+
+    opacity:
+        1;
+
+    transform:
+        translateX(0);
+
+}
+
 
 .boot-line::before {
-    content: "> ";
-    color: var(--blue);
+
+    content:
+        "> ";
+
+    color:
+        var(--blue);
+
 }
 
-.boot-line.show {
+
+.boot-success {
+
+    color:
+        var(--green);
+
+    text-shadow:
+        0 0 9px
+        rgba(104,224,160,.45);
+
+}
+
+
+/* =========================================================
+   PROGRESS BAR
+   ========================================================= */
+
+.progress-wrapper {
+
+    margin-top:
+        30px;
+
+    opacity:
+        0;
+
+    transition:
+        .4s;
+
+}
+
+
+.progress-wrapper.visible {
     opacity: 1;
 }
 
-.access-granted {
-    color: #68d7a0 !important;
-    text-shadow: 0 0 10px rgba(104,215,160,.5);
-}
 
-/* ---------------------------------------------------------
-   MAIN CONTENT
-   --------------------------------------------------------- */
+.progress-bar {
 
-.content {
-    display: none;
-    padding: clamp(25px, 5vw, 60px);
-}
+    width: 100%;
 
-.content.visible {
-    display: block;
-}
+    height: 4px;
 
-.document-header {
-    text-align: center;
-    margin-bottom: 55px;
-}
-
-.classification {
-    font-family: Consolas, monospace;
-    color: var(--blue);
-    font-size: 11px;
-    letter-spacing: 4px;
-    opacity: .75;
-    margin-bottom: 18px;
-}
-
-.document-title {
-    font-size: clamp(30px, 6vw, 58px);
-    letter-spacing: 6px;
-    font-weight: 300;
-    margin: 0;
-
-    color: #e6f8ff;
-
-    text-shadow:
-        0 0 8px rgba(57,191,255,.55),
-        0 0 35px rgba(57,191,255,.18);
-}
-
-.document-subtitle {
-    margin-top: 14px;
-    color: var(--muted);
-    font-family: Consolas, monospace;
-    font-size: 12px;
-    letter-spacing: 2px;
-}
-
-/* ---------------------------------------------------------
-   TECHNICAL DIVIDER
-   --------------------------------------------------------- */
-
-.divider {
-    height: 1px;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        var(--blue-dim),
-        var(--blue),
-        var(--blue-dim),
-        transparent
-    );
-
-    box-shadow: 0 0 8px rgba(57,191,255,.25);
-    margin: 35px 0;
-    position: relative;
-}
-
-.divider::after {
-    content: "◇";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    padding: 0 12px;
-
-    background: var(--bg);
-    color: var(--blue);
-    text-shadow: 0 0 8px var(--blue);
-}
-
-/* ---------------------------------------------------------
-   RULE SECTIONS
-   --------------------------------------------------------- */
-
-.rule-section {
     background:
-        linear-gradient(
-            135deg,
-            rgba(8,22,32,.88),
-            rgba(4,11,17,.95)
-        );
+        rgba(54,199,255,.08);
 
-    border: 1px solid rgba(57,191,255,.18);
-    border-left: 2px solid var(--blue-dim);
+    border:
+        1px solid
+        rgba(54,199,255,.12);
 
-    padding: clamp(20px, 4vw, 35px);
-    margin: 25px 0;
+    overflow:
+        hidden;
 
-    position: relative;
-
-    transition:
-        border-color .25s,
-        box-shadow .25s,
-        transform .25s;
 }
 
-.rule-section:hover {
-    border-color: rgba(57,191,255,.42);
+
+.progress-fill {
+
+    width: 0%;
+
+    height: 100%;
+
+    background:
+        var(--blue);
 
     box-shadow:
-        0 0 18px rgba(57,191,255,.07),
-        inset 0 0 25px rgba(57,191,255,.025);
+        0 0 12px
+        var(--blue);
 
-    transform: translateX(2px);
+    transition:
+        width .15s linear;
+
 }
+
+
+.progress-number {
+
+    margin-top:
+        8px;
+
+    text-align:
+        right;
+
+    color:
+        var(--blue);
+
+    font-size:
+        10px;
+
+}
+
+
+/* =========================================================
+   PUBLIC DOCUMENT
+   ========================================================= */
+
+.document {
+
+    display:
+        none;
+
+    padding:
+        clamp(
+            25px,
+            5vw,
+            65px
+        );
+
+    opacity:
+        0;
+
+    transform:
+        scale(.985);
+
+}
+
+
+.document.open {
+
+    display:
+        block;
+
+    animation:
+        documentOpen
+        1.2s ease forwards;
+
+}
+
+
+@keyframes documentOpen {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            scale(.985)
+            translateY(12px);
+
+        filter:
+            brightness(2)
+            blur(2px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            scale(1)
+            translateY(0);
+
+        filter:
+            brightness(1)
+            blur(0);
+
+    }
+
+}
+
+
+/* =========================================================
+   HUD
+   ========================================================= */
+
+.hud {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            1fr
+        );
+
+    gap:
+        8px;
+
+    margin-bottom:
+        45px;
+
+}
+
+
+.hud-item {
+
+    padding:
+        9px 12px;
+
+    border:
+        1px solid
+        rgba(54,199,255,.13);
+
+    background:
+        rgba(7,21,30,.65);
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size:
+        8px;
+
+    letter-spacing:
+        1px;
+
+    color:
+        #527687;
+
+}
+
+
+.hud-value {
+
+    display:
+        block;
+
+    margin-top:
+        5px;
+
+    color:
+        var(--blue-light);
+
+}
+
+
+.hud-value.green {
+    color:
+        var(--green);
+}
+
+
+/* =========================================================
+   DOCUMENT HEADER
+   ========================================================= */
+
+.document-header {
+
+    text-align:
+        center;
+
+    margin-bottom:
+        55px;
+
+}
+
+
+.classification {
+
+    font-family:
+        Consolas,
+        monospace;
+
+    color:
+        var(--blue);
+
+    font-size:
+        10px;
+
+    letter-spacing:
+        4px;
+
+    opacity:
+        .75;
+
+    margin-bottom:
+        18px;
+
+}
+
+
+.document-title {
+
+    margin:
+        0;
+
+    font-size:
+        clamp(
+            34px,
+            7vw,
+            65px
+        );
+
+    font-weight:
+        300;
+
+    letter-spacing:
+        7px;
+
+    color:
+        #e8f9ff;
+
+    text-shadow:
+
+        0 0 9px
+        rgba(54,199,255,.5),
+
+        0 0 35px
+        rgba(54,199,255,.15);
+
+}
+
+
+.document-subtitle {
+
+    margin-top:
+        14px;
+
+    color:
+        var(--text-muted);
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size:
+        11px;
+
+    letter-spacing:
+        2px;
+
+}
+
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
+.divider {
+
+    height:
+        1px;
+
+    margin:
+        35px 0;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--blue-dark),
+            var(--blue),
+            var(--blue-dark),
+            transparent
+        );
+
+    box-shadow:
+        0 0 9px
+        rgba(54,199,255,.3);
+
+    position:
+        relative;
+
+}
+
+
+.divider::after {
+
+    content:
+        "◇";
+
+    position:
+        absolute;
+
+    left:
+        50%;
+
+    top:
+        50%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    padding:
+        0 12px;
+
+    background:
+        var(--background);
+
+    color:
+        var(--blue);
+
+    text-shadow:
+        0 0 8px
+        var(--blue);
+
+}
+
+
+/* =========================================================
+   RULE SECTIONS
+   ========================================================= */
+
+.rule-section {
+
+    margin:
+        25px 0;
+
+    padding:
+        clamp(
+            20px,
+            4vw,
+            36px
+        );
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(8,24,35,.9),
+            rgba(3,11,17,.96)
+        );
+
+    border:
+        1px solid
+        rgba(54,199,255,.17);
+
+    border-left:
+        2px solid
+        var(--blue-dark);
+
+    position:
+        relative;
+
+    box-shadow:
+        inset 0 0 30px
+        rgba(54,199,255,.015);
+
+}
+
+
+.rule-section::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    top:
+        -1px;
+
+    right:
+        -1px;
+
+    width:
+        45px;
+
+    height:
+        1px;
+
+    background:
+        var(--blue);
+
+    box-shadow:
+        0 0 9px
+        var(--blue);
+
+    animation:
+        cornerPulse
+        3s ease-in-out infinite;
+
+}
+
+
+@keyframes cornerPulse {
+
+    0%,100% {
+        opacity: .2;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+}
+
 
 .rule-number {
-    font-family: Consolas, monospace;
-    font-size: 11px;
-    letter-spacing: 3px;
-    color: var(--blue);
-    margin-bottom: 10px;
-    opacity: .8;
+
+    font-family:
+        Consolas,
+        monospace;
+
+    color:
+        var(--blue);
+
+    font-size:
+        10px;
+
+    letter-spacing:
+        3px;
+
+    opacity:
+        .75;
+
+    margin-bottom:
+        10px;
+
 }
+
 
 .rule-title {
-    font-size: 23px;
-    margin: 0 0 20px;
-    font-weight: 500;
-    letter-spacing: 1px;
+
+    margin:
+        0 0 20px;
+
+    font-size:
+        clamp(
+            20px,
+            4vw,
+            27px
+        );
+
+    font-weight:
+        500;
+
+    letter-spacing:
+        1px;
+
 }
+
 
 .rule-text {
-    color: #bfd8e2;
-    line-height: 1.8;
-    font-size: 16px;
+
+    color:
+        #bfd8e2;
+
+    font-size:
+        16px;
+
+    line-height:
+        1.85;
+
 }
+
 
 .rule-text strong {
-    color: #e9faff;
+
+    color:
+        #effcff;
+
 }
+
 
 .rule-text em {
-    color: #a7dfff;
+
+    color:
+        #9ddfff;
+
 }
 
+
+/* =========================================================
+   QUOTES
+   ========================================================= */
+
+blockquote {
+
+    margin:
+        25px 0;
+
+    padding:
+        18px 22px;
+
+    border-left:
+        2px solid
+        var(--blue);
+
+    background:
+        rgba(54,199,255,.045);
+
+    color:
+        #a9d9eb;
+
+    font-style:
+        italic;
+
+    box-shadow:
+        inset 0 0 25px
+        rgba(54,199,255,.025);
+
+}
+
+
+blockquote::before {
+
+    content:
+        "◈  ARCHIVE NOTE";
+
+    display:
+        block;
+
+    margin-bottom:
+        10px;
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size:
+        9px;
+
+    letter-spacing:
+        2px;
+
+    color:
+        var(--blue);
+
+    font-style:
+        normal;
+
+}
+
+
+/* =========================================================
+   TEXT COLORS
+   ========================================================= */
+
 .blue {
-    color: #39bfff;
+    color:
+        var(--blue);
 }
 
 .green {
-    color: #68d7a0;
+    color:
+        var(--green);
 }
 
 .red {
-    color: #ff5364;
+    color:
+        var(--red);
 }
 
 .yellow {
-    color: #ffd66b;
+    color:
+        #ffd66b;
 }
 
-/* ---------------------------------------------------------
-   QUOTES
-   --------------------------------------------------------- */
 
-blockquote {
-    margin: 25px 0;
-    padding: 18px 22px;
-
-    border-left: 2px solid var(--blue);
-    background: rgba(57,191,255,.045);
-
-    color: #a9d9eb;
-    font-style: italic;
-
-    box-shadow:
-        inset 0 0 25px rgba(57,191,255,.025);
-}
-
-blockquote::before {
-    content: "◈  ARCHIVE NOTE";
-    display: block;
-
-    font-family: Consolas, monospace;
-    font-size: 9px;
-    letter-spacing: 2px;
-
-    color: var(--blue);
-    font-style: normal;
-
-    margin-bottom: 10px;
-}
-
-/* ---------------------------------------------------------
-   EDITOR
-   --------------------------------------------------------- */
-
-.editor-panel {
-    display: none;
-
-    position: sticky;
-    top: 15px;
-    z-index: 50;
-
-    margin: -30px -30px 35px;
-    padding: 12px;
-
-    background: rgba(5,15,22,.97);
-    border: 1px solid var(--border);
-
-    box-shadow:
-        0 0 25px rgba(0,100,160,.12);
-}
-
-.editor-panel.visible {
-    display: block;
-}
-
-.editor-toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-}
-
-.editor-btn {
-    min-width: 38px;
-    height: 34px;
-
-    padding: 0 10px;
-
-    border: 1px solid rgba(57,191,255,.2);
-    background: rgba(12,29,40,.9);
-
-    color: #9bd8ef;
-
-    font-family: Consolas, monospace;
-    font-size: 12px;
-
-    cursor: pointer;
-
-    transition: .2s;
-}
-
-.editor-btn:hover {
-    border-color: var(--blue);
-    color: white;
-
-    box-shadow:
-        0 0 10px rgba(57,191,255,.2);
-}
-
-.editor-btn.active {
-    background: rgba(57,191,255,.15);
-    border-color: var(--blue);
-    color: white;
-}
-
-.color-picker {
-    width: 38px;
-    height: 34px;
-
-    padding: 2px;
-
-    background: #071018;
-    border: 1px solid rgba(57,191,255,.2);
-
-    cursor: pointer;
-}
-
-.editor-status {
-    margin-top: 8px;
-
-    color: #638b9b;
-    font-family: Consolas, monospace;
-    font-size: 9px;
-    letter-spacing: 1px;
-}
-
-/* editable state */
-
-.editing .rule-text,
-.editing .rule-title,
-.editing .document-title,
-.editing .document-subtitle {
-    outline: 1px dashed rgba(57,191,255,.2);
-    outline-offset: 4px;
-}
-
-.editing [contenteditable="true"]:focus {
-    outline: 1px solid rgba(57,191,255,.45);
-    box-shadow: 0 0 12px rgba(57,191,255,.08);
-}
-
-/* ---------------------------------------------------------
-   BOTTOM INFO
-   --------------------------------------------------------- */
+/* =========================================================
+   FOOTER
+   ========================================================= */
 
 .footer {
-    margin-top: 60px;
-    padding-top: 25px;
 
-    border-top: 1px solid rgba(57,191,255,.14);
+    margin-top:
+        60px;
 
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    flex-wrap: wrap;
+    padding-top:
+        25px;
 
-    font-family: Consolas, monospace;
-    font-size: 9px;
-    letter-spacing: 1.5px;
+    border-top:
+        1px solid
+        rgba(54,199,255,.14);
 
-    color: #466a7a;
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        15px;
+
+    color:
+        #466a7a;
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size:
+        9px;
+
+    letter-spacing:
+        1.5px;
+
 }
 
-.footer .access {
-    color: #68d7a0;
+
+.footer .active {
+
+    color:
+        var(--green);
+
 }
 
-/* ---------------------------------------------------------
-   CONTROL BUTTON
-   --------------------------------------------------------- */
 
-.mode-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 200;
-
-    padding: 10px 14px;
-
-    border: 1px solid rgba(57,191,255,.25);
-    background: rgba(3,12,18,.92);
-
-    color: #6598aa;
-
-    font-family: Consolas, monospace;
-    font-size: 10px;
-    letter-spacing: 1px;
-
-    cursor: pointer;
-
-    transition: .2s;
-}
-
-.mode-button:hover {
-    color: var(--blue);
-    border-color: var(--blue);
-
-    box-shadow:
-        0 0 15px rgba(57,191,255,.2);
-}
-
-/* ---------------------------------------------------------
-   RESPONSIVE
-   --------------------------------------------------------- */
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
 @media (max-width: 650px) {
 
     .terminal {
-        width: calc(100% - 14px);
-        margin: 7px auto;
+
+        width:
+            calc(100% - 10px);
+
+        margin:
+            5px auto 20px;
+
     }
+
 
     .topbar {
-        padding: 0 12px;
-        font-size: 9px;
+
+        height:
+            48px;
+
+        padding:
+            0 11px;
+
+        font-size:
+            8px;
+
     }
 
-    .content {
-        padding: 25px 17px;
+
+    .boot-screen {
+
+        min-height:
+            80vh;
+
+        padding:
+            30px 18px;
+
     }
+
+
+    .document {
+
+        padding:
+            24px 15px;
+
+    }
+
 
     .document-title {
-        letter-spacing: 3px;
+
+        letter-spacing:
+            3px;
+
     }
 
-    .rule-section {
-        padding: 20px 16px;
+
+    .hud {
+
+        grid-template-columns:
+            repeat(
+                2,
+                1fr
+            );
+
     }
+
 
     .rule-text {
-        font-size: 15px;
+
+        font-size:
+            15px;
+
     }
 
-    .editor-panel {
-        margin: -15px -10px 25px;
+
+    .footer {
+
+        flex-direction:
+            column;
+
     }
+
 }
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="terminal">
 
+
     <!-- =====================================================
-         TOP BAR
+         TOP SYSTEM BAR
          ===================================================== -->
 
     <div class="topbar">
@@ -661,265 +1336,345 @@ blockquote::before {
             S.H.I.E.L.D. // SECURE TERMINAL
         </div>
 
-        <div class="status">
+        <div class="system-status">
+
             <span class="status-dot"></span>
+
             SYSTEM ONLINE
+
         </div>
 
     </div>
 
 
+
     <!-- =====================================================
-         BOOT SCREEN
+         BOOT SEQUENCE
          ===================================================== -->
 
-    <section class="boot-screen" id="bootScreen">
+    <section
+        class="boot-screen"
+        id="bootScreen"
+    >
 
-        <div class="boot-inner">
+        <div class="boot-window">
 
-            <div class="boot-title">
-                S.H.I.E.L.D.
+
+            <div class="boot-logo">
+                SHIELD
             </div>
 
-            <div class="boot-line" id="boot1">
+
+            <div class="boot-title">
+                SECURE DATABASE
+            </div>
+
+
+            <div
+                class="boot-line"
+                id="boot1"
+            >
                 INITIALIZING SECURE DATABASE...
             </div>
 
-            <div class="boot-line" id="boot2">
-                VERIFYING ACCESS CREDENTIALS...
+
+            <div
+                class="boot-line"
+                id="boot2"
+            >
+                ESTABLISHING ENCRYPTED CONNECTION...
             </div>
 
-            <div class="boot-line" id="boot3">
-                DECRYPTING PROTOCOL FILE...
+
+            <div
+                class="boot-line"
+                id="boot3"
+            >
+                SEARCHING DATABASE FOR PROTOCOL FILE...
             </div>
 
-            <div class="boot-line access-granted" id="boot4">
+
+            <div
+                class="boot-line"
+                id="boot4"
+            >
+                FILE FOUND:
+                <span style="color:#d8f4ff;">
+                    PROTOCOL_RULES
+                </span>
+            </div>
+
+
+            <div
+                class="boot-line"
+                id="boot5"
+            >
+                CLASSIFICATION:
+                <span style="color:#36c7ff;">
+                    LEVEL 04
+                </span>
+            </div>
+
+
+            <div
+                class="boot-line"
+                id="boot6"
+            >
+                DECRYPTING DOCUMENT...
+            </div>
+
+
+            <div
+                class="progress-wrapper"
+                id="progressWrapper"
+            >
+
+                <div class="progress-bar">
+
+                    <div
+                        class="progress-fill"
+                        id="progressFill"
+                    ></div>
+
+                </div>
+
+
+                <div
+                    class="progress-number"
+                    id="progressNumber"
+                >
+                    0%
+                </div>
+
+            </div>
+
+
+            <div
+                class="boot-line boot-success"
+                id="boot7"
+            >
                 ACCESS GRANTED.
             </div>
+
 
         </div>
 
     </section>
 
 
+
     <!-- =====================================================
-         MAIN DOCUMENT
+         PUBLIC DOCUMENT
          ===================================================== -->
 
-    <main class="content" id="content">
+    <main
+        class="document"
+        id="document"
+    >
 
 
-        <!-- EDITOR -->
+        <!-- HUD -->
 
-        <div class="editor-panel" id="editorPanel">
+        <div class="hud">
 
-            <div class="editor-toolbar">
 
-                <button class="editor-btn" onclick="format('bold')">
-                    <b>B</b>
-                </button>
+            <div class="hud-item">
 
-                <button class="editor-btn" onclick="format('italic')">
-                    <i>I</i>
-                </button>
+                SECURITY
 
-                <button class="editor-btn" onclick="boldItalic()">
-                    <b><i>BI</i></b>
-                </button>
-
-                <button class="editor-btn" onclick="format('underline')">
-                    <u>U</u>
-                </button>
-
-                <button class="editor-btn" onclick="format('strikeThrough')">
-                    <s>S</s>
-                </button>
-
-                <button class="editor-btn" onclick="format('justifyLeft')">
-                    ←
-                </button>
-
-                <button class="editor-btn" onclick="format('justifyCenter')">
-                    ↔
-                </button>
-
-                <button class="editor-btn" onclick="format('justifyRight')">
-                    →
-                </button>
-
-                <button class="editor-btn" onclick="makeQuote()">
-                    ❝
-                </button>
-
-                <button class="editor-btn" onclick="format('insertUnorderedList')">
-                    • LIST
-                </button>
-
-                <button class="editor-btn" onclick="format('insertOrderedList')">
-                    1. LIST
-                </button>
-
-                <button class="editor-btn" onclick="insertDivider()">
-                    ─
-                </button>
-
-                <label class="editor-btn" style="display:flex;align-items:center;justify-content:center;">
-                    A
-                    <input
-                        class="color-picker"
-                        type="color"
-                        value="#39bfff"
-                        onchange="changeColor(this.value)"
-                        title="Text color"
-                    >
-                </label>
-
-                <button class="editor-btn" onclick="saveChanges()">
-                    SAVE
-                </button>
-
-                <button class="editor-btn" onclick="exportPage()">
-                    EXPORT
-                </button>
-
-                <button class="editor-btn" onclick="resetPage()">
-                    RESET
-                </button>
+                <span class="hud-value green">
+                    ACTIVE
+                </span>
 
             </div>
 
-            <div class="editor-status" id="editorStatus">
-                EDIT MODE // LOCAL STORAGE ENABLED
+
+            <div class="hud-item">
+
+                DATABASE
+
+                <span class="hud-value green">
+                    ONLINE
+                </span>
+
             </div>
+
+
+            <div class="hud-item">
+
+                CLASSIFICATION
+
+                <span class="hud-value">
+                    LEVEL 04
+                </span>
+
+            </div>
+
+
+            <div class="hud-item">
+
+                ACCESS
+
+                <span class="hud-value green">
+                    GRANTED
+                </span>
+
+            </div>
+
 
         </div>
+
 
 
         <!-- DOCUMENT HEADER -->
 
         <header class="document-header">
 
-            <div
-                class="classification"
-                contenteditable="true"
-            >
+
+            <div class="classification">
                 S.H.I.E.L.D. // CLASSIFIED DOCUMENT
             </div>
 
-            <h1
-                class="document-title"
-                contenteditable="true"
-            >
+
+            <h1 class="document-title">
                 PROTOCOL
             </h1>
 
-            <div
-                class="document-subtitle"
-                contenteditable="true"
-            >
+
+            <div class="document-subtitle">
                 RULES &amp; REGULATIONS
             </div>
 
+
         </header>
+
 
 
         <div class="divider"></div>
 
 
-        <!-- =====================================================
-             RULES
-             ===================================================== -->
+
+        <!-- =================================================
+             RULE 01
+             ================================================= -->
 
         <section class="rule-section">
+
 
             <div class="rule-number">
                 FILE // 01
             </div>
 
-            <h2
-                class="rule-title"
-                contenteditable="true"
-            >
+
+            <h2 class="rule-title">
                 ЗАГАЛЬНІ ПОЛОЖЕННЯ
             </h2>
 
-            <div
-                class="rule-text"
-                contenteditable="true"
-            >
+
+            <div class="rule-text">
+
                 <p>
                     Тут буде твій текст правил.
-                    Просто заміни цей текст своїм.
+                    Цей блок призначений виключно
+                    для перегляду.
                 </p>
+
 
                 <p>
-                    Окремі слова можна буде
-                    <strong>виділяти жирним</strong>,
-                    <em>курсивом</em> або
-                    <span class="blue">кольором.</span>
+
+                    Окремі слова можна зробити
+
+                    <strong>
+                        жирними
+                    </strong>
+
+                    або
+
+                    <em>
+                        курсивом
+                    </em>
+
+                    під час підготовки документа.
+
                 </p>
 
+
                 <blockquote>
-                    Тут можна розміщувати важливі цитати,
-                    попередження або внутрішні положення.
+
+                    Тут можна розміщувати
+                    важливі положення,
+                    попередження або цитати.
+
                 </blockquote>
+
 
             </div>
 
         </section>
 
 
+
+        <!-- =================================================
+             RULE 02
+             ================================================= -->
+
         <section class="rule-section">
+
 
             <div class="rule-number">
                 FILE // 02
             </div>
 
-            <h2
-                class="rule-title"
-                contenteditable="true"
-            >
+
+            <h2 class="rule-title">
                 ПОВЕДІНКА ГРАВЦІВ
             </h2>
 
-            <div
-                class="rule-text"
-                contenteditable="true"
-            >
+
+            <div class="rule-text">
+
                 <p>
-                    Тут буде другий розділ твоїх правил.
+                    Тут буде другий розділ
+                    твоїх правил.
                 </p>
+
             </div>
 
         </section>
 
 
+
+        <!-- =================================================
+             RULE 03
+             ================================================= -->
+
         <section class="rule-section">
+
 
             <div class="rule-number">
                 FILE // 03
             </div>
 
-            <h2
-                class="rule-title"
-                contenteditable="true"
-            >
+
+            <h2 class="rule-title">
                 РОЛЬОВА ГРА
             </h2>
 
-            <div
-                class="rule-text"
-                contenteditable="true"
-            >
+
+            <div class="rule-text">
+
                 <p>
                     Тут буде третій розділ.
                 </p>
+
             </div>
 
         </section>
 
 
+
         <div class="divider"></div>
+
 
 
         <!-- FOOTER -->
@@ -930,9 +1685,11 @@ blockquote::before {
                 S.H.I.E.L.D. DATABASE
             </span>
 
-            <span class="access">
+
+            <span class="active">
                 ACCESS: GRANTED
             </span>
+
 
             <span>
                 PROTOCOL // SECURE
@@ -940,302 +1697,162 @@ blockquote::before {
 
         </footer>
 
+
     </main>
 
 </div>
 
 
-<!-- EDITOR MODE BUTTON -->
-
-<button
-    class="mode-button"
-    onclick="toggleEditor()"
->
-    ◈ EDIT MODE
-</button>
-
 
 <script>
 
 /* =========================================================
-   BOOT ANIMATION
+   BOOT SEQUENCE
    ========================================================= */
 
 const bootLines = [
+
     document.getElementById("boot1"),
+
     document.getElementById("boot2"),
+
     document.getElementById("boot3"),
-    document.getElementById("boot4")
+
+    document.getElementById("boot4"),
+
+    document.getElementById("boot5"),
+
+    document.getElementById("boot6"),
+
+    document.getElementById("boot7")
+
 ];
 
-const bootScreen = document.getElementById("bootScreen");
-const content = document.getElementById("content");
 
-bootLines.forEach((line, index) => {
+const bootScreen =
+    document.getElementById("bootScreen");
 
-    setTimeout(() => {
 
-        line.classList.add("show");
+const documentScreen =
+    document.getElementById("document");
 
-    }, 650 + index * 650);
 
-});
+const progressWrapper =
+    document.getElementById("progressWrapper");
 
 
-setTimeout(() => {
+const progressFill =
+    document.getElementById("progressFill");
 
-    bootScreen.style.display = "none";
-    content.classList.add("visible");
 
-}, 3400);
+const progressNumber =
+    document.getElementById("progressNumber");
 
 
-/* =========================================================
-   EDIT MODE
-   ========================================================= */
 
-let editMode = false;
+/* ---------------------------------------------------------
+   SHOW TERMINAL LINES
+   --------------------------------------------------------- */
 
-function toggleEditor() {
+bootLines.forEach(
+    (line, index) => {
 
-    editMode = !editMode;
+        setTimeout(
+            () => {
 
-    const panel = document.getElementById("editorPanel");
+                line.classList.add(
+                    "visible"
+                );
 
-    if (editMode) {
+            },
 
-        panel.classList.add("visible");
-        document.body.classList.add("editing");
+            600 +
+            index * 500
 
-        setEditable(true);
-
-        document.getElementById("editorStatus").textContent =
-            "EDIT MODE // SELECT TEXT AND USE THE TERMINAL CONTROLS";
-
-    } else {
-
-        panel.classList.remove("visible");
-        document.body.classList.remove("editing");
-
-        setEditable(false);
-
-        document.getElementById("editorStatus").textContent =
-            "EDIT MODE DISABLED";
-
-    }
-
-}
-
-
-function setEditable(state) {
-
-    document
-        .querySelectorAll("[contenteditable]")
-        .forEach(element => {
-            element.setAttribute("contenteditable", state);
-        });
-
-}
-
-
-/* =========================================================
-   TEXT FORMATTING
-   ========================================================= */
-
-function format(command, value = null) {
-
-    document.execCommand(command, false, value);
-
-}
-
-
-/* Bold + italic */
-
-function boldItalic() {
-
-    document.execCommand("bold", false, null);
-    document.execCommand("italic", false, null);
-
-}
-
-
-/* Text color */
-
-function changeColor(color) {
-
-    document.execCommand(
-        "foreColor",
-        false,
-        color
-    );
-
-}
-
-
-/* Quote */
-
-function makeQuote() {
-
-    document.execCommand(
-        "formatBlock",
-        false,
-        "blockquote"
-    );
-
-}
-
-
-/* Divider */
-
-function insertDivider() {
-
-    document.execCommand(
-        "insertHTML",
-        false,
-        '<div class="divider"></div>'
-    );
-
-}
-
-
-/* =========================================================
-   SAVE
-   ========================================================= */
-
-function saveChanges() {
-
-    const contentHTML =
-        document.getElementById("content").innerHTML;
-
-    localStorage.setItem(
-        "shield_protocol_content",
-        contentHTML
-    );
-
-    document.getElementById("editorStatus").textContent =
-        "CHANGES SAVED // LOCAL STORAGE";
-
-}
-
-
-/* =========================================================
-   LOAD SAVED CONTENT
-   ========================================================= */
-
-window.addEventListener("load", () => {
-
-    const saved =
-        localStorage.getItem(
-            "shield_protocol_content"
         );
 
-    if (saved) {
-
-        document.getElementById("content").innerHTML =
-            saved;
-
     }
-
-});
-
-
-/* =========================================================
-   RESET
-   ========================================================= */
-
-function resetPage() {
-
-    const confirmation =
-        confirm(
-            "Reset local changes and restore the original document?"
-        );
-
-    if (!confirmation) return;
-
-    localStorage.removeItem(
-        "shield_protocol_content"
-    );
-
-    location.reload();
-
-}
+);
 
 
-/* =========================================================
-   EXPORT
-   ========================================================= */
+/* ---------------------------------------------------------
+   START PROGRESS
+   --------------------------------------------------------- */
 
-function exportPage() {
+setTimeout(
+    () => {
 
-    const clone =
-        document.documentElement.cloneNode(true);
-
-    /* Remove editor */
-
-    const editor =
-        clone.querySelector("#editorPanel");
-
-    if (editor) {
-        editor.remove();
-    }
-
-    const editButton =
-        clone.querySelector(".mode-button");
-
-    if (editButton) {
-        editButton.remove();
-    }
-
-    /* Remove contenteditable */
-
-    clone
-        .querySelectorAll("[contenteditable]")
-        .forEach(element => {
-            element.removeAttribute("contenteditable");
-        });
-
-
-    /* Create final HTML */
-
-    const finalHTML =
-        "<!DOCTYPE html>\n" +
-        clone.outerHTML;
-
-
-    const blob =
-        new Blob(
-            [finalHTML],
-            {type: "text/html"}
+        progressWrapper.classList.add(
+            "visible"
         );
 
 
-    const url =
-        URL.createObjectURL(blob);
+        let progress = 0;
 
 
-    const link =
-        document.createElement("a");
+        const interval =
+            setInterval(
+                () => {
 
-    link.href = url;
-
-    link.download =
-        "shield-protocol-rules.html";
-
-    document.body.appendChild(link);
-
-    link.click();
-
-    link.remove();
-
-    URL.revokeObjectURL(url);
+                    progress +=
+                        Math.floor(
+                            Math.random() * 7
+                        ) + 2;
 
 
-    document.getElementById("editorStatus").textContent =
-        "EXPORT COMPLETE // FILE GENERATED";
+                    if (progress >= 100) {
 
-}
+                        progress = 100;
+
+                        clearInterval(
+                            interval
+                        );
+
+                    }
+
+
+                    progressFill.style.width =
+                        progress + "%";
+
+
+                    progressNumber.textContent =
+                        progress + "%";
+
+                },
+
+                80
+
+            );
+
+    },
+
+    3200
+);
+
+
+/* ---------------------------------------------------------
+   OPEN DOCUMENT
+   --------------------------------------------------------- */
+
+setTimeout(
+    () => {
+
+        bootScreen.style.display =
+            "none";
+
+
+        documentScreen.classList.add(
+            "open"
+        );
+
+    },
+
+    5600
+
+);
 
 </script>
+
 
 </body>
 </html>
