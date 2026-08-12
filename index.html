@@ -1,1858 +1,423 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>S.H.I.E.L.D. // PROTOCOL</title>
+<title>S.H.I.E.L.D. // DATABASE</title>
 
 <style>
-
-/* =========================================================
-   S.H.I.E.L.D. SECURE TERMINAL
-   PUBLIC READ-ONLY INTERFACE
-   ========================================================= */
-
-:root {
-
-    --background: #020609;
-    --panel: #061019;
-    --panel-light: #091823;
-
-    --blue: #36c7ff;
-    --blue-light: #8ee4ff;
-    --blue-dark: #126083;
-
-    --text: #d8f4ff;
-    --text-muted: #769aaa;
-
-    --green: #68e0a0;
-    --red: #ff5364;
-
-    --border: rgba(54,199,255,.24);
-
-}
-
-
-/* =========================================================
-   RESET
-   ========================================================= */
-
-* {
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-
-    margin: 0;
-
-    min-height: 100vh;
-
-    background:
-        radial-gradient(
-            circle at 50% 0%,
-            rgba(25,130,180,.14),
-            transparent 48%
-        ),
-        #020609;
-
-    color: var(--text);
-
-    font-family:
-        "Segoe UI",
-        Arial,
-        sans-serif;
-
-    overflow-x: hidden;
-
-}
-
-
-/* =========================================================
-   TECHNICAL GRID
-   ========================================================= */
-
-body::before {
-
-    content: "";
-
-    position: fixed;
-
-    inset: 0;
-
-    pointer-events: none;
-
-    z-index: -5;
-
-    background-image:
-
-        linear-gradient(
-            rgba(54,199,255,.035) 1px,
-            transparent 1px
-        ),
-
-        linear-gradient(
-            90deg,
-            rgba(54,199,255,.035) 1px,
-            transparent 1px
-        );
-
-    background-size: 45px 45px;
-
-}
-
-
-/* =========================================================
-   SCANNING LINE
-   ========================================================= */
-
-body::after {
-
-    content: "";
-
-    position: fixed;
-
-    left: 0;
-    right: 0;
-
-    top: -10%;
-
-    height: 2px;
-
-    background:
-
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(54,199,255,.8),
-            transparent
-        );
-
-    box-shadow:
-
-        0 0 10px rgba(54,199,255,.8),
-        0 0 35px rgba(54,199,255,.35);
-
-    animation:
-
-        scan 8s linear infinite;
-
-    pointer-events: none;
-
-    z-index: 1000;
-
-}
-
-
-@keyframes scan {
-
-    from {
-        top: -10%;
+    * {
+        box-sizing: border-box;
     }
 
-    to {
-        top: 110%;
+    html, body {
+        margin: 0;
+        padding: 0;
+        min-height: 100%;
+        background: #02070d;
+        color: #d8f3ff;
+        font-family: "Courier New", monospace;
     }
 
-}
-
-
-/* =========================================================
-   TERMINAL FRAME
-   ========================================================= */
-
-.terminal {
-
-    width:
-        min(
-            1120px,
-            calc(100% - 24px)
-        );
-
-    min-height: 90vh;
-
-    margin:
-        12px auto 40px;
-
-    background:
-        rgba(3,10,15,.96);
-
-    border:
-        1px solid var(--border);
-
-    position: relative;
-
-    overflow: hidden;
-
-    box-shadow:
-
-        0 0 30px
-        rgba(0,140,210,.08),
-
-        inset 0 0 100px
-        rgba(0,100,150,.035);
-
-}
-
-
-/* =========================================================
-   ANIMATED TOP EDGE
-   ========================================================= */
-
-.terminal::after {
-
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    left: 0;
-    right: 0;
-
-    height: 1px;
-
-    background:
-
-        linear-gradient(
-            90deg,
-            transparent,
-            var(--blue),
-            transparent
-        );
-
-    box-shadow:
-        0 0 14px var(--blue);
-
-    animation:
-        edgePulse 3s ease-in-out infinite;
-
-}
-
-
-@keyframes edgePulse {
-
-    0%,100% {
-        opacity: .25;
+    body {
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
     }
 
-    50% {
-        opacity: 1;
+    /* ===== BACKGROUND ===== */
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background:
+            linear-gradient(
+                rgba(0, 170, 255, 0.035) 1px,
+                transparent 1px
+            ),
+            linear-gradient(
+                90deg,
+                rgba(0, 170, 255, 0.035) 1px,
+                transparent 1px
+            );
+        background-size: 45px 45px;
+        z-index: 0;
     }
 
-}
-
-
-/* =========================================================
-   TOP BAR
-   ========================================================= */
-
-.topbar {
-
-    height: 56px;
-
-    padding:
-        0 20px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    border-bottom:
-        1px solid var(--border);
-
-    background:
-        rgba(7,20,29,.94);
-
-    font-family:
-        Consolas,
-        monospace;
-
-    font-size: 11px;
-
-    letter-spacing: 1.5px;
-
-}
-
-
-.system-name {
-
-    color:
-        var(--blue);
-
-    text-shadow:
-        0 0 9px
-        rgba(54,199,255,.65);
-
-}
-
-
-.system-status {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
-
-    color:
-        var(--green);
-
-}
-
-
-.status-dot {
-
-    width: 7px;
-    height: 7px;
-
-    border-radius: 50%;
-
-    background:
-        var(--green);
-
-    box-shadow:
-        0 0 10px
-        var(--green);
-
-    animation:
-        statusPulse 1.7s infinite;
-
-}
-
-
-@keyframes statusPulse {
-
-    50% {
-
-        opacity: .35;
-
-        box-shadow:
-            0 0 3px
-            var(--green);
-
+    body::after {
+        content: "";
+        position: fixed;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: rgba(0, 180, 255, 0.35);
+        box-shadow: 0 0 15px rgba(0, 180, 255, 0.8);
+        animation: scan 5s linear infinite;
+        pointer-events: none;
+        z-index: 10;
     }
 
-}
-
-
-/* =========================================================
-   BOOT SCREEN
-   ========================================================= */
-
-.boot-screen {
-
-    min-height:
-        calc(90vh - 56px);
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    padding:
-        40px 25px;
-
-}
-
-
-.boot-window {
-
-    width:
-        min(
-            680px,
-            100%
-        );
-
-    font-family:
-        Consolas,
-        monospace;
-
-}
-
-
-.boot-logo {
-
-    width: 100px;
-    height: 100px;
-
-    margin:
-        0 auto 35px;
-
-    border:
-        1px solid
-        rgba(54,199,255,.35);
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    color:
-        var(--blue);
-
-    font-size: 11px;
-
-    letter-spacing:
-        2px;
-
-    position:
-        relative;
-
-    box-shadow:
-
-        0 0 25px
-        rgba(54,199,255,.08);
-
-}
-
-
-/*
-   Temporary SHIELD logo placeholder.
-   We replace this later with the real graphic.
-*/
-
-.boot-logo::before {
-
-    content:
-        "S.H.I.E.L.D.";
-
-    position:
-        absolute;
-
-    inset:
-        8px;
-
-    border:
-        1px solid
-        rgba(54,199,255,.2);
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    font-size:
-        8px;
-
-    color:
-        var(--blue-light);
-
-}
-
-
-.boot-title {
-
-    text-align:
-        center;
-
-    color:
-        var(--blue);
-
-    font-size:
-        clamp(
-            27px,
-            6vw,
-            48px
-        );
-
-    letter-spacing:
-        7px;
-
-    margin-bottom:
-        35px;
-
-    text-shadow:
-
-        0 0 9px
-        rgba(54,199,255,.7),
-
-        0 0 35px
-        rgba(54,199,255,.2);
-
-}
-
-
-.boot-line {
-
-    margin:
-        12px 0;
-
-    color:
-        #7da9ba;
-
-    opacity:
-        0;
-
-    transform:
-        translateX(-8px);
-
-    transition:
-        .35s;
-
-}
-
-
-.boot-line.visible {
-
-    opacity:
-        1;
-
-    transform:
-        translateX(0);
-
-}
-
-
-.boot-line::before {
-
-    content:
-        "> ";
-
-    color:
-        var(--blue);
-
-}
-
-
-.boot-success {
-
-    color:
-        var(--green);
-
-    text-shadow:
-        0 0 9px
-        rgba(104,224,160,.45);
-
-}
-
-
-/* =========================================================
-   PROGRESS BAR
-   ========================================================= */
-
-.progress-wrapper {
-
-    margin-top:
-        30px;
-
-    opacity:
-        0;
-
-    transition:
-        .4s;
-
-}
-
-
-.progress-wrapper.visible {
-    opacity: 1;
-}
-
-
-.progress-bar {
-
-    width: 100%;
-
-    height: 4px;
-
-    background:
-        rgba(54,199,255,.08);
-
-    border:
-        1px solid
-        rgba(54,199,255,.12);
-
-    overflow:
-        hidden;
-
-}
-
-
-.progress-fill {
-
-    width: 0%;
-
-    height: 100%;
-
-    background:
-        var(--blue);
-
-    box-shadow:
-        0 0 12px
-        var(--blue);
-
-    transition:
-        width .15s linear;
-
-}
-
-
-.progress-number {
-
-    margin-top:
-        8px;
-
-    text-align:
-        right;
-
-    color:
-        var(--blue);
-
-    font-size:
-        10px;
-
-}
-
-
-/* =========================================================
-   PUBLIC DOCUMENT
-   ========================================================= */
-
-.document {
-
-    display:
-        none;
-
-    padding:
-        clamp(
-            25px,
-            5vw,
-            65px
-        );
-
-    opacity:
-        0;
-
-    transform:
-        scale(.985);
-
-}
-
-
-.document.open {
-
-    display:
-        block;
-
-    animation:
-        documentOpen
-        1.2s ease forwards;
-
-}
-
-
-@keyframes documentOpen {
-
-    from {
-
-        opacity: 0;
-
-        transform:
-            scale(.985)
-            translateY(12px);
-
-        filter:
-            brightness(2)
-            blur(2px);
-
+    @keyframes scan {
+        0% {
+            top: -5px;
+        }
+
+        100% {
+            top: 100%;
+        }
     }
 
-    to {
-
-        opacity: 1;
-
-        transform:
-            scale(1)
-            translateY(0);
-
-        filter:
-            brightness(1)
-            blur(0);
-
-    }
-
-}
-
-
-/* =========================================================
-   HUD
-   ========================================================= */
-
-.hud {
-
-    display:
-        grid;
-
-    grid-template-columns:
-        repeat(
-            4,
-            1fr
-        );
-
-    gap:
-        8px;
-
-    margin-bottom:
-        45px;
-
-}
-
-
-.hud-item {
-
-    padding:
-        9px 12px;
-
-    border:
-        1px solid
-        rgba(54,199,255,.13);
-
-    background:
-        rgba(7,21,30,.65);
-
-    font-family:
-        Consolas,
-        monospace;
-
-    font-size:
-        8px;
-
-    letter-spacing:
-        1px;
-
-    color:
-        #527687;
-
-}
-
-
-.hud-value {
-
-    display:
-        block;
-
-    margin-top:
-        5px;
-
-    color:
-        var(--blue-light);
-
-}
-
-
-.hud-value.green {
-    color:
-        var(--green);
-}
-
-
-/* =========================================================
-   DOCUMENT HEADER
-   ========================================================= */
-
-.document-header {
-
-    text-align:
-        center;
-
-    margin-bottom:
-        55px;
-
-}
-
-
-.classification {
-
-    font-family:
-        Consolas,
-        monospace;
-
-    color:
-        var(--blue);
-
-    font-size:
-        10px;
-
-    letter-spacing:
-        4px;
-
-    opacity:
-        .75;
-
-    margin-bottom:
-        18px;
-
-}
-
-
-.document-title {
-
-    margin:
-        0;
-
-    font-size:
-        clamp(
-            34px,
-            7vw,
-            65px
-        );
-
-    font-weight:
-        300;
-
-    letter-spacing:
-        7px;
-
-    color:
-        #e8f9ff;
-
-    text-shadow:
-
-        0 0 9px
-        rgba(54,199,255,.5),
-
-        0 0 35px
-        rgba(54,199,255,.15);
-
-}
-
-
-.document-subtitle {
-
-    margin-top:
-        14px;
-
-    color:
-        var(--text-muted);
-
-    font-family:
-        Consolas,
-        monospace;
-
-    font-size:
-        11px;
-
-    letter-spacing:
-        2px;
-
-}
-
-
-/* =========================================================
-   DIVIDER
-   ========================================================= */
-
-.divider {
-
-    height:
-        1px;
-
-    margin:
-        35px 0;
-
-    background:
-
-        linear-gradient(
-            90deg,
-            transparent,
-            var(--blue-dark),
-            var(--blue),
-            var(--blue-dark),
-            transparent
-        );
-
-    box-shadow:
-        0 0 9px
-        rgba(54,199,255,.3);
-
-    position:
-        relative;
-
-}
-
-
-.divider::after {
-
-    content:
-        "◇";
-
-    position:
-        absolute;
-
-    left:
-        50%;
-
-    top:
-        50%;
-
-    transform:
-        translate(
-            -50%,
-            -50%
-        );
-
-    padding:
-        0 12px;
-
-    background:
-        var(--background);
-
-    color:
-        var(--blue);
-
-    text-shadow:
-        0 0 8px
-        var(--blue);
-
-}
-
-
-/* =========================================================
-   RULE SECTIONS
-   ========================================================= */
-
-.rule-section {
-
-    margin:
-        25px 0;
-
-    padding:
-        clamp(
-            20px,
-            4vw,
-            36px
-        );
-
-    background:
-
-        linear-gradient(
-            135deg,
-            rgba(8,24,35,.9),
-            rgba(3,11,17,.96)
-        );
-
-    border:
-        1px solid
-        rgba(54,199,255,.17);
-
-    border-left:
-        2px solid
-        var(--blue-dark);
-
-    position:
-        relative;
-
-    box-shadow:
-        inset 0 0 30px
-        rgba(54,199,255,.015);
-
-}
-
-
-.rule-section::before {
-
-    content:
-        "";
-
-    position:
-        absolute;
-
-    top:
-        -1px;
-
-    right:
-        -1px;
-
-    width:
-        45px;
-
-    height:
-        1px;
-
-    background:
-        var(--blue);
-
-    box-shadow:
-        0 0 9px
-        var(--blue);
-
-    animation:
-        cornerPulse
-        3s ease-in-out infinite;
-
-}
-
-
-@keyframes cornerPulse {
-
-    0%,100% {
-        opacity: .2;
-    }
-
-    50% {
-        opacity: 1;
-    }
-
-}
-
-
-.rule-number {
-
-    font-family:
-        Consolas,
-        monospace;
-
-    color:
-        var(--blue);
-
-    font-size:
-        10px;
-
-    letter-spacing:
-        3px;
-
-    opacity:
-        .75;
-
-    margin-bottom:
-        10px;
-
-}
-
-
-.rule-title {
-
-    margin:
-        0 0 20px;
-
-    font-size:
-        clamp(
-            20px,
-            4vw,
-            27px
-        );
-
-    font-weight:
-        500;
-
-    letter-spacing:
-        1px;
-
-}
-
-
-.rule-text {
-
-    color:
-        #bfd8e2;
-
-    font-size:
-        16px;
-
-    line-height:
-        1.85;
-
-}
-
-
-.rule-text strong {
-
-    color:
-        #effcff;
-
-}
-
-
-.rule-text em {
-
-    color:
-        #9ddfff;
-
-}
-
-
-/* =========================================================
-   QUOTES
-   ========================================================= */
-
-blockquote {
-
-    margin:
-        25px 0;
-
-    padding:
-        18px 22px;
-
-    border-left:
-        2px solid
-        var(--blue);
-
-    background:
-        rgba(54,199,255,.045);
-
-    color:
-        #a9d9eb;
-
-    font-style:
-        italic;
-
-    box-shadow:
-        inset 0 0 25px
-        rgba(54,199,255,.025);
-
-}
-
-
-blockquote::before {
-
-    content:
-        "◈  ARCHIVE NOTE";
-
-    display:
-        block;
-
-    margin-bottom:
-        10px;
-
-    font-family:
-        Consolas,
-        monospace;
-
-    font-size:
-        9px;
-
-    letter-spacing:
-        2px;
-
-    color:
-        var(--blue);
-
-    font-style:
-        normal;
-
-}
-
-
-/* =========================================================
-   TEXT COLORS
-   ========================================================= */
-
-.blue {
-    color:
-        var(--blue);
-}
-
-.green {
-    color:
-        var(--green);
-}
-
-.red {
-    color:
-        var(--red);
-}
-
-.yellow {
-    color:
-        #ffd66b;
-}
-
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-
-.footer {
-
-    margin-top:
-        60px;
-
-    padding-top:
-        25px;
-
-    border-top:
-        1px solid
-        rgba(54,199,255,.14);
-
-    display:
-        flex;
-
-    justify-content:
-        space-between;
-
-    flex-wrap:
-        wrap;
-
-    gap:
-        15px;
-
-    color:
-        #466a7a;
-
-    font-family:
-        Consolas,
-        monospace;
-
-    font-size:
-        9px;
-
-    letter-spacing:
-        1.5px;
-
-}
-
-
-.footer .active {
-
-    color:
-        var(--green);
-
-}
-
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 650px) {
+    /* ===== MAIN ===== */
 
     .terminal {
-
-        width:
-            calc(100% - 10px);
-
-        margin:
-            5px auto 20px;
-
+        position: relative;
+        z-index: 1;
+        width: min(1100px, 92%);
+        margin: 50px auto;
+        border: 1px solid rgba(0, 170, 255, 0.45);
+        background: rgba(2, 10, 18, 0.94);
+        box-shadow:
+            0 0 30px rgba(0, 140, 255, 0.12),
+            inset 0 0 50px rgba(0, 120, 255, 0.035);
     }
 
+    /* ===== HEADER ===== */
 
-    .topbar {
-
-        height:
-            48px;
-
-        padding:
-            0 11px;
-
-        font-size:
-            8px;
-
+    .header {
+        padding: 30px;
+        border-bottom: 1px solid rgba(0, 170, 255, 0.35);
+        position: relative;
     }
 
-
-    .boot-screen {
-
-        min-height:
-            80vh;
-
-        padding:
-            30px 18px;
-
+    .system {
+        color: #48c7ff;
+        font-size: 12px;
+        letter-spacing: 3px;
+        margin-bottom: 20px;
     }
 
-
-    .document {
-
-        padding:
-            24px 15px;
-
+    .title {
+        font-size: clamp(30px, 6vw, 65px);
+        letter-spacing: 8px;
+        color: #eaf9ff;
+        text-shadow: 0 0 15px rgba(0, 170, 255, 0.7);
+        margin: 0;
     }
 
-
-    .document-title {
-
-        letter-spacing:
-            3px;
-
+    .subtitle {
+        margin-top: 12px;
+        color: #5caeca;
+        letter-spacing: 3px;
+        font-size: 13px;
     }
 
-
-    .hud {
-
-        grid-template-columns:
-            repeat(
-                2,
-                1fr
-            );
-
+    .status {
+        margin-top: 25px;
+        color: #62d5ff;
+        font-size: 12px;
     }
 
-
-    .rule-text {
-
-        font-size:
-            15px;
-
+    .status::before {
+        content: "● ";
+        animation: pulse 1.5s infinite;
     }
 
+    @keyframes pulse {
+        0%, 100% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0.25;
+        }
+    }
+
+    /* ===== TERMINAL ===== */
+
+    .terminal-line {
+        padding: 18px 30px;
+        border-bottom: 1px solid rgba(0, 170, 255, 0.2);
+        color: #75cfff;
+        font-size: 13px;
+        min-height: 50px;
+    }
+
+    .terminal-line span {
+        color: #e8fbff;
+    }
+
+    /* ===== DATABASE BLOCKS ===== */
+
+    .database {
+        padding: 35px 30px 45px;
+    }
+
+    .section-label {
+        color: #438daf;
+        font-size: 11px;
+        letter-spacing: 4px;
+        margin-bottom: 22px;
+    }
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+    }
+
+    .card {
+        position: relative;
+        display: block;
+        min-height: 190px;
+        padding: 28px 22px;
+        border: 1px solid rgba(0, 170, 255, 0.35);
+        background: rgba(0, 35, 55, 0.18);
+        color: #dff8ff;
+        text-decoration: none;
+        overflow: hidden;
+        transition:
+            transform 0.25s ease,
+            border-color 0.25s ease,
+            background 0.25s ease,
+            box-shadow 0.25s ease;
+    }
+
+    .card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-top: 1px solid rgba(80, 210, 255, 0.4);
+        transform: translateX(-100%);
+        transition: transform 0.4s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(70, 200, 255, 0.8);
+        background: rgba(0, 70, 100, 0.25);
+        box-shadow:
+            0 0 25px rgba(0, 160, 255, 0.15),
+            inset 0 0 25px rgba(0, 160, 255, 0.04);
+    }
+
+    .card:hover::before {
+        transform: translateX(100%);
+    }
+
+    .card-number {
+        color: #397c99;
+        font-size: 11px;
+        letter-spacing: 2px;
+    }
+
+    .card-title {
+        margin-top: 30px;
+        font-size: 21px;
+        letter-spacing: 3px;
+        color: #dff8ff;
+    }
+
+    .card-description {
+        margin-top: 14px;
+        color: #6798aa;
+        font-size: 11px;
+        line-height: 1.6;
+    }
+
+    .access {
+        position: absolute;
+        bottom: 18px;
+        right: 20px;
+        font-size: 10px;
+        color: #3789aa;
+        letter-spacing: 1px;
+    }
+
+    /* ===== FOOTER ===== */
 
     .footer {
-
-        flex-direction:
-            column;
-
+        padding: 18px 30px;
+        border-top: 1px solid rgba(0, 170, 255, 0.25);
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        flex-wrap: wrap;
+        color: #397187;
+        font-size: 10px;
+        letter-spacing: 1px;
     }
 
-}
+    /* ===== MOBILE ===== */
 
+    @media (max-width: 750px) {
+        .cards {
+            grid-template-columns: 1fr;
+        }
+
+        .terminal {
+            margin: 20px auto;
+        }
+
+        .header {
+            padding: 25px 20px;
+        }
+
+        .database {
+            padding: 25px 20px 35px;
+        }
+
+        .terminal-line {
+            padding: 15px 20px;
+        }
+    }
 </style>
-
 </head>
-
 
 <body>
 
-
 <div class="terminal">
 
+    <!-- HEADER -->
 
-    <!-- =====================================================
-         TOP SYSTEM BAR
-         ===================================================== -->
+    <header class="header">
 
-    <div class="topbar">
-
-        <div class="system-name">
-            S.H.I.E.L.D. // SECURE TERMINAL
+        <div class="system">
+            S.H.I.E.L.D. // SECURE DATABASE
         </div>
 
-        <div class="system-status">
+        <h1 class="title">
+            PROTOCOL
+        </h1>
 
-            <span class="status-dot"></span>
-
-            SYSTEM ONLINE
-
+        <div class="subtitle">
+            CLASSIFIED INFORMATION NETWORK
         </div>
 
+        <div class="status">
+            SYSTEM ONLINE // ACCESS GRANTED
+        </div>
+
+    </header>
+
+
+    <!-- TERMINAL -->
+
+    <div class="terminal-line">
+        &gt; INITIALIZING DATABASE...
+        <span> COMPLETE</span>
+    </div>
+
+    <div class="terminal-line">
+        &gt; SECURITY CLEARANCE:
+        <span>AUTHORIZED</span>
+    </div>
+
+    <div class="terminal-line">
+        &gt; SELECT DATABASE SECTION_
     </div>
 
 
+    <!-- DATABASE -->
 
-    <!-- =====================================================
-         BOOT SEQUENCE
-         ===================================================== -->
+    <main class="database">
 
-    <section
-        class="boot-screen"
-        id="bootScreen"
-    >
-
-        <div class="boot-window">
-
-
-            <div class="boot-logo">
-                SHIELD
-            </div>
-
-
-            <div class="boot-title">
-                SECURE DATABASE
-            </div>
-
-
-            <div
-                class="boot-line"
-                id="boot1"
-            >
-                INITIALIZING SECURE DATABASE...
-            </div>
-
-
-            <div
-                class="boot-line"
-                id="boot2"
-            >
-                ESTABLISHING ENCRYPTED CONNECTION...
-            </div>
-
-
-            <div
-                class="boot-line"
-                id="boot3"
-            >
-                SEARCHING DATABASE FOR PROTOCOL FILE...
-            </div>
-
-
-            <div
-                class="boot-line"
-                id="boot4"
-            >
-                FILE FOUND:
-                <span style="color:#d8f4ff;">
-                    PROTOCOL_RULES
-                </span>
-            </div>
-
-
-            <div
-                class="boot-line"
-                id="boot5"
-            >
-                CLASSIFICATION:
-                <span style="color:#36c7ff;">
-                    LEVEL 04
-                </span>
-            </div>
-
-
-            <div
-                class="boot-line"
-                id="boot6"
-            >
-                DECRYPTING DOCUMENT...
-            </div>
-
-
-            <div
-                class="progress-wrapper"
-                id="progressWrapper"
-            >
-
-                <div class="progress-bar">
-
-                    <div
-                        class="progress-fill"
-                        id="progressFill"
-                    ></div>
-
-                </div>
-
-
-                <div
-                    class="progress-number"
-                    id="progressNumber"
-                >
-                    0%
-                </div>
-
-            </div>
-
-
-            <div
-                class="boot-line boot-success"
-                id="boot7"
-            >
-                ACCESS GRANTED.
-            </div>
-
-
+        <div class="section-label">
+            // AVAILABLE FILES
         </div>
 
-    </section>
+        <div class="cards">
+
+            <!-- CHARACTERS -->
+
+            <a href="characters.html" class="card">
+
+                <div class="card-number">
+                    FILE_001
+                </div>
+
+                <div class="card-title">
+                    ПЕРСОНАЖІ
+                </div>
+
+                <div class="card-description">
+                    PERSONNEL DATABASE // IDENTITIES // CLASSIFICATION
+                </div>
+
+                <div class="access">
+                    OPEN FILE →
+                </div>
+
+            </a>
 
 
+            <!-- STORY -->
 
-    <!-- =====================================================
-         PUBLIC DOCUMENT
-         ===================================================== -->
+            <a href="story.html" class="card">
 
-    <main
-        class="document"
-        id="document"
-    >
+                <div class="card-number">
+                    FILE_002
+                </div>
 
+                <div class="card-title">
+                    СЮЖЕТ
+                </div>
 
-        <!-- HUD -->
+                <div class="card-description">
+                    OPERATION ARCHIVE // EVENTS // TIMELINE
+                </div>
 
-        <div class="hud">
+                <div class="access">
+                    OPEN FILE →
+                </div>
 
-
-            <div class="hud-item">
-
-                SECURITY
-
-                <span class="hud-value green">
-                    ACTIVE
-                </span>
-
-            </div>
+            </a>
 
 
-            <div class="hud-item">
+            <!-- RULES -->
 
-                DATABASE
+            <a href="rules.html" class="card">
 
-                <span class="hud-value green">
-                    ONLINE
-                </span>
+                <div class="card-number">
+                    FILE_003
+                </div>
 
-            </div>
+                <div class="card-title">
+                    ПРАВИЛА
+                </div>
 
+                <div class="card-description">
+                    PROTOCOL // REGULATIONS // ACCESS CONDITIONS
+                </div>
 
-            <div class="hud-item">
+                <div class="access">
+                    OPEN FILE →
+                </div>
 
-                CLASSIFICATION
-
-                <span class="hud-value">
-                    LEVEL 04
-                </span>
-
-            </div>
-
-
-            <div class="hud-item">
-
-                ACCESS
-
-                <span class="hud-value green">
-                    GRANTED
-                </span>
-
-            </div>
-
+            </a>
 
         </div>
-
-
-
-        <!-- DOCUMENT HEADER -->
-
-        <header class="document-header">
-
-
-            <div class="classification">
-                S.H.I.E.L.D. // CLASSIFIED DOCUMENT
-            </div>
-
-
-            <h1 class="document-title">
-                PROTOCOL
-            </h1>
-
-
-            <div class="document-subtitle">
-                RULES &amp; REGULATIONS
-            </div>
-
-
-        </header>
-
-
-
-        <div class="divider"></div>
-
-
-
-        <!-- =================================================
-             RULE 01
-             ================================================= -->
-
-        <section class="rule-section">
-
-
-            <div class="rule-number">
-                FILE // 01
-            </div>
-
-
-            <h2 class="rule-title">
-                ЗАГАЛЬНІ ПОЛОЖЕННЯ
-            </h2>
-
-
-            <div class="rule-text">
-
-                <p>
-                    Тут буде твій текст правил.
-                    Цей блок призначений виключно
-                    для перегляду.
-                </p>
-
-
-                <p>
-
-                    Окремі слова можна зробити
-
-                    <strong>
-                        жирними
-                    </strong>
-
-                    або
-
-                    <em>
-                        курсивом
-                    </em>
-
-                    під час підготовки документа.
-
-                </p>
-
-
-                <blockquote>
-
-                    Тут можна розміщувати
-                    важливі положення,
-                    попередження або цитати.
-
-                </blockquote>
-
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =================================================
-             RULE 02
-             ================================================= -->
-
-        <section class="rule-section">
-
-
-            <div class="rule-number">
-                FILE // 02
-            </div>
-
-
-            <h2 class="rule-title">
-                ПОВЕДІНКА ГРАВЦІВ
-            </h2>
-
-
-            <div class="rule-text">
-
-                <p>
-                    Тут буде другий розділ
-                    твоїх правил.
-                </p>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =================================================
-             RULE 03
-             ================================================= -->
-
-        <section class="rule-section">
-
-
-            <div class="rule-number">
-                FILE // 03
-            </div>
-
-
-            <h2 class="rule-title">
-                РОЛЬОВА ГРА
-            </h2>
-
-
-            <div class="rule-text">
-
-                <p>
-                    Тут буде третій розділ.
-                </p>
-
-            </div>
-
-        </section>
-
-
-
-        <div class="divider"></div>
-
-
-
-        <!-- FOOTER -->
-
-        <footer class="footer">
-
-            <span>
-                S.H.I.E.L.D. DATABASE
-            </span>
-
-
-            <span class="active">
-                ACCESS: GRANTED
-            </span>
-
-
-            <span>
-                PROTOCOL // SECURE
-            </span>
-
-        </footer>
-
 
     </main>
 
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <div>
+            S.H.I.E.L.D. // INTERNAL USE ONLY
+        </div>
+
+        <div>
+            DATABASE STATUS: ONLINE
+        </div>
+
+    </footer>
+
 </div>
-
-
-
-<script>
-
-/* =========================================================
-   BOOT SEQUENCE
-   ========================================================= */
-
-const bootLines = [
-
-    document.getElementById("boot1"),
-
-    document.getElementById("boot2"),
-
-    document.getElementById("boot3"),
-
-    document.getElementById("boot4"),
-
-    document.getElementById("boot5"),
-
-    document.getElementById("boot6"),
-
-    document.getElementById("boot7")
-
-];
-
-
-const bootScreen =
-    document.getElementById("bootScreen");
-
-
-const documentScreen =
-    document.getElementById("document");
-
-
-const progressWrapper =
-    document.getElementById("progressWrapper");
-
-
-const progressFill =
-    document.getElementById("progressFill");
-
-
-const progressNumber =
-    document.getElementById("progressNumber");
-
-
-
-/* ---------------------------------------------------------
-   SHOW TERMINAL LINES
-   --------------------------------------------------------- */
-
-bootLines.forEach(
-    (line, index) => {
-
-        setTimeout(
-            () => {
-
-                line.classList.add(
-                    "visible"
-                );
-
-            },
-
-            600 +
-            index * 500
-
-        );
-
-    }
-);
-
-
-/* ---------------------------------------------------------
-   START PROGRESS
-   --------------------------------------------------------- */
-
-setTimeout(
-    () => {
-
-        progressWrapper.classList.add(
-            "visible"
-        );
-
-
-        let progress = 0;
-
-
-        const interval =
-            setInterval(
-                () => {
-
-                    progress +=
-                        Math.floor(
-                            Math.random() * 7
-                        ) + 2;
-
-
-                    if (progress >= 100) {
-
-                        progress = 100;
-
-                        clearInterval(
-                            interval
-                        );
-
-                    }
-
-
-                    progressFill.style.width =
-                        progress + "%";
-
-
-                    progressNumber.textContent =
-                        progress + "%";
-
-                },
-
-                80
-
-            );
-
-    },
-
-    3200
-);
-
-
-/* ---------------------------------------------------------
-   OPEN DOCUMENT
-   --------------------------------------------------------- */
-
-setTimeout(
-    () => {
-
-        bootScreen.style.display =
-            "none";
-
-
-        documentScreen.classList.add(
-            "open"
-        );
-
-    },
-
-    5600
-
-);
-
-</script>
-
 
 </body>
 </html>
