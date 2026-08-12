@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>S.H.I.E.L.D. // PROTOCOL RULES</title>
+
+<style>
+
+:root {
+    --bg: #020609;
+    --panel: #061019;
+    --blue: #36c7ff;
+    --blue-light: #9be8ff;
+    --text: #d8f4ff;
+    --muted: #769aaa;
+    --green: #68e0a0;
+    --red: #ff5364;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(25,130,180,.15),
+            transparent 48%
+        ),
+        #020609;
+
+    color: var(--text);
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    overflow-x: hidden;
+}
+
+
+/* GRID */
+
+body::before {
+    content: "";
+
+    position: fixed;
+    inset: 0;
+
+    background-image:
+        linear-gradient(
+            rgba(54,199,255,.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(54,199,255,.035) 1px,
+            transparent 1px
+        );
+
+    background-size: 45px 45px;
+
+    pointer-events: none;
+
+    z-index: -2;
+}
+
+
+/* SCANNER */
+
+body::after {
+    content: "";
+
+    position: fixed;
+
+    left: 0;
+    right: 0;
+
+    top: -10%;
+
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--blue),
+            transparent
+        );
+
+    box-shadow:
+        0 0 12px var(--blue);
+
+    animation:
+        scan 8s linear infinite;
+
+    pointer-events: none;
+
+    z-index: 100;
+}
+
+@keyframes scan {
+
+    from {
+        top: -10%;
+    }
+
+    to {
+        top: 110%;
+    }
+}
+
+
+/* TERMINAL */
+
+.terminal {
+
+    width:
+        min(1120px, calc(100% - 24px));
+
+    margin: 12px auto 40px;
+
+    min-height: 90vh;
+
+    background:
+        rgba(3,10,15,.96);
+
+    border:
+        1px solid rgba(54,199,255,.24);
+
+    box-shadow:
+        0 0 35px rgba(0,140,210,.08);
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+
+/* TOP BAR */
+
+.topbar {
+
+    height: 56px;
+
+    padding: 0 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-bottom:
+        1px solid rgba(54,199,255,.24);
+
+    background:
+        rgba(7,20,29,.95);
+
+    font-family: Consolas, monospace;
+
+    font-size: 11px;
+
+    letter-spacing: 1.5px;
+}
+
+.system-name {
+
+    color: var(--blue);
+
+    text-shadow:
+        0 0 9px rgba(54,199,255,.65);
+}
+
+.status {
+
+    color: var(--green);
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+.dot {
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: var(--green);
+
+    box-shadow:
+        0 0 10px var(--green);
+
+    animation:
+        pulse 1.7s infinite;
+}
+
+@keyframes pulse {
+
+    50% {
+        opacity: .3;
+    }
+}
+
+
+/* CONTENT */
+
+.content {
+
+    padding:
+        clamp(25px, 5vw, 65px);
+}
+
+
+/* RETURN BUTTON */
+
+.return {
+
+    display: inline-block;
+
+    margin-bottom: 40px;
+
+    color: var(--blue);
+
+    text-decoration: none;
+
+    font-family: Consolas, monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+    border:
+        1px solid rgba(54,199,255,.2);
+
+    padding: 10px 15px;
+
+    transition: .25s;
+}
+
+.return:hover {
+
+    background:
+        rgba(54,199,255,.08);
+
+    box-shadow:
+        0 0 15px rgba(54,199,255,.15);
+}
+
+
+/* HEADER */
+
+.classification {
+
+    color: var(--blue);
+
+    font-family: Consolas, monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 4px;
+
+    margin-bottom: 15px;
+}
+
+h1 {
+
+    margin: 0;
+
+    font-size:
+        clamp(32px, 7vw, 62px);
+
+    font-weight: 300;
+
+    letter-spacing: 6px;
+
+    text-shadow:
+        0 0 12px rgba(54,199,255,.45);
+}
+
+.subtitle {
+
+    margin-top: 12px;
+
+    color: var(--muted);
+
+    font-family: Consolas, monospace;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+}
+
+
+/* DIVIDER */
+
+.divider {
+
+    height: 1px;
+
+    margin: 45px 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--blue),
+            transparent
+        );
+
+    box-shadow:
+        0 0 10px rgba(54,199,255,.25);
+}
+
+
+/* RULE BLOCK */
+
+.rule {
+
+    margin-bottom: 25px;
+
+    padding: 28px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(8,24,35,.95),
+            rgba(3,11,17,.96)
+        );
+
+    border:
+        1px solid rgba(54,199,255,.17);
+
+    border-left:
+        2px solid rgba(54,199,255,.5);
+
+    transition: .3s;
+}
+
+.rule:hover {
+
+    border-color:
+        rgba(54,199,255,.4);
+
+    box-shadow:
+        0 0 25px rgba(54,199,255,.06);
+}
+
+.rule-number {
+
+    color: var(--blue);
+
+    font-family: Consolas, monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 12px;
+}
+
+.rule-title {
+
+    font-size: 23px;
+
+    margin-bottom: 15px;
+
+    letter-spacing: 1px;
+}
+
+.rule-text {
+
+    color: #bfd8e2;
+
+    font-size: 15px;
+
+    line-height: 1.8;
+}
+
+
+/* IMPORTANT */
+
+.warning {
+
+    margin: 30px 0;
+
+    padding: 20px 24px;
+
+    border:
+        1px solid rgba(255,83,100,.3);
+
+    border-left:
+        2px solid var(--red);
+
+    background:
+        rgba(255,83,100,.035);
+
+    color: #e5c7cc;
+
+    line-height: 1.7;
+}
+
+.warning-title {
+
+    color: var(--red);
+
+    font-family: Consolas, monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 10px;
+}
+
+
+/* QUOTE */
+
+.quote {
+
+    margin: 25px 0;
+
+    padding: 18px 22px;
+
+    border-left:
+        2px solid var(--blue);
+
+    background:
+        rgba(54,199,255,.045);
+
+    color: #a9d9eb;
+
+    font-style: italic;
+
+    line-height: 1.7;
+}
+
+
+/* FOOTER */
+
+.footer {
+
+    margin-top: 70px;
+
+    padding-top: 25px;
+
+    border-top:
+        1px solid rgba(54,199,255,.14);
+
+    display: flex;
+
+    justify-content: space-between;
+
+    flex-wrap: wrap;
+
+    gap: 15px;
+
+    color: #466a7a;
+
+    font-family: Consolas, monospace;
+
+    font-size: 9px;
+
+    letter-spacing: 1.5px;
+}
+
+
+/* MOBILE */
+
+@media(max-width:650px) {
+
+    .terminal {
+
+        width:
+            calc(100% - 10px);
+
+        margin:
+            5px auto 20px;
+    }
+
+    .topbar {
+
+        padding: 0 11px;
+
+        font-size: 8px;
+    }
+
+    .content {
+
+        padding:
+            25px 17px;
+    }
+
+    .rule {
+
+        padding: 21px;
+    }
+
+    .footer {
+
+        flex-direction: column;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="terminal">
+
+
+    <!-- TOP BAR -->
+
+    <div class="topbar">
+
+        <div class="system-name">
+            S.H.I.E.L.D. // SECURE TERMINAL
+        </div>
+
+        <div class="status">
+
+            <span class="dot"></span>
+
+            DATABASE ONLINE
+
+        </div>
+
+    </div>
+
+
+
+    <!-- CONTENT -->
+
+    <main class="content">
+
+
+        <!-- RETURN -->
+
+        <a
+            href="index.html"
+            class="return"
+        >
+
+            &lt; RETURN TO MAIN DATABASE
+
+        </a>
+
+
+
+        <!-- HEADER -->
+
+        <div class="classification">
+
+            S.H.I.E.L.D. // PROTOCOL DATABASE
+
+        </div>
+
+
+        <h1>
+
+            RULES
+
+        </h1>
+
+
+        <div class="subtitle">
+
+            ROLEPLAY PROTOCOL // LEVEL 04 ACCESS
+
+        </div>
+
+
+
+        <div class="divider"></div>
+
+
+
+        <!-- RULE 01 -->
+
+        <section class="rule">
+
+            <div class="rule-number">
+
+                PROTOCOL // 001
+
+            </div>
+
+
+            <div class="rule-title">
+
+                ЗАГАЛЬНІ ПРАВИЛА
+
+            </div>
+
+
+            <div class="rule-text">
+
+                Тут буде твій текст із загальними
+                правилами рольової.
+
+                Можеш замінити цей текст на свій
+                готовий блок правил.
+
+            </div>
+
+        </section>
+
+
+
+        <!-- RULE 02 -->
+
+        <section class="rule">
+
+            <div class="rule-number">
+
+                PROTOCOL // 002
+
+            </div>
+
+
+            <div class="rule-title">
+
+                ПЕРСОНАЖІ
+
+            </div>
+
+
+            <div class="rule-text">
+
+                Тут будуть правила щодо персонажів,
+                їх створення, поведінки та взаємодії.
+
+            </div>
+
+        </section>
+
+
+
+        <!-- RULE 03 -->
+
+        <section class="rule">
+
+            <div class="rule-number">
+
+                PROTOCOL // 003
+
+            </div>
+
+
+            <div class="rule-title">
+
+                ВЗАЄМОДІЯ
+
+            </div>
+
+
+            <div class="rule-text">
+
+                Тут можна розмістити правила
+                щодо взаємодії між гравцями.
+
+            </div>
+
+        </section>
+
+
+
+        <!-- WARNING -->
+
+        <div class="warning">
+
+            <div class="warning-title">
+
+                ⚠ SYSTEM NOTICE
+
+            </div>
+
+
+            Перед початком участі в рольовій
+            кожен учасник повинен ознайомитися
+            з усіма правилами бази даних.
+
+        </div>
+
+
+
+        <!-- QUOTE -->
+
+        <div class="quote">
+
+            "ACCESS TO THIS DATABASE IMPLIES
+            ACCEPTANCE OF S.H.I.E.L.D. PROTOCOL."
+
+        </div>
+
+
+
+        <!-- FOOTER -->
+
+        <footer class="footer">
+
+            <span>
+
+                S.H.I.E.L.D. // PROTOCOL DATABASE
+
+            </span>
+
+
+            <span>
+
+                ACCESS: GRANTED
+
+            </span>
+
+
+            <span>
+
+                RECORDS: ENCRYPTED
+
+            </span>
+
+        </footer>
+
+
+    </main>
+
+</div>
+
+
+</body>
+
+</html>
