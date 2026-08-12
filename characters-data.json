@@ -1,18 +1,59 @@
 [
-    {
-        "id": "test",
-        "name": "TEST SUBJECT",
-        "alias": "CLASSIFIED",
-        "status": "ACTIVE",
-        "affiliation": "S.H.I.E.L.D.",
-        "age": "UNKNOWN",
-        "codename": "TEST-01",
-        "biography": "This is a test personnel record.",
-        "abilities": "Database integration.",
-        "personality": "Highly cooperative.",
-        "history": "Record successfully created.",
-        "relationships": "None recorded.",
-        "quote": "The system works.",
-        "photo": ""
-    }
+  {
+    "id": "wanda-maximoff",
+    "file": "001",
+    "name": "WANDA MAXIMOFF",
+    "group": "avengers",
+    "status": "ACTIVE",
+    "alias": "SCARLET WITCH",
+    "affiliation": "AVENGERS",
+    "role": "AVENGER",
+    "location": "UNKNOWN",
+    "description": "Personnel information classified.",
+    "abilities": [
+      "CHAOS MAGIC",
+      "TELEKINESIS",
+      "TELEPATHY"
+    ],
+    "history": "Historical personnel records classified.",
+    "notes": "LEVEL 04 CLEARANCE REQUIRED."
+  },
+
+  {
+    "id": "yelena-belova",
+    "file": "002",
+    "name": "YELENA BELOVA",
+    "group": "avengers",
+    "status": "ACTIVE",
+    "alias": "BLACK WIDOW",
+    "affiliation": "AVENGERS",
+    "role": "OPERATIVE",
+    "location": "UNKNOWN",
+    "description": "Personnel information classified.",
+    "abilities": [
+      "HAND-TO-HAND COMBAT",
+      "ESPIONAGE",
+      "MARKSMANSHIP"
+    ],
+    "history": "Historical personnel records classified.",
+    "notes": "LEVEL 04 CLEARANCE REQUIRED."
+  },
+
+  {
+    "id": "test-character",
+    "file": "003",
+    "name": "CHARACTER NAME",
+    "group": "other",
+    "status": "CLASSIFIED",
+    "alias": "UNKNOWN",
+    "affiliation": "UNKNOWN",
+    "role": "UNKNOWN",
+    "location": "UNKNOWN",
+    "description": "Personnel information classified.",
+    "abilities": [
+      "CLASSIFIED"
+    ],
+    "history": "Historical personnel records classified.",
+    "notes": "LEVEL 04 CLEARANCE REQUIRED."
+  }
 ]
