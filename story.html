@@ -1,335 +1,592 @@
 <!DOCTYPE html>
 <html lang="uk">
+
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>S.H.I.E.L.D. // MISSION ARCHIVE</title>
+<title>S.H.I.E.L.D. // STORY</title>
 
 <style>
 
-:root {
-    --bg:#020609;
-    --blue:#36c7ff;
-    --text:#d8f4ff;
-    --muted:#769aaa;
-    --green:#68e0a0;
-}
+/* =====================================================
+   BASE
+===================================================== */
 
 * {
-    box-sizing:border-box;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
 }
 
 body {
 
-    margin:0;
-    min-height:100vh;
-
     background:
-        radial-gradient(
-            circle at 50% 0%,
-            rgba(25,130,180,.14),
-            transparent 48%
+        linear-gradient(
+            rgba(0, 80, 120, 0.055) 1px,
+            transparent 1px
         ),
-        #020609;
+        linear-gradient(
+            90deg,
+            rgba(0, 80, 120, 0.055) 1px,
+            transparent 1px
+        ),
+        #02080d;
 
-    color:var(--text);
+    background-size: 32px 32px;
+
+    color: #c9e8f2;
 
     font-family:
-        "Segoe UI",
-        Arial,
-        sans-serif;
+        "Courier New",
+        monospace;
+
+    overflow-x: hidden;
 }
+
+
+/* =====================================================
+   SCANLINES
+===================================================== */
 
 body::before {
 
-    content:"";
+    content: "";
 
-    position:fixed;
-    inset:0;
+    position: fixed;
 
-    background-image:
+    inset: 0;
 
-        linear-gradient(
-            rgba(54,199,255,.035) 1px,
-            transparent 1px
-        ),
-
-        linear-gradient(
-            90deg,
-            rgba(54,199,255,.035) 1px,
-            transparent 1px
-        );
-
-    background-size:45px 45px;
-
-    pointer-events:none;
-}
-
-body::after {
-
-    content:"";
-
-    position:fixed;
-
-    top:-10%;
-
-    left:0;
-    right:0;
-
-    height:2px;
+    pointer-events: none;
 
     background:
-        linear-gradient(
-            90deg,
-            transparent,
-            var(--blue),
-            transparent
+        repeating-linear-gradient(
+            0deg,
+            rgba(255,255,255,0.012) 0px,
+            rgba(255,255,255,0.012) 1px,
+            transparent 1px,
+            transparent 4px
         );
 
-    box-shadow:0 0 12px var(--blue);
-
-    animation:scan 8s linear infinite;
-
-    pointer-events:none;
+    z-index: 999;
 }
 
-@keyframes scan {
 
-    from {top:-10%;}
-    to {top:110%;}
+/* =====================================================
+   LOADING SCREEN
+===================================================== */
+
+#loading-screen {
+
+    position: fixed;
+
+    inset: 0;
+
+    background: #02080d;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 5000;
+
+    transition:
+        opacity 0.8s ease,
+        visibility 0.8s ease;
+}
+
+
+#loading-screen.hidden {
+
+    opacity: 0;
+
+    visibility: hidden;
 
 }
 
-.terminal {
 
-    width:min(1120px,calc(100% - 24px));
+.loading-box {
 
-    margin:12px auto 40px;
+    width: min(650px, 90%);
 
-    min-height:90vh;
+    border: 1px solid #0b6385;
 
-    background:rgba(3,10,15,.96);
+    background: rgba(3, 15, 22, 0.96);
 
-    border:
-        1px solid rgba(54,199,255,.24);
+    padding: 30px;
 
     box-shadow:
-        0 0 35px rgba(0,140,210,.08);
+        0 0 35px rgba(0, 180, 255, 0.12);
+
 }
 
-.topbar {
 
-    height:56px;
+.loading-header {
 
-    padding:0 20px;
+    color: #39cfff;
 
-    display:flex;
+    letter-spacing: 4px;
 
-    justify-content:space-between;
+    margin-bottom: 25px;
 
-    align-items:center;
-
-    border-bottom:
-        1px solid rgba(54,199,255,.24);
-
-    background:rgba(7,20,29,.95);
-
-    font-family:Consolas,monospace;
-
-    font-size:11px;
-
-    letter-spacing:1.5px;
 }
 
-.system-name {
 
-    color:var(--blue);
+.loading-terminal {
 
-    text-shadow:0 0 9px rgba(54,199,255,.65);
+    min-height: 150px;
+
+    color: #72c8df;
+
+    line-height: 1.8;
+
+    font-size: 13px;
+
 }
 
-.status {
 
-    color:var(--green);
+.loading-line {
+
+    opacity: 0;
+
+    animation:
+        terminalLine 0.25s forwards;
+
 }
 
-.content {
 
-    padding:clamp(25px,5vw,65px);
+@keyframes terminalLine {
+
+    from {
+        opacity: 0;
+        transform: translateX(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
 }
 
-.return {
 
-    display:inline-block;
+.progress-container {
 
-    margin-bottom:40px;
+    margin-top: 20px;
 
-    color:var(--blue);
+    height: 5px;
 
-    text-decoration:none;
+    background: #04131b;
 
-    font-family:Consolas,monospace;
+    border: 1px solid #0b526c;
 
-    font-size:10px;
+}
 
-    letter-spacing:2px;
+
+.progress {
+
+    height: 100%;
+
+    width: 0%;
+
+    background: #39cfff;
+
+    box-shadow:
+        0 0 12px #39cfff;
+
+    animation:
+        loadingProgress 2.7s forwards;
+
+}
+
+
+@keyframes loadingProgress {
+
+    from {
+        width: 0%;
+    }
+
+    to {
+        width: 100%;
+    }
+
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+#site {
+
+    opacity: 0;
+
+    transition: opacity 0.8s ease;
+
+}
+
+
+#site.loaded {
+
+    opacity: 1;
+
+}
+
+
+.container {
+
+    width: min(1100px, 92%);
+
+    margin: auto;
+
+    padding:
+        45px 0
+        90px;
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header {
+
+    position: relative;
 
     border:
-        1px solid rgba(54,199,255,.2);
+        1px solid #0b6385;
 
-    padding:10px 15px;
+    background:
+        rgba(3, 15, 22, 0.94);
+
+    padding: 30px;
+
+    margin-bottom: 25px;
+
+    box-shadow:
+        0 0 30px
+        rgba(0, 180, 255, 0.08);
+
 }
 
-.classification {
 
-    color:var(--blue);
+.header::before {
 
-    font-family:Consolas,monospace;
+    content: "";
 
-    font-size:10px;
+    position: absolute;
 
-    letter-spacing:4px;
+    left: 0;
+    top: 0;
+
+    width: 100%;
+
+    height: 2px;
+
+    background: #39cfff;
+
+    box-shadow:
+        0 0 15px #39cfff;
+
 }
 
-h1 {
 
-    margin:15px 0 10px;
+.system {
 
-    font-size:clamp(35px,7vw,62px);
+    color: #39cfff;
 
-    font-weight:300;
+    font-size: 12px;
 
-    letter-spacing:6px;
+    letter-spacing: 4px;
+
 }
+
+
+.title {
+
+    margin:
+        20px 0 8px;
+
+    color: #8be6ff;
+
+    font-size:
+        clamp(35px, 7vw, 70px);
+
+    letter-spacing: 7px;
+
+    text-shadow:
+        0 0 15px
+        rgba(57, 207, 255, 0.35);
+
+}
+
 
 .subtitle {
 
-    color:var(--muted);
+    color: #5d91a5;
 
-    font-family:Consolas,monospace;
+    letter-spacing: 3px;
 
-    font-size:11px;
+    font-size: 12px;
 
-    letter-spacing:2px;
 }
 
-.divider {
 
-    height:1px;
+/* =====================================================
+   DECORATIVE LINE
+===================================================== */
 
-    margin:45px 0;
+.interface-line {
+
+    height: 1px;
+
+    margin:
+        25px 0;
 
     background:
         linear-gradient(
             90deg,
             transparent,
-            var(--blue),
+            #0b6385,
             transparent
         );
 
-    box-shadow:0 0 10px rgba(54,199,255,.3);
+    position: relative;
+
 }
 
 
-/* ACTS */
+.interface-line::after {
 
-.act {
+    content: "";
 
-    margin:25px 0;
+    position: absolute;
 
-    padding:30px;
+    left: 50%;
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(8,24,35,.95),
-            rgba(3,11,17,.96)
-        );
+    top: -3px;
+
+    width: 7px;
+
+    height: 7px;
+
+    background: #39cfff;
+
+    box-shadow:
+        0 0 12px #39cfff;
+
+    transform:
+        translateX(-50%)
+        rotate(45deg);
+
+}
+
+
+/* =====================================================
+   STORY CONTENT
+===================================================== */
+
+#story-content {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+
+}
+
+
+.story-section {
+
+    position: relative;
 
     border:
-        1px solid rgba(54,199,255,.17);
+        1px solid #0b526c;
 
-    border-left:
-        2px solid rgba(54,199,255,.5);
+    background:
+        rgba(4, 17, 24, 0.94);
+
+    padding: 27px;
+
+    box-shadow:
+        inset 0 0 25px
+        rgba(0, 120, 170, 0.035);
+
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease;
+
 }
 
-.act-number {
 
-    color:var(--blue);
+.story-section:hover {
 
-    font-family:Consolas,monospace;
+    border-color: #1687ad;
 
-    font-size:10px;
+    box-shadow:
+        0 0 18px
+        rgba(57, 207, 255, 0.08);
 
-    letter-spacing:3px;
-
-    margin-bottom:12px;
 }
 
-.act-title {
 
-    font-size:26px;
+.story-section::before {
 
-    margin-bottom:20px;
+    content: "";
+
+    position: absolute;
+
+    left: -1px;
+
+    top: 18px;
+
+    width: 3px;
+
+    height: 55px;
+
+    background: #39cfff;
+
+    box-shadow:
+        0 0 12px #39cfff;
+
 }
 
-.act-text {
 
-    color:#bfd8e2;
+.story-number {
 
-    font-size:16px;
+    color: #39cfff;
 
-    line-height:1.85;
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 12px;
+
 }
 
-.quote {
 
-    margin:25px 0;
+.story-section h2 {
 
-    padding:18px 22px;
+    color: #8be6ff;
 
-    border-left:2px solid var(--blue);
+    font-size: 21px;
 
-    background:rgba(54,199,255,.045);
+    letter-spacing: 3px;
 
-    color:#a9d9eb;
+    margin:
+        0 0 20px;
 
-    font-style:italic;
 }
+
+
+.story-content {
+
+    color: #b8d6df;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size: 16px;
+
+    line-height: 1.85;
+
+    white-space: pre-line;
+
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
 
 .footer {
 
-    margin-top:70px;
+    margin-top: 30px;
 
-    padding-top:25px;
+    border:
+        1px solid #0b4055;
 
-    border-top:
-        1px solid rgba(54,199,255,.14);
+    padding: 18px;
 
-    color:#466a7a;
+    text-align: center;
 
-    font-family:Consolas,monospace;
+    color: #426b7a;
 
-    font-size:9px;
+    font-size: 10px;
 
-    letter-spacing:1.5px;
+    letter-spacing: 3px;
+
 }
 
-@media(max-width:650px) {
 
-    .terminal {
-        width:calc(100% - 10px);
+/* =====================================================
+   ERROR
+===================================================== */
+
+.error {
+
+    border:
+        1px solid #ff5577;
+
+    color: #ff7892;
+
+    padding: 25px;
+
+    background:
+        rgba(60, 5, 20, .2);
+
+    line-height: 1.7;
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+
+    .container {
+
+        width: 94%;
+
+        padding-top: 25px;
+
     }
 
-    .content {
-        padding:25px 17px;
+    .header {
+
+        padding: 22px;
+
     }
 
-    .topbar {
-        padding:0 11px;
-        font-size:8px;
+    .title {
+
+        letter-spacing: 4px;
+
+    }
+
+    .story-section {
+
+        padding: 22px;
+
+    }
+
+    .story-content {
+
+        font-size: 15px;
+
     }
 
 }
@@ -338,151 +595,393 @@ h1 {
 
 </head>
 
+
 <body>
 
-<div class="terminal">
 
-    <div class="topbar">
+<!-- =====================================================
+     LOADING SCREEN
+===================================================== -->
 
-        <div class="system-name">
+<div id="loading-screen">
+
+    <div class="loading-box">
+
+        <div class="loading-header">
             S.H.I.E.L.D. // SECURE TERMINAL
         </div>
 
-        <div class="status">
-            ● ARCHIVE ONLINE
+        <div
+            class="loading-terminal"
+            id="loading-terminal"
+        ></div>
+
+        <div class="progress-container">
+
+            <div class="progress"></div>
+
         </div>
 
     </div>
 
-
-    <main class="content">
-
-        <a
-            href="index.html"
-            class="return"
-        >
-            &lt; RETURN TO MAIN DATABASE
-        </a>
+</div>
 
 
-        <div class="classification">
-            S.H.I.E.L.D. // MISSION ARCHIVE
-        </div>
+<!-- =====================================================
+     SITE
+===================================================== -->
 
-        <h1>
-            STORY
-        </h1>
+<div id="site">
 
-        <div class="subtitle">
-            CLASSIFIED MISSION HISTORY // LEVEL 04
-        </div>
+    <div class="container">
 
 
-        <div class="divider"></div>
+        <!-- HEADER -->
 
+        <header class="header">
 
-        <!-- PROLOGUE -->
-
-        <section class="act">
-
-            <div class="act-number">
-                ARCHIVE // PROLOGUE
+            <div class="system">
+                S.H.I.E.L.D. // CLASSIFIED DATABASE
             </div>
 
-            <div class="act-title">
-                ПРОЛОГ
+            <div
+                class="title"
+                id="page-title"
+            >
+                STORY
             </div>
 
-            <div class="act-text">
-
-                Тут буде твій пролог.
-
-                <div class="quote">
-                    Тут можна розміщувати ключову цитату,
-                    фрагмент документа або важливу
-                    інформацію про події.
-                </div>
-
+            <div
+                class="subtitle"
+                id="page-subtitle"
+            >
+                CLASSIFIED STORY DATABASE
             </div>
 
-        </section>
+        </header>
 
 
-        <!-- ACT I -->
-
-        <section class="act">
-
-            <div class="act-number">
-                ARCHIVE // ACT I
-            </div>
-
-            <div class="act-title">
-                ДОВІРА
-            </div>
-
-            <div class="act-text">
-
-                Тут буде опис першого акту
-                твоєї рольової.
-
-            </div>
-
-        </section>
+        <div class="interface-line"></div>
 
 
-        <!-- ACT II -->
+        <!-- STORY -->
 
-        <section class="act">
+        <main id="story-content">
 
-            <div class="act-number">
-                ARCHIVE // ACT II
-            </div>
+            <!--
+                STORY DATA WILL APPEAR HERE
+            -->
 
-            <div class="act-title">
-                НАЗВА АКТУ
-            </div>
-
-            <div class="act-text">
-
-                Тут буде інформація
-                про наступну частину сюжету.
-
-            </div>
-
-        </section>
+        </main>
 
 
-        <!-- ACT III -->
-
-        <section class="act">
-
-            <div class="act-number">
-                ARCHIVE // ACT III
-            </div>
-
-            <div class="act-title">
-                НАЗВА АКТУ
-            </div>
-
-            <div class="act-text">
-
-                Тут буде завершальна
-                частина сюжету.
-
-            </div>
-
-        </section>
+        <div class="interface-line"></div>
 
 
         <footer class="footer">
 
-            S.H.I.E.L.D. // MISSION ARCHIVE
+            S.H.I.E.L.D. DATABASE
+            //
+            CLASSIFIED INFORMATION
+            //
+            AUTHORIZED PERSONNEL ONLY
 
         </footer>
 
-    </main>
+
+    </div>
 
 </div>
 
+
+<script>
+
+/* =====================================================
+   LOADING TERMINAL
+===================================================== */
+
+const terminal =
+    document.getElementById(
+        "loading-terminal"
+    );
+
+
+const loadingMessages = [
+
+    "INITIALIZING SECURE CONNECTION...",
+
+    "CONNECTING TO S.H.I.E.L.D. DATABASE...",
+
+    "VERIFYING AUTHORIZATION...",
+
+    "ACCESS LEVEL: AUTHORIZED",
+
+    "LOCATING STORY DATABASE...",
+
+    "DECRYPTING FILES...",
+
+    "LOADING NARRATIVE DATA..."
+
+];
+
+
+loadingMessages.forEach(
+    (message, index) => {
+
+        setTimeout(() => {
+
+            const line =
+                document.createElement("div");
+
+            line.className =
+                "loading-line";
+
+            line.textContent =
+                "> " + message;
+
+            terminal.appendChild(line);
+
+        }, index * 260);
+
+    }
+);
+
+
+/* =====================================================
+   LOAD STORY DATA
+===================================================== */
+
+async function loadStory() {
+
+    try {
+
+        const response =
+            await fetch(
+                "story-data.json?cache=" +
+                Date.now()
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "story-data.json could not be loaded."
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        /* PAGE HEADER */
+
+        document.getElementById(
+            "page-title"
+        ).textContent =
+            data.title || "STORY";
+
+
+        document.getElementById(
+            "page-subtitle"
+        ).textContent =
+            data.subtitle ||
+            "CLASSIFIED STORY DATABASE";
+
+
+        /* STORY CONTAINER */
+
+        const container =
+            document.getElementById(
+                "story-content"
+            );
+
+
+        container.innerHTML = "";
+
+
+        /* CREATE SECTIONS */
+
+        if (
+            !data.sections ||
+            !Array.isArray(data.sections)
+        ) {
+
+            throw new Error(
+                "No story sections found."
+            );
+
+        }
+
+
+        data.sections.forEach(
+            section => {
+
+                const article =
+                    document.createElement(
+                        "article"
+                    );
+
+
+                article.className =
+                    "story-section";
+
+
+                const number =
+                    document.createElement(
+                        "div"
+                    );
+
+                number.className =
+                    "story-number";
+
+
+                number.textContent =
+                    "FILE // " +
+                    (section.number || "00");
+
+
+                const title =
+                    document.createElement(
+                        "h2"
+                    );
+
+
+                title.textContent =
+                    section.title ||
+                    "UNTITLED SECTION";
+
+
+                const content =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                content.className =
+                    "story-content";
+
+
+                content.textContent =
+                    section.content || "";
+
+
+                article.appendChild(
+                    number
+                );
+
+                article.appendChild(
+                    title
+                );
+
+                article.appendChild(
+                    content
+                );
+
+
+                container.appendChild(
+                    article
+                );
+
+            }
+        );
+
+
+        /* SHOW SITE */
+
+        setTimeout(() => {
+
+            document
+                .getElementById(
+                    "loading-screen"
+                )
+                .classList.add(
+                    "hidden"
+                );
+
+
+            document
+                .getElementById("site")
+                .classList.add(
+                    "loaded"
+                );
+
+        }, 3000);
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        const container =
+            document.getElementById(
+                "story-content"
+            );
+
+
+        container.innerHTML = `
+
+            <div class="error">
+
+                <strong>
+                    DATABASE ERROR
+                </strong>
+
+                <br><br>
+
+                STORY DATABASE COULD NOT
+                BE LOADED.
+
+                <br><br>
+
+                CHECK THAT
+                <strong>
+                    story-data.json
+                </strong>
+                EXISTS IN THE SAME
+                REPOSITORY.
+
+                <br><br>
+
+                ERROR:
+                ${error.message}
+
+            </div>
+
+        `;
+
+
+        document
+            .getElementById(
+                "loading-screen"
+            )
+            .classList.add(
+                "hidden"
+            );
+
+
+        document
+            .getElementById("site")
+            .classList.add(
+                "loaded"
+            );
+
+    }
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+loadStory();
+
+</script>
+
+
 </body>
+
 </html>
