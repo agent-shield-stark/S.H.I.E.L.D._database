@@ -1,886 +1,453 @@
 <!DOCTYPE html>
 <html lang="uk">
-
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<title>S.H.I.E.L.D. // ADMIN TERMINAL</title>
-
+<title>S.H.I.E.L.D. // ADMIN</title>
 
 <style>
 
-:root {
-
-    --bg: #02080d;
-
-    --panel: #06131b;
-
-    --panel2: #081923;
-
-    --cyan: #19cfff;
-
-    --cyan-soft: #5edfff;
-
-    --text: #d9f3ff;
-
-    --muted: #7194a5;
-
-    --green: #5df2ae;
-
-    --red: #ff5c6c;
-
-}
-
-
 * {
-
     box-sizing: border-box;
-
 }
 
+:root {
+    --bg: #02080d;
+    --panel: #06131b;
+    --panel2: #081a24;
+    --line: #0b6385;
+    --cyan: #39cfff;
+    --cyan2: #8be6ff;
+    --green: #5df2a4;
+    --red: #ff5577;
+    --text: #c9e7f2;
+    --muted: #5d91a5;
+}
 
 body {
-
     margin: 0;
-
-    min-height: 100vh;
-
     background:
-
-        linear-gradient(
-            rgba(20,130,170,.035) 1px,
-            transparent 1px
-        ),
-
-        linear-gradient(
-            90deg,
-            rgba(20,130,170,.035) 1px,
-            transparent 1px
-        ),
-
+        linear-gradient(rgba(15, 75, 100, .08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 75, 100, .08) 1px, transparent 1px),
         var(--bg);
-
-    background-size: 50px 50px;
-
+    background-size: 32px 32px;
     color: var(--text);
-
-    font-family:
-        "Courier New",
-        monospace;
-
+    font-family: "Courier New", monospace;
+    min-height: 100vh;
 }
 
-
-/* =========================
-   HEADER
-   ========================= */
-
-.header {
-
-    border-bottom:
-        1px solid
-        rgba(25,207,255,.35);
-
-    padding:
-        28px
-        clamp(20px,5vw,70px);
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(10,40,55,.4),
-            transparent
-        );
-
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,.55));
 }
-
-
-.system {
-
-    color: var(--cyan);
-
-    font-size: 11px;
-
-    letter-spacing: 4px;
-
-    margin-bottom: 25px;
-
-}
-
-
-h1 {
-
-    margin: 0;
-
-    font-weight: 300;
-
-    letter-spacing: 5px;
-
-    font-size:
-        clamp(30px,6vw,65px);
-
-}
-
-
-.subtitle {
-
-    margin-top: 12px;
-
-    color: var(--muted);
-
-    font-size: 11px;
-
-    letter-spacing: 3px;
-
-}
-
-
-/* =========================
-   CONTAINER
-   ========================= */
 
 .container {
-
-    width:
-        min(1200px,92%);
-
-    margin:
-        45px auto 100px;
-
+    width: min(1200px, 94%);
+    margin: 0 auto;
+    padding: 35px 0 80px;
 }
 
-
-/* =========================
-   TERMINAL
-   ========================= */
-
-.terminal {
-
-    border:
-        1px solid
-        rgba(25,207,255,.4);
-
-    background:
-        rgba(3,13,19,.85);
-
-    padding: 25px;
-
-    margin-bottom: 30px;
-
-}
-
-
-.terminal-title {
-
-    color: var(--cyan);
-
-    font-size: 11px;
-
-    letter-spacing: 3px;
-
-    margin-bottom: 15px;
-
-}
-
-
-.status {
-
-    color: var(--green);
-
-    font-size: 12px;
-
-}
-
-
-/* =========================
-   BUTTONS
-   ========================= */
-
-button {
-
-    font-family:
-        "Courier New",
-        monospace;
-
-    cursor: pointer;
-
-}
-
-
-.primary {
-
-    background:
-        rgba(25,207,255,.08);
-
-    color: var(--cyan);
-
-    border:
-        1px solid
-        rgba(25,207,255,.5);
-
-    padding:
-        13px 18px;
-
-    letter-spacing: 2px;
-
-    font-size: 11px;
-
-    transition: .2s;
-
-}
-
-
-.primary:hover {
-
-    background:
-        rgba(25,207,255,.16);
-
-    border-color:
-        var(--cyan);
-
-}
-
-
-.danger {
-
-    background:
-        rgba(255,92,108,.05);
-
-    color: var(--red);
-
-    border:
-        1px solid
-        rgba(255,92,108,.35);
-
-    padding:
-        11px 15px;
-
-    letter-spacing: 2px;
-
-    font-size: 10px;
-
-}
-
-
-.danger:hover {
-
-    background:
-        rgba(255,92,108,.12);
-
-}
-
-
-/* =========================
-   DATABASE
-   ========================= */
-
-.database {
-
-    display: grid;
-
-    grid-template-columns:
-        300px 1fr;
-
-    gap: 25px;
-
-}
-
-
-/* =========================
-   CHARACTER LIST
-   ========================= */
-
-.list {
-
-    border:
-        1px solid
-        rgba(25,207,255,.3);
-
-    background:
-        rgba(3,13,19,.8);
-
-    padding: 18px;
-
-}
-
-
-.list-title {
-
-    color: var(--cyan);
-
-    font-size: 11px;
-
-    letter-spacing: 3px;
-
-    padding-bottom: 15px;
-
-    border-bottom:
-        1px solid
-        rgba(25,207,255,.2);
-
-    margin-bottom: 15px;
-
-}
-
-
-.character-item {
-
-    width: 100%;
-
-    text-align: left;
-
-    background:
-        rgba(10,30,40,.4);
-
-    border:
-        1px solid
-        rgba(25,207,255,.12);
-
-    color: var(--text);
-
-    padding: 14px;
-
-    margin-bottom: 8px;
-
-    transition: .2s;
-
-}
-
-
-.character-item:hover {
-
-    border-color:
-        rgba(25,207,255,.5);
-
-    background:
-        rgba(25,207,255,.06);
-
-}
-
-
-.character-item.active {
-
-    border-left:
-        3px solid
-        var(--cyan);
-
-    background:
-        rgba(25,207,255,.08);
-
-}
-
-
-.character-name {
-
-    display: block;
-
-    font-size: 12px;
-
-    letter-spacing: 1px;
-
-}
-
-
-.character-group {
-
-    display: block;
-
-    margin-top: 6px;
-
-    color: var(--muted);
-
-    font-size: 9px;
-
-    letter-spacing: 2px;
-
-}
-
-
-/* =========================
-   EDITOR
-   ========================= */
-
-.editor {
-
-    border:
-        1px solid
-        rgba(25,207,255,.3);
-
-    background:
-        rgba(3,13,19,.8);
-
-    padding:
-        clamp(20px,4vw,35px);
-
-}
-
-
-.editor-title {
-
-    color: var(--cyan);
-
-    font-size: 12px;
-
-    letter-spacing: 3px;
-
+/* HEADER */
+
+.header {
+    border: 1px solid var(--line);
+    padding: 28px;
     margin-bottom: 25px;
-
+    background: rgba(3, 15, 22, .9);
+    box-shadow: 0 0 30px rgba(0, 180, 255, .08);
 }
 
+.system {
+    color: var(--cyan);
+    letter-spacing: 4px;
+    font-size: 13px;
+}
 
-.form-grid {
+.title {
+    font-size: clamp(32px, 6vw, 68px);
+    letter-spacing: 8px;
+    margin: 22px 0 5px;
+    color: var(--cyan2);
+    text-shadow: 0 0 15px rgba(57,207,255,.35);
+}
 
+.subtitle {
+    color: var(--muted);
+    letter-spacing: 3px;
+}
+
+/* NAV */
+
+.tabs {
     display: grid;
-
-    grid-template-columns:
-        repeat(
-            2,
-            minmax(0,1fr)
-        );
-
-    gap: 18px;
-
-}
-
-
-.field {
-
-    display: flex;
-
-    flex-direction: column;
-
+    grid-template-columns: repeat(4, 1fr);
     gap: 8px;
-
+    margin-bottom: 20px;
 }
 
-
-.field.full {
-
-    grid-column:
-        1 / -1;
-
+.tab {
+    background: #041018;
+    border: 1px solid #0b4e67;
+    color: #69a9bd;
+    padding: 16px;
+    font-family: inherit;
+    cursor: pointer;
+    letter-spacing: 2px;
+    transition: .2s;
 }
 
+.tab:hover,
+.tab.active {
+    border-color: var(--cyan);
+    color: var(--cyan);
+    background: #06202b;
+    box-shadow: 0 0 15px rgba(57,207,255,.1);
+}
+
+/* PANELS */
+
+.panel {
+    display: none;
+    border: 1px solid #0b4e67;
+    background: rgba(4,16,23,.94);
+    padding: 25px;
+}
+
+.panel.active {
+    display: block;
+}
+
+.panel-title {
+    color: var(--cyan);
+    letter-spacing: 4px;
+    margin-bottom: 25px;
+    font-size: 20px;
+}
+
+.section {
+    border: 1px solid #0b4055;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: rgba(5,20,28,.7);
+}
+
+/* FORM */
 
 label {
-
-    color: var(--muted);
-
-    font-size: 9px;
-
+    display: block;
+    color: #67a8bb;
+    font-size: 12px;
     letter-spacing: 2px;
-
+    margin-bottom: 7px;
 }
-
 
 input,
-select,
-textarea {
-
+textarea,
+select {
     width: 100%;
-
-    background:
-        #030d13;
-
-    border:
-        1px solid
-        rgba(25,207,255,.25);
-
-    color:
-        var(--text);
-
-    padding:
-        12px 13px;
-
-    font-family:
-        "Courier New",
-        monospace;
-
-    font-size: 13px;
-
+    border: 1px solid #0b526c;
+    background: #020b11;
+    color: var(--text);
+    padding: 13px;
+    font-family: inherit;
+    font-size: 14px;
     outline: none;
-
+    margin-bottom: 18px;
 }
-
 
 input:focus,
-select:focus,
-textarea:focus {
-
-    border-color:
-        var(--cyan);
-
-    box-shadow:
-        0 0 10px
-        rgba(25,207,255,.08);
-
+textarea:focus,
+select:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 10px rgba(57,207,255,.1);
 }
-
 
 textarea {
-
-    min-height: 140px;
-
+    min-height: 130px;
     resize: vertical;
-
     line-height: 1.6;
-
 }
 
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
 
-/* =========================
-   ABILITIES
-   ========================= */
+.full {
+    grid-column: 1 / -1;
+}
 
-.abilities-editor {
+/* BUTTONS */
 
+.buttons {
     display: flex;
-
-    flex-direction: column;
-
-    gap: 8px;
-
-}
-
-
-.ability-row {
-
-    display: flex;
-
-    gap: 8px;
-
-}
-
-
-.ability-row input {
-
-    flex: 1;
-
-}
-
-
-.remove-ability {
-
-    width: 42px;
-
-    color: var(--red);
-
-    border:
-        1px solid
-        rgba(255,92,108,.3);
-
-    background:
-        transparent;
-
-}
-
-
-.add-ability {
-
-    align-self: flex-start;
-
-    margin-top: 5px;
-
-}
-
-
-/* =========================
-   ACTIONS
-   ========================= */
-
-.actions {
-
-    display: flex;
-
     flex-wrap: wrap;
-
     gap: 10px;
-
-    margin-top: 30px;
-
-    padding-top: 25px;
-
-    border-top:
-        1px solid
-        rgba(25,207,255,.2);
-
+    margin-top: 10px;
 }
 
-
-/* =========================
-   EMPTY
-   ========================= */
-
-.empty {
-
-    color: var(--muted);
-
-    text-align: center;
-
-    padding: 80px 20px;
-
-    font-size: 11px;
-
+button {
+    border: 1px solid var(--cyan);
+    background: #04131b;
+    color: var(--cyan);
+    padding: 13px 18px;
+    font-family: inherit;
     letter-spacing: 2px;
-
-}
-
-
-/* =========================
-   PHOTO EDITOR
-   ========================= */
-
-#photoFile {
-
-    padding: 10px;
-
     cursor: pointer;
-
 }
 
+button:hover {
+    background: #073040;
+    box-shadow: 0 0 15px rgba(57,207,255,.15);
+}
 
-.photo-preview {
+button.green {
+    border-color: var(--green);
+    color: var(--green);
+}
 
-    margin-top: 15px;
+button.red {
+    border-color: var(--red);
+    color: var(--red);
+}
 
-    width: 220px;
+button.gray {
+    border-color: #446675;
+    color: #7fa2ae;
+}
 
-    min-height: 120px;
+/* CHARACTER LIST */
 
-    border:
-        1px solid
-        rgba(25,207,255,.25);
+.character-list {
+    display: grid;
+    gap: 10px;
+}
 
-    background:
-        rgba(0,10,15,.7);
-
+.character-item {
     display: flex;
-
+    justify-content: space-between;
     align-items: center;
-
-    justify-content: center;
-
-    overflow: hidden;
-
+    gap: 15px;
+    padding: 15px;
+    border: 1px solid #0b4055;
+    background: #031018;
 }
 
-
-.photo-preview img {
-
-    display: block;
-
-    width: 100%;
-
-    height: auto;
-
-    max-height: 300px;
-
-    object-fit: contain;
-
+.character-info strong {
+    color: var(--cyan2);
 }
 
+.character-info small {
+    color: var(--muted);
+}
 
-.photo-preview.empty::before {
+.character-item button {
+    padding: 8px 12px;
+    font-size: 11px;
+}
 
-    content:
-        "NO VISUAL DATA";
+/* STATUS */
 
-    color:
-        var(--muted);
+.status {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #164b5d;
+    color: var(--green);
+    min-height: 48px;
+}
 
-    font-size: 9px;
+/* STORY / RULES */
 
+.content-row {
+    border: 1px solid #0b4055;
+    padding: 20px;
+    margin-bottom: 15px;
+    background: #031018;
+}
+
+.row-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.row-number {
+    color: var(--cyan);
     letter-spacing: 2px;
-
-}
-      
-/* =========================
-   MOBILE
-   ========================= */
-
-@media(max-width:800px) {
-
-    .database {
-
-        grid-template-columns: 1fr;
-
-    }
-
 }
 
+/* MOBILE */
 
-@media(max-width:600px) {
+@media(max-width: 700px) {
 
-    .form-grid {
-
+    .grid {
         grid-template-columns: 1fr;
-
     }
 
-    .field.full {
-
-        grid-column:
-            auto;
-
+    .tabs {
+        grid-template-columns: 1fr 1fr;
     }
 
+    .character-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .title {
+        letter-spacing: 4px;
+    }
 }
 
 </style>
-
 </head>
-
 
 <body>
 
+<div class="container">
 
-<header class="header">
-
-    <div class="system">
-
-        S.H.I.E.L.D. //
-        SECURE ADMINISTRATIVE TERMINAL
-
-    </div>
-
-
-    <h1>
-
-        DATABASE CONTROL
-
-    </h1>
-
-
-    <div class="subtitle">
-
-        PERSONNEL DATABASE MANAGEMENT //
-        LEVEL 07 CLEARANCE
-
-    </div>
-
-</header>
-
-
-
-<main class="container">
-
-
-<!-- =========================
-     TERMINAL
-     ========================= -->
-
-<div class="terminal">
-
-    <div class="terminal-title">
-
-        SYSTEM STATUS
-
-    </div>
-
-
-    <div
-        id="systemStatus"
-        class="status"
-    >
-
-        > INITIALIZING DATABASE...
-
-    </div>
-
-
-    <br>
-
-
-    <button
-        class="primary"
-        onclick="createNewCharacter()"
-    >
-
-        + ADD NEW CHARACTER
-
-    </button>
-
-
-    <button
-        class="primary"
-        onclick="downloadDatabase()"
-    >
-
-        ↓ EXPORT DATABASE
-
-    </button>
-
-
-    <input
-        type="file"
-        id="jsonFile"
-        accept=".json"
-        style="display:none"
-        onchange="importDatabase(event)"
-    >
-
-
-    <button
-        class="primary"
-        onclick="document.getElementById('jsonFile').click()"
-    >
-
-        ↑ IMPORT DATABASE
-
-    </button>
-
-</div>
-
-
-
-<!-- =========================
-     DATABASE
-     ========================= -->
-
-<div class="database">
-
-
-    <aside class="list">
-
-        <div class="list-title">
-
-            PERSONNEL FILES
-
+    <div class="header">
+        <div class="system">
+            S.H.I.E.L.D. // SECURE ADMIN TERMINAL
         </div>
 
+        <div class="title">
+            ADMIN
+        </div>
 
-        <div id="characterList">
+        <div class="subtitle">
+            CONTENT MANAGEMENT SYSTEM // LEVEL 10
+        </div>
+    </div>
 
-            <div class="empty">
 
-                LOADING...
+    <!-- TABS -->
+
+    <div class="tabs">
+
+        <button class="tab active" data-tab="personnel">
+            PERSONNEL
+        </button>
+
+        <button class="tab" data-tab="story">
+            STORY
+        </button>
+
+        <button class="tab" data-tab="rules">
+            RULES
+        </button>
+
+        <button class="tab" data-tab="main">
+            MAIN DATABASE
+        </button>
+
+    </div>
+
+
+    <!-- ================= PERSONNEL ================= -->
+
+    <section id="personnel" class="panel active">
+
+        <div class="panel-title">
+            // PERSONNEL DATABASE
+        </div>
+
+        <div class="section">
+
+            <label>SELECT PERSONNEL FILE</label>
+
+            <select id="characterSelect">
+                <option value="">— NEW CHARACTER —</option>
+            </select>
+
+            <div class="grid">
+
+                <div>
+                    <label>FILE NUMBER</label>
+                    <input id="charFile" placeholder="001">
+                </div>
+
+                <div>
+                    <label>NAME</label>
+                    <input id="charName" placeholder="WANDA MAXIMOFF">
+                </div>
+
+                <div>
+                    <label>STATUS</label>
+                    <input id="charStatus" placeholder="ACTIVE">
+                </div>
+
+                <div>
+                    <label>SECTION</label>
+
+                    <select id="charSection">
+                        <option>Avengers</option>
+                        <option>Agents of S.H.I.E.L.D.</option>
+                        <option>Other</option>
+                    </select>
+
+                </div>
+
+                <div class="full">
+                    <label>IMAGE PATH</label>
+                    <input id="charImage" placeholder="images/wanda.jpg">
+                </div>
+
+                <div class="full">
+                    <label>SHORT DESCRIPTION</label>
+                    <textarea id="charDescription"></textarea>
+                </div>
+
+                <div class="full">
+                    <label>HISTORY</label>
+                    <textarea id="charHistory"></textarea>
+                </div>
+
+                <div class="full">
+                    <label>ABILITIES</label>
+                    <textarea id="charAbilities"></textarea>
+                </div>
+
+                <div class="full">
+                    <label>ARCHIVE NOTES</label>
+                    <textarea id="charNotes"></textarea>
+                </div>
+
+            </div>
+
+            <div class="buttons">
+
+                <button class="green" onclick="saveCharacter()">
+                    ✓ SAVE CHARACTER
+                </button>
+
+                <button class="red" onclick="deleteCharacter()">
+                    ✕ DELETE CHARACTER
+                </button>
+
+                <button class="gray" onclick="clearCharacterForm()">
+                    CLEAR
+                </button>
 
             </div>
 
         </div>
 
-    </aside>
 
+        <div class="section">
 
+            <div class="panel-title">
+                CURRENT PERSONNEL
+            </div>
 
-    <section class="editor">
-
-        <div
-            id="editorContent"
-        >
-
-            <div class="empty">
-
-                SELECT PERSONNEL FILE
-
-                <br><br>
-
-                OR CREATE NEW CHARACTER
-
+            <div id="characterList" class="character-list">
+                Loading...
             </div>
 
         </div>
@@ -888,1256 +455,977 @@ textarea {
     </section>
 
 
+    <!-- ================= STORY ================= -->
+
+    <section id="story" class="panel">
+
+        <div class="panel-title">
+            // STORY DATABASE
+        </div>
+
+        <div class="section">
+
+            <label>STORY TITLE</label>
+            <input id="storyTitle">
+
+            <label>STORY SUBTITLE</label>
+            <input id="storySubtitle">
+
+        </div>
+
+        <div id="storySections"></div>
+
+        <div class="buttons">
+
+            <button onclick="addStorySection()">
+                + ADD STORY SECTION
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= RULES ================= -->
+
+    <section id="rules" class="panel">
+
+        <div class="panel-title">
+            // PROTOCOL RULES
+        </div>
+
+        <div class="section">
+
+            <label>RULES TITLE</label>
+            <input id="rulesTitle">
+
+            <label>RULES SUBTITLE</label>
+            <input id="rulesSubtitle">
+
+        </div>
+
+        <div id="rulesSections"></div>
+
+        <div class="buttons">
+
+            <button onclick="addRuleSection()">
+                + ADD RULE SECTION
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <section id="main" class="panel">
+
+        <div class="panel-title">
+            // MAIN DATABASE
+        </div>
+
+        <div class="section">
+
+            <label>MAIN TITLE</label>
+            <input id="mainTitle">
+
+            <label>MAIN SUBTITLE</label>
+            <input id="mainSubtitle">
+
+            <label>MAIN DESCRIPTION</label>
+            <textarea id="mainDescription"></textarea>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= EXPORT ================= -->
+
+    <section class="section">
+
+        <div class="panel-title">
+            // DATABASE CONTROL
+        </div>
+
+        <div class="buttons">
+
+            <button class="green" onclick="exportCharacters()">
+                EXPORT PERSONNEL DATABASE
+            </button>
+
+            <button class="green" onclick="exportSite()">
+                EXPORT SITE DATABASE
+            </button>
+
+            <button onclick="exportEverything()">
+                EXPORT ALL DATABASES
+            </button>
+
+        </div>
+
+        <div id="status" class="status">
+            SYSTEM READY.
+        </div>
+
+    </section>
+
 </div>
-
-
-</main>
-
 
 
 <script>
 
-
-/* =========================================
+/* =========================================================
    DATABASE
-   ========================================= */
+========================================================= */
 
-let characters = [];
+let charactersData = {
+    characters: []
+};
 
-let selectedIndex = null;
+let siteData = {
+    main: {
+        title: "",
+        subtitle: "",
+        description: ""
+    },
+
+    story: {
+        title: "",
+        subtitle: "",
+        sections: []
+    },
+
+    rules: {
+        title: "",
+        subtitle: "",
+        sections: []
+    }
+};
 
 
-/* =========================================
-   LOAD DATABASE
-   ========================================= */
+/* =========================================================
+   LOAD DATABASES
+========================================================= */
 
-async function loadDatabase() {
+async function loadDatabases() {
 
     try {
 
-        const response =
-            await fetch(
-                "characters-data.json?cache=" +
-                Date.now()
-            );
+        const charactersResponse =
+            await fetch("characters-data.json?cache=" + Date.now());
 
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Database unavailable"
-            );
-
+        if (charactersResponse.ok) {
+            charactersData = await charactersResponse.json();
         }
 
+    } catch (error) {
 
-        characters =
-            await response.json();
-
-
-        renderList();
-
-
-        document.getElementById(
-            "systemStatus"
-        ).textContent =
-            "> DATABASE ONLINE // " +
-            characters.length +
-            " PERSONNEL FILES LOADED";
-
-
-    } catch(error) {
-
-        console.error(error);
-
-
-        document.getElementById(
-            "systemStatus"
-        ).textContent =
-            "> DATABASE CONNECTION FAILED";
-
-    }
-
-}
-
-
-/* =========================================
-   CHARACTER LIST
-   ========================================= */
-
-function renderList() {
-
-    const list =
-        document.getElementById(
-            "characterList"
-        );
-
-
-    if (!characters.length) {
-
-        list.innerHTML = `
-
-            <div class="empty">
-
-                NO PERSONNEL FILES
-
-            </div>
-
-        `;
-
-        return;
+        console.log("Characters database not loaded.");
 
     }
 
 
-    list.innerHTML =
-        characters
-        .map(
-            (character,index) => `
+    try {
 
-                <button
-                    class="character-item ${
-                        index === selectedIndex
-                            ? "active"
-                            : ""
-                    }"
-                    onclick="selectCharacter(${index})"
-                >
+        const siteResponse =
+            await fetch("site-data.json?cache=" + Date.now());
 
-                    <span class="character-name">
+        if (siteResponse.ok) {
+            siteData = await siteResponse.json();
+        }
 
-                        ${escapeHTML(
-                            character.name ||
-                            "CLASSIFIED"
-                        )}
+    } catch (error) {
 
-                    </span>
-
-
-                    <span class="character-group">
-
-                        ${
-                            character.group ||
-                            "UNASSIGNED"
-                        }
-
-                    </span>
-
-                </button>
-
-            `
-        )
-        .join("");
-
-}
-
-
-/* =========================================
-   SELECT
-   ========================================= */
-
-function selectCharacter(index) {
-
-    selectedIndex = index;
-
-    renderList();
-
-    renderEditor(
-        characters[index]
-    );
-
-}
-
-
-/* =========================================
-   EDITOR
-   ========================================= */
-
-function renderEditor(character) {
-
-    const editor =
-        document.getElementById(
-            "editorContent"
-        );
-
-
-    editor.innerHTML = `
-
-        <div class="editor-title">
-
-            PERSONNEL FILE //
-            ${escapeHTML(
-                character.file ||
-                "NEW"
-            )}
-
-        </div>
-
-
-        <div class="form-grid">
-
-
-            ${field(
-                "FILE NUMBER",
-                "file",
-                character.file
-            )}
-
-
-            ${field(
-                "DATABASE ID",
-                "id",
-                character.id
-            )}
-
-
-            ${field(
-                "DISPLAY NAME",
-                "name",
-                character.name
-            )}
-
-
-            ${field(
-                "FULL NAME",
-                "fullName",
-                character.fullName
-            )}
-
-
-            ${field(
-                "ALIAS",
-                "alias",
-                character.alias
-            )}
-
-
-            ${field(
-                "AGE",
-                "age",
-                character.age
-            )}
-
-
-            ${field(
-                "AFFILIATION",
-                "affiliation",
-                character.affiliation
-            )}
-
-
-            ${field(
-                "ROLE",
-                "role",
-                character.role
-            )}
-
-
-            ${field(
-                "LOCATION",
-                "location",
-                character.location
-            )}
-
-
-            <div class="field full">
-
-    <label>
-        PERSONNEL PHOTO
-    </label>
-
-    <input
-        type="file"
-        id="photoFile"
-        accept="image/*"
-        onchange="previewPhoto(event)"
-    >
-
-    <input
-        id="field-photo"
-        value="${escapeAttribute(
-            character.photo || ""
-        )}"
-        placeholder="IMAGE DATA / URL"
-    >
-
-    <div
-        id="photoPreview"
-        class="photo-preview"
-    ></div>
-
-</div>
-
-
-            <div class="field">
-
-                <label>
-                    GROUP
-                </label>
-
-                <select
-                    id="field-group"
-                >
-
-                    <option
-                        value="avengers"
-                        ${character.group === "avengers"
-                            ? "selected"
-                            : ""}
-                    >
-                        AVENGERS
-                    </option>
-
-                    <option
-                        value="agents"
-                        ${character.group === "agents"
-                            ? "selected"
-                            : ""}
-                    >
-                        AGENTS OF S.H.I.E.L.D.
-                    </option>
-
-                    <option
-                        value="other"
-                        ${character.group === "other"
-                            ? "selected"
-                            : ""}
-                    >
-                        OTHER
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <div class="field">
-
-                <label>
-                    STATUS
-                </label>
-
-                <select
-                    id="field-status"
-                >
-
-                    <option
-                        value="ACTIVE"
-                        ${character.status === "ACTIVE"
-                            ? "selected"
-                            : ""}
-                    >
-                        ACTIVE
-                    </option>
-
-                    <option
-                        value="INACTIVE"
-                        ${character.status === "INACTIVE"
-                            ? "selected"
-                            : ""}
-                    >
-                        INACTIVE
-                    </option>
-
-                    <option
-                        value="MISSING"
-                        ${character.status === "MISSING"
-                            ? "selected"
-                            : ""}
-                    >
-                        MISSING
-                    </option>
-
-                    <option
-                        value="CLASSIFIED"
-                        ${character.status === "CLASSIFIED"
-                            ? "selected"
-                            : ""}
-                    >
-                        CLASSIFIED
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            ${textareaField(
-                "PERSONNEL SUMMARY",
-                "description",
-                character.description
-            )}
-
-
-            <div class="field full">
-
-                <label>
-                    ABILITIES
-                </label>
-
-
-                <div
-                    id="abilitiesEditor"
-                    class="abilities-editor"
-                >
-
-                </div>
-
-
-                <button
-                    type="button"
-                    class="primary add-ability"
-                    onclick="addAbility()"
-                >
-
-                    + ADD ABILITY
-
-                </button>
-
-            </div>
-
-
-            ${textareaField(
-                "PSYCHOLOGICAL PROFILE",
-                "personality",
-                character.personality
-            )}
-
-
-            ${textareaField(
-                "HISTORY",
-                "history",
-                character.history
-            )}
-
-
-            ${textareaField(
-                "RELATIONSHIPS",
-                "relationships",
-                character.relationships
-            )}
-
-
-            ${textareaField(
-                "ARCHIVE NOTES",
-                "notes",
-                character.notes
-            )}
-
-        </div>
-
-
-        <div class="actions">
-
-            <button
-                class="primary"
-                onclick="saveCharacter()"
-            >
-
-                ✓ SAVE CHANGES
-
-            </button>
-
-
-            <button
-                class="danger"
-                onclick="deleteCharacter()"
-            >
-
-                DELETE FILE
-
-            </button>
-
-        </div>
-
-    `;
-
-
-    renderAbilities(
-    character.abilities || []
-);
-
-showPhotoPreview(
-    character.photo || ""
-);
-
-}
-
-
-/* =========================================
-   FIELD
-   ========================================= */
-
-function field(
-    label,
-    key,
-    value
-) {
-
-    return `
-
-        <div class="field">
-
-            <label>
-
-                ${label}
-
-            </label>
-
-
-            <input
-                id="field-${key}"
-                value="${escapeAttribute(
-                    value || ""
-                )}"
-            >
-
-        </div>
-
-    `;
-
-}
-
-
-/* =========================================
-   TEXTAREA
-   ========================================= */
-
-function textareaField(
-    label,
-    key,
-    value
-) {
-
-    return `
-
-        <div class="field full">
-
-            <label>
-
-                ${label}
-
-            </label>
-
-
-            <textarea
-                id="field-${key}"
-            >${escapeHTML(
-                value || ""
-            )}</textarea>
-
-        </div>
-
-    `;
-
-}
-
-
-/* =========================================
-   ABILITIES
-   ========================================= */
-
-function renderAbilities(
-    abilities
-) {
-
-    const container =
-        document.getElementById(
-            "abilitiesEditor"
-        );
-
-
-    container.innerHTML = "";
-
-
-    abilities.forEach(
-        ability =>
-            addAbility(
-                ability
-            )
-    );
-
-}
-
-
-function addAbility(
-    value = ""
-) {
-
-    const container =
-        document.getElementById(
-            "abilitiesEditor"
-        );
-
-
-    if (!container) return;
-
-
-    const row =
-        document.createElement(
-            "div"
-        );
-
-
-    row.className =
-        "ability-row";
-
-
-    row.innerHTML = `
-
-        <input
-            class="ability-input"
-            value="${escapeAttribute(
-                value
-            )}"
-            placeholder="ABILITY"
-        >
-
-
-        <button
-            type="button"
-            class="remove-ability"
-            onclick="this.parentElement.remove()"
-        >
-
-            ×
-
-        </button>
-
-    `;
-
-
-    container.appendChild(
-        row
-    );
-
-}
-
-/* =========================================
-   PHOTO UPLOAD
-   ========================================= */
-
-function previewPhoto(event) {
-
-    const file =
-        event.target.files[0];
-
-    if (!file) return;
-
-
-    if (!file.type.startsWith("image/")) {
-
-        alert(
-            "PLEASE SELECT AN IMAGE FILE."
-        );
-
-        return;
+        console.log("Site database not loaded.");
 
     }
 
 
-    const reader =
-        new FileReader();
+    normalizeData();
+
+    populateCharacterSelect();
+
+    populateCharacterList();
+
+    populateSiteEditor();
+
+    setStatus("DATABASES LOADED.");
+
+}
 
 
-    reader.onload =
-        function(e) {
+/* =========================================================
+   NORMALIZE
+========================================================= */
 
-            const imageData =
-                e.target.result;
+function normalizeData() {
 
+    if (!Array.isArray(charactersData.characters)) {
 
-            const photoField =
-                document.getElementById(
-                    "field-photo"
-                );
+        if (Array.isArray(charactersData)) {
+            charactersData = {
+                characters: charactersData
+            };
+        } else {
+            charactersData.characters = [];
+        }
 
-
-            if (photoField) {
-
-                photoField.value =
-                    imageData;
-
-            }
+    }
 
 
-            showPhotoPreview(
-                imageData
-            );
+    if (!siteData.main) {
 
+        siteData.main = {
+            title: "",
+            subtitle: "",
+            description: ""
         };
 
-
-    reader.readAsDataURL(
-        file
-    );
-
-}
+    }
 
 
-/* =========================================
-   PHOTO PREVIEW
-   ========================================= */
+    if (!siteData.story) {
 
-function showPhotoPreview(
-    imageData
-) {
-
-    const preview =
-        document.getElementById(
-            "photoPreview"
-        );
-
-
-    if (!preview) return;
-
-
-    if (!imageData) {
-
-        preview.classList.add(
-            "empty"
-        );
-
-        preview.innerHTML = "";
-
-        return;
+        siteData.story = {
+            title: "STORY",
+            subtitle: "",
+            sections: []
+        };
 
     }
 
 
-    preview.classList.remove(
-        "empty"
-    );
+    if (!Array.isArray(siteData.story.sections)) {
+        siteData.story.sections = [];
+    }
 
 
-    preview.innerHTML = `
+    if (!siteData.rules) {
 
-        <img
-            src="${escapeAttribute(
-                imageData
-            )}"
-            alt="Personnel photo preview"
-        >
+        siteData.rules = {
+            title: "PROTOCOL",
+            subtitle: "",
+            sections: []
+        };
 
-    `;
+    }
+
+
+    if (!Array.isArray(siteData.rules.sections)) {
+        siteData.rules.sections = [];
+    }
 
 }
 
-      
-/* =========================================
-   SAVE CHARACTER
-   ========================================= */
+
+/* =========================================================
+   TABS
+========================================================= */
+
+document.querySelectorAll(".tab").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        document.querySelectorAll(".tab")
+            .forEach(btn => btn.classList.remove("active"));
+
+        document.querySelectorAll(".panel")
+            .forEach(panel => panel.classList.remove("active"));
+
+        button.classList.add("active");
+
+        document.getElementById(button.dataset.tab)
+            .classList.add("active");
+
+    });
+
+});
+
+
+/* =========================================================
+   CHARACTERS
+========================================================= */
+
+function populateCharacterSelect() {
+
+    const select = document.getElementById("characterSelect");
+
+    select.innerHTML =
+        '<option value="">— NEW CHARACTER —</option>';
+
+    charactersData.characters.forEach((character, index) => {
+
+        const option = document.createElement("option");
+
+        option.value = index;
+
+        option.textContent =
+            `${character.file || String(index + 1).padStart(3, "0")} // ${character.name || "CHARACTER"}`;
+
+        select.appendChild(option);
+
+    });
+
+}
+
+
+document.getElementById("characterSelect")
+.addEventListener("change", function() {
+
+    if (this.value === "") {
+
+        clearCharacterForm();
+        return;
+
+    }
+
+    const character =
+        charactersData.characters[Number(this.value)];
+
+    if (!character) return;
+
+    document.getElementById("charFile").value =
+        character.file || "";
+
+    document.getElementById("charName").value =
+        character.name || "";
+
+    document.getElementById("charStatus").value =
+        character.status || "";
+
+    document.getElementById("charSection").value =
+        character.section || "Other";
+
+    document.getElementById("charImage").value =
+        character.image || "";
+
+    document.getElementById("charDescription").value =
+        character.description || "";
+
+    document.getElementById("charHistory").value =
+        character.history || "";
+
+    document.getElementById("charAbilities").value =
+        character.abilities || "";
+
+    document.getElementById("charNotes").value =
+        character.notes || "";
+
+});
+
 
 function saveCharacter() {
 
-    if (
-        selectedIndex === null
-    ) {
+    const select =
+        document.getElementById("characterSelect");
 
-        return;
-
-    }
-
-
-    const character =
-        characters[selectedIndex];
-
-
-    character.file =
-        getValue("file");
-
-
-    character.id =
-        getValue("id");
-
-
-    character.name =
-        getValue("name");
-
-
-    character.fullName =
-        getValue("fullName");
-
-
-    character.alias =
-        getValue("alias");
-
-
-    character.age =
-        getValue("age");
-
-
-    character.affiliation =
-        getValue("affiliation");
-
-
-    character.role =
-        getValue("role");
-
-
-    character.location =
-        getValue("location");
-
-
-    character.photo =
-        getValue("photo");
-
-
-    character.group =
-        document.getElementById(
-            "field-group"
-        ).value;
-
-
-    character.status =
-        document.getElementById(
-            "field-status"
-        ).value;
-
-
-    character.description =
-        getValue("description");
-
-
-    character.personality =
-        getValue("personality");
-
-
-    character.history =
-        getValue("history");
-
-
-    character.relationships =
-        getValue("relationships");
-
-
-    character.notes =
-        getValue("notes");
-
-
-    character.abilities =
-        Array.from(
-            document.querySelectorAll(
-                ".ability-input"
-            )
-        )
-        .map(
-            input =>
-                input.value.trim()
-        )
-        .filter(
-            value => value
-        );
-
-
-    renderList();
-
-
-    document.getElementById(
-        "systemStatus"
-    ).textContent =
-        "> FILE UPDATED // EXPORT DATABASE TO SAVE CHANGES";
-
-
-    alert(
-        "PERSONNEL FILE UPDATED.\n\n" +
-        "Press EXPORT DATABASE to download the updated JSON."
-    );
-
-}
-
-
-/* =========================================
-   NEW CHARACTER
-   ========================================= */
-
-function createNewCharacter() {
-
-    const newCharacter = {
+    const character = {
 
         id:
-            "new-character-" +
-            Date.now(),
-
-        file:
-            String(
-                characters.length + 1
-            ).padStart(
-                3,
-                "0"
+            slugify(
+                document.getElementById("charName").value
             ),
 
+        file:
+            document.getElementById("charFile").value,
+
         name:
-            "NEW CHARACTER",
-
-        fullName:
-            "",
-
-        group:
-            "other",
+            document.getElementById("charName").value,
 
         status:
-            "CLASSIFIED",
+            document.getElementById("charStatus").value,
 
-        alias:
-            "",
+        section:
+            document.getElementById("charSection").value,
 
-        age:
-            "",
-
-        affiliation:
-            "",
-
-        role:
-            "",
-
-        location:
-            "",
-
-        photo:
-            "",
+        image:
+            document.getElementById("charImage").value,
 
         description:
-            "",
-
-        abilities:
-            [],
-
-        personality:
-            "",
+            document.getElementById("charDescription").value,
 
         history:
-            "",
+            document.getElementById("charHistory").value,
 
-        relationships:
-            "",
+        abilities:
+            document.getElementById("charAbilities").value,
 
         notes:
-            ""
+            document.getElementById("charNotes").value
 
     };
 
 
-    characters.push(
-        newCharacter
-    );
+    if (!character.name.trim()) {
+
+        alert("CHARACTER NAME REQUIRED.");
+        return;
+
+    }
 
 
-    selectedIndex =
-        characters.length - 1;
+    if (select.value === "") {
+
+        charactersData.characters.push(character);
+
+        setStatus("NEW PERSONNEL FILE CREATED.");
+
+    } else {
+
+        const index = Number(select.value);
+
+        charactersData.characters[index] =
+            character;
+
+        setStatus("PERSONNEL FILE UPDATED.");
+
+    }
 
 
-    renderList();
+    populateCharacterSelect();
 
-    renderEditor(
-        newCharacter
-    );
+    populateCharacterList();
 
-
-    document.getElementById(
-        "systemStatus"
-    ).textContent =
-        "> NEW PERSONNEL FILE CREATED // UNSAVED";
-
+    clearCharacterForm(false);
 
 }
 
-
-/* =========================================
-   DELETE
-   ========================================= */
 
 function deleteCharacter() {
 
-    if (
-        selectedIndex === null
-    ) {
+    const select =
+        document.getElementById("characterSelect");
 
+    if (select.value === "") {
+
+        alert("SELECT A CHARACTER FIRST.");
         return;
 
     }
 
+    const index = Number(select.value);
 
     const character =
-        characters[selectedIndex];
+        charactersData.characters[index];
+
+    if (!confirm(
+        `DELETE ${character.name || "THIS FILE"}?`
+    )) return;
 
 
-    const confirmed =
-        confirm(
-            "DELETE PERSONNEL FILE?\n\n" +
-            character.name
-        );
+    charactersData.characters.splice(index, 1);
 
+    populateCharacterSelect();
 
-    if (!confirmed) {
+    populateCharacterList();
 
-        return;
+    clearCharacterForm(false);
 
-    }
-
-
-    characters.splice(
-        selectedIndex,
-        1
-    );
-
-
-    selectedIndex = null;
-
-
-    renderList();
-
-
-    document.getElementById(
-        "editorContent"
-    ).innerHTML = `
-
-        <div class="empty">
-
-            PERSONNEL FILE DELETED
-
-        </div>
-
-    `;
-
-
-    document.getElementById(
-        "systemStatus"
-    ).textContent =
-        "> FILE DELETED // EXPORT DATABASE TO SAVE CHANGES";
+    setStatus("PERSONNEL FILE DELETED.");
 
 }
 
 
-/* =========================================
-   EXPORT
-   ========================================= */
+function clearCharacterForm(changeSelect = true) {
 
-function downloadDatabase() {
+    if (changeSelect) {
+
+        document.getElementById("characterSelect").value = "";
+
+    }
+
+    document.getElementById("charFile").value = "";
+
+    document.getElementById("charName").value = "";
+
+    document.getElementById("charStatus").value = "";
+
+    document.getElementById("charSection").value =
+        "Avengers";
+
+    document.getElementById("charImage").value = "";
+
+    document.getElementById("charDescription").value = "";
+
+    document.getElementById("charHistory").value = "";
+
+    document.getElementById("charAbilities").value = "";
+
+    document.getElementById("charNotes").value = "";
+
+}
+
+
+function populateCharacterList() {
+
+    const list =
+        document.getElementById("characterList");
+
+    list.innerHTML = "";
+
+    if (!charactersData.characters.length) {
+
+        list.innerHTML =
+            "<div>NO PERSONNEL FILES.</div>";
+
+        return;
+
+    }
+
+
+    charactersData.characters.forEach((character, index) => {
+
+        const item =
+            document.createElement("div");
+
+        item.className = "character-item";
+
+        item.innerHTML = `
+
+            <div class="character-info">
+
+                <strong>
+                    ${escapeHtml(character.name || "UNKNOWN")}
+                </strong>
+
+                <br>
+
+                <small>
+                    FILE // ${escapeHtml(character.file || "---")}
+                    &nbsp; | &nbsp;
+                    ${escapeHtml(character.section || "Other")}
+                    &nbsp; | &nbsp;
+                    ${escapeHtml(character.status || "---")}
+                </small>
+
+            </div>
+
+            <button onclick="editCharacter(${index})">
+                EDIT
+            </button>
+
+        `;
+
+        list.appendChild(item);
+
+    });
+
+}
+
+
+function editCharacter(index) {
+
+    document.getElementById("characterSelect").value =
+        index;
+
+    document.getElementById("characterSelect")
+        .dispatchEvent(new Event("change"));
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/* =========================================================
+   STORY
+========================================================= */
+
+function populateSiteEditor() {
+
+    document.getElementById("mainTitle").value =
+        siteData.main.title || "";
+
+    document.getElementById("mainSubtitle").value =
+        siteData.main.subtitle || "";
+
+    document.getElementById("mainDescription").value =
+        siteData.main.description || "";
+
+
+    document.getElementById("storyTitle").value =
+        siteData.story.title || "";
+
+    document.getElementById("storySubtitle").value =
+        siteData.story.subtitle || "";
+
+
+    document.getElementById("rulesTitle").value =
+        siteData.rules.title || "";
+
+    document.getElementById("rulesSubtitle").value =
+        siteData.rules.subtitle || "";
+
+
+    renderStorySections();
+
+    renderRuleSections();
+
+}
+
+
+function renderStorySections() {
+
+    const container =
+        document.getElementById("storySections");
+
+    container.innerHTML = "";
+
+    siteData.story.sections.forEach((section, index) => {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "content-row";
+
+        div.innerHTML = `
+
+            <div class="row-head">
+
+                <div class="row-number">
+                    STORY FILE // ${String(index + 1).padStart(2, "0")}
+                </div>
+
+                <button
+                    class="red"
+                    onclick="removeStorySection(${index})">
+                    DELETE
+                </button>
+
+            </div>
+
+            <label>SECTION TITLE</label>
+
+            <input
+                value="${escapeAttribute(section.title || "")}"
+                oninput="siteData.story.sections[${index}].title = this.value">
+
+            <label>SECTION TEXT</label>
+
+            <textarea
+                oninput="siteData.story.sections[${index}].text = this.value"
+            >${escapeHtml(section.text || "")}</textarea>
+
+        `;
+
+        container.appendChild(div);
+
+    });
+
+}
+
+
+function addStorySection() {
+
+    siteData.story.sections.push({
+
+        id: "section-" + Date.now(),
+
+        title: "НОВА СЕКЦІЯ",
+
+        text: ""
+
+    });
+
+    renderStorySections();
+
+}
+
+
+function removeStorySection(index) {
+
+    if (!confirm("DELETE THIS STORY SECTION?")) return;
+
+    siteData.story.sections.splice(index, 1);
+
+    renderStorySections();
+
+}
+
+
+/* =========================================================
+   RULES
+========================================================= */
+
+function renderRuleSections() {
+
+    const container =
+        document.getElementById("rulesSections");
+
+    container.innerHTML = "";
+
+    siteData.rules.sections.forEach((section, index) => {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "content-row";
+
+        div.innerHTML = `
+
+            <div class="row-head">
+
+                <div class="row-number">
+                    RULE FILE // ${String(index + 1).padStart(2, "0")}
+                </div>
+
+                <button
+                    class="red"
+                    onclick="removeRuleSection(${index})">
+                    DELETE
+                </button>
+
+            </div>
+
+            <label>SECTION TITLE</label>
+
+            <input
+                value="${escapeAttribute(section.title || "")}"
+                oninput="siteData.rules.sections[${index}].title = this.value">
+
+            <label>SECTION TEXT</label>
+
+            <textarea
+                oninput="siteData.rules.sections[${index}].text = this.value"
+            >${escapeHtml(section.text || "")}</textarea>
+
+        `;
+
+        container.appendChild(div);
+
+    });
+
+}
+
+
+function addRuleSection() {
+
+    siteData.rules.sections.push({
+
+        id: "rule-" + Date.now(),
+
+        title: "НОВЕ ПРАВИЛО",
+
+        text: ""
+
+    });
+
+    renderRuleSections();
+
+}
+
+
+function removeRuleSection(index) {
+
+    if (!confirm("DELETE THIS RULE SECTION?")) return;
+
+    siteData.rules.sections.splice(index, 1);
+
+    renderRuleSections();
+
+}
+
+
+/* =========================================================
+   MAIN DATABASE
+========================================================= */
+
+document.getElementById("mainTitle")
+.addEventListener("input", function() {
+
+    siteData.main.title = this.value;
+
+});
+
+
+document.getElementById("mainSubtitle")
+.addEventListener("input", function() {
+
+    siteData.main.subtitle = this.value;
+
+});
+
+
+document.getElementById("mainDescription")
+.addEventListener("input", function() {
+
+    siteData.main.description = this.value;
+
+});
+
+
+document.getElementById("storyTitle")
+.addEventListener("input", function() {
+
+    siteData.story.title = this.value;
+
+});
+
+
+document.getElementById("storySubtitle")
+.addEventListener("input", function() {
+
+    siteData.story.subtitle = this.value;
+
+});
+
+
+document.getElementById("rulesTitle")
+.addEventListener("input", function() {
+
+    siteData.rules.title = this.value;
+
+});
+
+
+document.getElementById("rulesSubtitle")
+.addEventListener("input", function() {
+
+    siteData.rules.subtitle = this.value;
+
+});
+
+
+/* =========================================================
+   EXPORT
+========================================================= */
+
+function downloadJSON(data, filename) {
 
     const json =
-        JSON.stringify(
-            characters,
-            null,
-            2
-        );
-
+        JSON.stringify(data, null, 2);
 
     const blob =
         new Blob(
             [json],
-            {
-                type:
-                    "application/json"
-            }
+            { type: "application/json" }
         );
-
 
     const url =
-        URL.createObjectURL(
-            blob
-        );
-
+        URL.createObjectURL(blob);
 
     const link =
-        document.createElement(
-            "a"
-        );
-
+        document.createElement("a");
 
     link.href = url;
 
-    link.download =
-        "characters-data.json";
+    link.download = filename;
 
+    document.body.appendChild(link);
 
     link.click();
 
+    link.remove();
 
-    URL.revokeObjectURL(
-        url
-    );
-
-
-    document.getElementById(
-        "systemStatus"
-    ).textContent =
-        "> DATABASE EXPORTED // UPLOAD FILE TO GITHUB";
+    URL.revokeObjectURL(url);
 
 }
 
 
-/* =========================================
-   IMPORT
-   ========================================= */
+function exportCharacters() {
 
-function importDatabase(
-    event
-) {
+    downloadJSON(
+        charactersData,
+        "characters-data.json"
+    );
 
-    const file =
-        event.target.files[0];
-
-
-    if (!file) return;
-
-
-    const reader =
-        new FileReader();
-
-
-    reader.onload =
-        function(e) {
-
-            try {
-
-                const data =
-                    JSON.parse(
-                        e.target.result
-                    );
-
-
-                if (
-                    !Array.isArray(data)
-                ) {
-
-                    throw new Error(
-                        "Invalid database"
-                    );
-
-                }
-
-
-                characters =
-                    data;
-
-
-                selectedIndex =
-                    null;
-
-
-                renderList();
-
-
-                document.getElementById(
-                    "editorContent"
-                ).innerHTML = `
-
-                    <div class="empty">
-
-                        DATABASE IMPORTED
-
-                        <br><br>
-
-                        SELECT PERSONNEL FILE
-
-                    </div>
-
-                `;
-
-
-                document.getElementById(
-                    "systemStatus"
-                ).textContent =
-                    "> DATABASE IMPORTED // " +
-                    characters.length +
-                    " FILES LOADED";
-
-
-            } catch(error) {
-
-                alert(
-                    "ERROR: INVALID JSON DATABASE."
-                );
-
-            }
-
-        };
-
-
-    reader.readAsText(
-        file
+    setStatus(
+        "PERSONNEL DATABASE EXPORTED."
     );
 
 }
 
 
-/* =========================================
+function exportSite() {
+
+    downloadJSON(
+        siteData,
+        "site-data.json"
+    );
+
+    setStatus(
+        "SITE DATABASE EXPORTED."
+    );
+
+}
+
+
+function exportEverything() {
+
+    downloadJSON(
+        charactersData,
+        "characters-data.json"
+    );
+
+    setTimeout(() => {
+
+        downloadJSON(
+            siteData,
+            "site-data.json"
+        );
+
+    }, 500);
+
+    setStatus(
+        "ALL DATABASES EXPORTED."
+    );
+
+}
+
+
+/* =========================================================
    HELPERS
-   ========================================= */
+========================================================= */
 
-function getValue(
-    key
-) {
+function slugify(text) {
 
-    const element =
-        document.getElementById(
-            "field-" + key
-        );
-
-
-    return element
-        ? element.value.trim()
-        : "";
+    return text
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9а-яіїєґ]+/gi, "-")
+        .replace(/^-+|-+$/g, "");
 
 }
 
 
-function escapeHTML(
-    text
-) {
+function escapeHtml(text) {
 
-    const div =
-        document.createElement(
-            "div"
-        );
-
-
-    div.textContent =
-        text;
-
-
-    return div.innerHTML;
+    return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
 
 }
 
 
-function escapeAttribute(
-    text
-) {
+function escapeAttribute(text) {
 
-    return String(
-        text || ""
-    )
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-    .replace(
-        /</g,
-        "&lt;"
-    )
-    .replace(
-        />/g,
-        "&gt;"
-    );
+    return escapeHtml(text)
+        .replace(/"/g, "&quot;");
 
 }
 
 
-/* =========================================
+function setStatus(message) {
+
+    document.getElementById("status")
+        .textContent =
+        "> " + message;
+
+}
+
+
+/* =========================================================
    START
-   ========================================= */
+========================================================= */
 
-loadDatabase();
+loadDatabases();
 
 </script>
 
-
 </body>
-
 </html>
