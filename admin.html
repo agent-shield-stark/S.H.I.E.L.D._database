@@ -1072,11 +1072,33 @@ function renderEditor(character) {
             )}
 
 
-            ${field(
-                "PHOTO URL",
-                "photo",
-                character.photo
-            )}
+            <div class="field full">
+
+    <label>
+        PERSONNEL PHOTO
+    </label>
+
+    <input
+        type="file"
+        id="photoFile"
+        accept="image/*"
+        onchange="previewPhoto(event)"
+    >
+
+    <input
+        id="field-photo"
+        value="${escapeAttribute(
+            character.photo || ""
+        )}"
+        placeholder="IMAGE DATA / URL"
+    >
+
+    <div
+        id="photoPreview"
+        class="photo-preview"
+    ></div>
+
+</div>
 
 
             <div class="field">
