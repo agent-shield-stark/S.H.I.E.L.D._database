@@ -198,6 +198,98 @@ body::before {
 
 
 /* =====================================================
+   GITHUB PANEL
+===================================================== */
+
+.github-panel {
+
+    border:
+        1px solid #0b6385;
+
+    background:
+        rgba(3, 15, 22, 0.96);
+
+    padding:
+        20px;
+
+    margin-bottom:
+        20px;
+
+    box-shadow:
+        0 0 20px
+        rgba(0, 180, 255, 0.05);
+
+}
+
+
+.github-title {
+
+    color:
+        #39cfff;
+
+    font-size:
+        12px;
+
+    letter-spacing:
+        3px;
+
+    margin-bottom:
+        15px;
+
+}
+
+
+.github-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap:
+        15px;
+
+}
+
+
+.github-actions {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        15px;
+
+    margin-top:
+        15px;
+
+    flex-wrap:
+        wrap;
+
+}
+
+
+.github-status-connected {
+
+    color:
+        #4dff9a !important;
+
+}
+
+
+.github-status-error {
+
+    color:
+        #ff7892 !important;
+
+}
+
+
+/* =====================================================
    TABS
 ===================================================== */
 
@@ -407,6 +499,25 @@ button {
 
     color:
         #ff7892;
+
+}
+
+
+.github-save-button {
+
+    border-color:
+        #39cfff;
+
+    color:
+        #8be6ff;
+
+}
+
+
+.github-save-button:hover {
+
+    background:
+        #0a2d3a;
 
 }
 
@@ -971,6 +1082,20 @@ textarea {
 }
 
 
+.save-buttons {
+
+    display:
+        flex;
+
+    gap:
+        10px;
+
+    flex-wrap:
+        wrap;
+
+}
+
+
 .status {
 
     color:
@@ -1012,6 +1137,18 @@ textarea {
 
     background:
         #0a2d3a;
+
+}
+
+
+.save-button:disabled,
+.action-button:disabled {
+
+    opacity:
+        .45;
+
+    cursor:
+        not-allowed;
 
 }
 
@@ -1114,6 +1251,14 @@ textarea {
     }
 
 
+    .github-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
     .field.full {
 
         grid-column:
@@ -1157,6 +1302,82 @@ textarea {
     </div>
 
 </header>
+
+
+<!-- =====================================================
+     GITHUB CONNECTION
+===================================================== -->
+
+<div class="github-panel">
+
+    <div class="github-title">
+        GITHUB // DATABASE CONNECTION
+    </div>
+
+
+    <div class="github-grid">
+
+        <div class="field">
+
+            <label>
+                GITHUB TOKEN
+            </label>
+
+            <input
+                type="password"
+                id="github-token"
+                placeholder="github_pat_..."
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                REPOSITORY
+            </label>
+
+            <input
+                type="text"
+                id="github-repository"
+                value="agent-shield-stark/S.H.I.E.L.D._database"
+            >
+
+        </div>
+
+    </div>
+
+
+    <div class="github-actions">
+
+        <button
+            class="action-button"
+            onclick="connectGitHub()"
+        >
+            CONNECT TO GITHUB
+        </button>
+
+
+        <button
+            class="action-button danger"
+            onclick="disconnectGitHub()"
+        >
+            DISCONNECT
+        </button>
+
+
+        <span
+            id="github-status"
+            class="status"
+        >
+            NOT CONNECTED
+        </span>
+
+    </div>
+
+</div>
 
 
 <div class="tabs">
@@ -1217,8 +1438,8 @@ textarea {
 
         <br><br>
 
-        All existing character fields are preserved
-        when exporting the database.
+        Changes can be exported locally or saved
+        directly to GitHub.
 
     </div>
 
@@ -1244,12 +1465,25 @@ textarea {
             DATABASE LOADING...
         </div>
 
-        <button
-            class="save-button"
-            onclick="saveCharacters()"
-        >
-            SAVE CHARACTERS
-        </button>
+
+        <div class="save-buttons">
+
+            <button
+                class="action-button"
+                onclick="downloadCharacters()"
+            >
+                DOWNLOAD JSON
+            </button>
+
+
+            <button
+                class="save-button github-save-button"
+                onclick="saveCharactersToGitHub()"
+            >
+                SAVE TO GITHUB
+            </button>
+
+        </div>
 
     </div>
 
@@ -1345,12 +1579,25 @@ textarea {
             DATABASE LOADING...
         </div>
 
-        <button
-            class="save-button"
-            onclick="saveStory()"
-        >
-            SAVE STORY
-        </button>
+
+        <div class="save-buttons">
+
+            <button
+                class="action-button"
+                onclick="downloadStory()"
+            >
+                DOWNLOAD JSON
+            </button>
+
+
+            <button
+                class="save-button github-save-button"
+                onclick="saveStoryToGitHub()"
+            >
+                SAVE TO GITHUB
+            </button>
+
+        </div>
 
     </div>
 
@@ -1446,12 +1693,25 @@ textarea {
             DATABASE LOADING...
         </div>
 
-        <button
-            class="save-button"
-            onclick="saveRules()"
-        >
-            SAVE RULES
-        </button>
+
+        <div class="save-buttons">
+
+            <button
+                class="action-button"
+                onclick="downloadRules()"
+            >
+                DOWNLOAD JSON
+            </button>
+
+
+            <button
+                class="save-button github-save-button"
+                onclick="saveRulesToGitHub()"
+            >
+                SAVE TO GITHUB
+            </button>
+
+        </div>
 
     </div>
 
@@ -1472,6 +1732,18 @@ let characters = [];
 let storySections = [];
 
 let ruleSections = [];
+
+
+/* =====================================================
+   GITHUB CONFIGURATION
+===================================================== */
+
+const GITHUB_API =
+    "https://api.github.com";
+
+
+const GITHUB_TOKEN_STORAGE =
+    "shield_github_token";
 
 
 /* =====================================================
@@ -1514,6 +1786,499 @@ function openPanel(
 
     button.classList.add(
         "active"
+    );
+
+}
+
+
+/* =====================================================
+   GITHUB HELPERS
+===================================================== */
+
+function getGitHubToken() {
+
+    return localStorage.getItem(
+        GITHUB_TOKEN_STORAGE
+    );
+
+}
+
+
+function getGitHubRepository() {
+
+    return document
+        .getElementById(
+            "github-repository"
+        )
+        .value
+        .trim();
+
+}
+
+
+function setGitHubStatus(
+    message,
+    type = "normal"
+) {
+
+    const element =
+        document.getElementById(
+            "github-status"
+        );
+
+
+    element.textContent =
+        message;
+
+
+    element.classList.remove(
+        "github-status-connected",
+        "github-status-error"
+    );
+
+
+    if (type === "connected") {
+
+        element.classList.add(
+            "github-status-connected"
+        );
+
+    }
+
+
+    if (type === "error") {
+
+        element.classList.add(
+            "github-status-error"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   CONNECT GITHUB
+===================================================== */
+
+async function connectGitHub() {
+
+    const token =
+        document
+            .getElementById(
+                "github-token"
+            )
+            .value
+            .trim();
+
+
+    const repository =
+        getGitHubRepository();
+
+
+    if (!token) {
+
+        alert(
+            "Встав свій GitHub token."
+        );
+
+        return;
+
+    }
+
+
+    if (!repository) {
+
+        alert(
+            "Вкажи GitHub repository."
+        );
+
+        return;
+
+    }
+
+
+    setGitHubStatus(
+        "CONNECTING..."
+    );
+
+
+    try {
+
+        const response =
+            await fetch(
+                GITHUB_API +
+                "/repos/" +
+                repository,
+                {
+
+                    method:
+                        "GET",
+
+                    headers: {
+
+                        "Authorization":
+                            "Bearer " + token,
+
+                        "Accept":
+                            "application/vnd.github+json",
+
+                        "X-GitHub-Api-Version":
+                            "2022-11-28"
+
+                    }
+
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "GitHub connection failed"
+            );
+
+        }
+
+
+        const repo =
+            await response.json();
+
+
+        localStorage.setItem(
+            GITHUB_TOKEN_STORAGE,
+            token
+        );
+
+
+        document
+            .getElementById(
+                "github-token"
+            )
+            .value = "";
+
+
+        setGitHubStatus(
+            "CONNECTED // " +
+            repo.full_name,
+            "connected"
+        );
+
+
+        alert(
+            "GitHub успішно підключено!"
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        setGitHubStatus(
+            "CONNECTION FAILED",
+            "error"
+        );
+
+
+        alert(
+            "Не вдалося підключитися до GitHub.\n\nПеревір token і назву repository."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   DISCONNECT GITHUB
+===================================================== */
+
+function disconnectGitHub() {
+
+    localStorage.removeItem(
+        GITHUB_TOKEN_STORAGE
+    );
+
+
+    setGitHubStatus(
+        "NOT CONNECTED"
+    );
+
+
+    alert(
+        "GitHub token видалено з цього браузера."
+    );
+
+}
+
+
+/* =====================================================
+   RESTORE GITHUB CONNECTION
+===================================================== */
+
+function restoreGitHubConnection() {
+
+    const token =
+        getGitHubToken();
+
+
+    if (token) {
+
+        setGitHubStatus(
+            "TOKEN SAVED // READY",
+            "connected"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   GITHUB API REQUEST
+===================================================== */
+
+async function githubRequest(
+    path,
+    options = {}
+) {
+
+    const token =
+        getGitHubToken();
+
+
+    if (!token) {
+
+        throw new Error(
+            "GitHub is not connected."
+        );
+
+    }
+
+
+    const response =
+        await fetch(
+            GITHUB_API + path,
+            {
+
+                ...options,
+
+                headers: {
+
+                    "Authorization":
+                        "Bearer " + token,
+
+                    "Accept":
+                        "application/vnd.github+json",
+
+                    "X-GitHub-Api-Version":
+                        "2022-11-28",
+
+                    ...(options.headers || {})
+
+                }
+
+            }
+        );
+
+
+    if (!response.ok) {
+
+        let message =
+            "GitHub API error: " +
+            response.status;
+
+
+        try {
+
+            const error =
+                await response.json();
+
+
+            if (error.message) {
+
+                message =
+                    error.message;
+
+            }
+
+        }
+
+        catch {
+
+            // Ignore JSON parsing errors.
+
+        }
+
+
+        throw new Error(
+            message
+        );
+
+    }
+
+
+    return response.json();
+
+}
+
+
+/* =====================================================
+   UTF-8 BASE64
+===================================================== */
+
+function encodeBase64UTF8(
+    text
+) {
+
+    const bytes =
+        new TextEncoder().encode(
+            text
+        );
+
+
+    let binary = "";
+
+
+    const chunkSize =
+        0x8000;
+
+
+    for (
+        let i = 0;
+        i < bytes.length;
+        i += chunkSize
+    ) {
+
+        binary += String.fromCharCode(
+            ...bytes.subarray(
+                i,
+                i + chunkSize
+            )
+        );
+
+    }
+
+
+    return btoa(
+        binary
+    );
+
+}
+
+
+/* =====================================================
+   GET FILE FROM GITHUB
+===================================================== */
+
+async function getGitHubFile(
+    path
+) {
+
+    const repository =
+        getGitHubRepository();
+
+
+    return githubRequest(
+        "/repos/" +
+        repository +
+        "/contents/" +
+        path +
+        "?ref=main"
+    );
+
+}
+
+
+/* =====================================================
+   SAVE FILE TO GITHUB
+===================================================== */
+
+async function saveFileToGitHub(
+    path,
+    content,
+    commitMessage
+) {
+
+    const repository =
+        getGitHubRepository();
+
+
+    let existingFile = null;
+
+
+    try {
+
+        existingFile =
+            await getGitHubFile(
+                path
+            );
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "File does not exist yet. Creating it."
+        );
+
+    }
+
+
+    const body = {
+
+        message:
+            commitMessage,
+
+        content:
+            encodeBase64UTF8(
+                content
+            ),
+
+        branch:
+            "main"
+
+    };
+
+
+    if (
+        existingFile &&
+        existingFile.sha
+    ) {
+
+        body.sha =
+            existingFile.sha;
+
+    }
+
+
+    return githubRequest(
+        "/repos/" +
+        repository +
+        "/contents/" +
+        path,
+        {
+
+            method:
+                "PUT",
+
+            headers: {
+
+                "Content-Type":
+                    "application/json"
+
+            },
+
+            body:
+                JSON.stringify(
+                    body
+                )
+
+        }
     );
 
 }
@@ -1706,6 +2471,7 @@ function renderCharacters() {
 
                     </div>
 
+
                     <button
                         class="action-button danger"
                         onclick="deleteCharacter(${index})"
@@ -1715,8 +2481,6 @@ function renderCharacters() {
 
                 </div>
 
-
-                <!-- PHOTO -->
 
                 <div class="photo-box">
 
@@ -1767,14 +2531,13 @@ function renderCharacters() {
 
                         <div class="photo-note">
 
-                            You can enter an existing image
-                            path manually or select an image
-                            from your computer for preview.
+                            Enter an existing image path
+                            or select an image for local preview.
 
                             <br><br>
 
-                            Image upload to the repository
-                            will be connected in the next stage.
+                            Automatic image upload will be
+                            added in the next stage.
 
                         </div>
 
@@ -1783,16 +2546,12 @@ function renderCharacters() {
                 </div>
 
 
-                <!-- BASIC INFORMATION -->
-
                 <div class="form-grid">
 
 
                     <div class="field">
 
-                        <label>
-                            ID
-                        </label>
+                        <label>ID</label>
 
                         <input
                             value="${escapeAttribute(character.id)}"
@@ -1804,9 +2563,7 @@ function renderCharacters() {
 
                     <div class="field">
 
-                        <label>
-                            FILE NUMBER
-                        </label>
+                        <label>FILE NUMBER</label>
 
                         <input
                             value="${escapeAttribute(character.file)}"
@@ -1818,9 +2575,7 @@ function renderCharacters() {
 
                     <div class="field">
 
-                        <label>
-                            NAME
-                        </label>
+                        <label>NAME</label>
 
                         <input
                             value="${escapeAttribute(character.name)}"
@@ -1832,9 +2587,7 @@ function renderCharacters() {
 
                     <div class="field">
 
-                        <label>
-                            FULL NAME
-                        </label>
+                        <label>FULL NAME</label>
 
                         <input
                             value="${escapeAttribute(character.fullName)}"
@@ -1846,9 +2599,7 @@ function renderCharacters() {
 
                     <div class="field">
 
-                        <label>
-                            GROUP
-                        </label>
+                        <label>GROUP</label>
 
                         <select
                             onchange="updateCharacter(${index}, 'group', this.value)"
@@ -1882,9 +2633,7 @@ function renderCharacters() {
 
                     <div class="field">
 
-                        <label>
-                            STATUS
-                        </label>
+                        <label>STATUS</label>
 
                         <input
                             value="${escapeAttribute(character.status)}"
@@ -1896,9 +2645,7 @@ function renderCharacters() {
 
                     <div class="field">
 
-                        <label>
-                            ALIAS
-                        </label>
+                        <label>ALIAS</label>
 
                         <input
                             value="${escapeAttribute(character.alias)}"
@@ -1910,9 +2657,7 @@ function renderCharacters() {
 
                     <div class="field">
 
-                        <label>
-                            AGE
-                        </label>
+                        <label>AGE</label>
 
                         <input
                             value="${escapeAttribute(character.age)}"
@@ -1924,9 +2669,7 @@ function renderCharacters() {
 
                     <div class="field">
 
-                        <label>
-                            AFFILIATION
-                        </label>
+                        <label>AFFILIATION</label>
 
                         <input
                             value="${escapeAttribute(character.affiliation)}"
@@ -1938,9 +2681,7 @@ function renderCharacters() {
 
                     <div class="field">
 
-                        <label>
-                            ROLE
-                        </label>
+                        <label>ROLE</label>
 
                         <input
                             value="${escapeAttribute(character.role)}"
@@ -1952,9 +2693,7 @@ function renderCharacters() {
 
                     <div class="field">
 
-                        <label>
-                            LOCATION
-                        </label>
+                        <label>LOCATION</label>
 
                         <input
                             value="${escapeAttribute(character.location)}"
@@ -1966,9 +2705,7 @@ function renderCharacters() {
 
                     <div class="field full">
 
-                        <label>
-                            DESCRIPTION
-                        </label>
+                        <label>DESCRIPTION</label>
 
                         <textarea
                             oninput="updateCharacter(${index}, 'description', this.value)"
@@ -1977,14 +2714,9 @@ function renderCharacters() {
                     </div>
 
 
-                    <!-- ABILITIES -->
-
                     <div class="field full">
 
-                        <label>
-                            ABILITIES
-                        </label>
-
+                        <label>ABILITIES</label>
 
                         <div
                             id="abilities-${index}"
@@ -2019,7 +2751,6 @@ function renderCharacters() {
                                 ""
                             }
 
-
                         </div>
 
 
@@ -2036,9 +2767,7 @@ function renderCharacters() {
 
                     <div class="field full">
 
-                        <label>
-                            PERSONALITY
-                        </label>
+                        <label>PERSONALITY</label>
 
                         <textarea
                             oninput="updateCharacter(${index}, 'personality', this.value)"
@@ -2049,9 +2778,7 @@ function renderCharacters() {
 
                     <div class="field full">
 
-                        <label>
-                            HISTORY
-                        </label>
+                        <label>HISTORY</label>
 
                         <textarea
                             oninput="updateCharacter(${index}, 'history', this.value)"
@@ -2062,9 +2789,7 @@ function renderCharacters() {
 
                     <div class="field full">
 
-                        <label>
-                            RELATIONSHIPS
-                        </label>
+                        <label>RELATIONSHIPS</label>
 
                         <textarea
                             oninput="updateCharacter(${index}, 'relationships', this.value)"
@@ -2075,9 +2800,7 @@ function renderCharacters() {
 
                     <div class="field full">
 
-                        <label>
-                            NOTES
-                        </label>
+                        <label>NOTES</label>
 
                         <textarea
                             oninput="updateCharacter(${index}, 'notes', this.value)"
@@ -2429,10 +3152,13 @@ function addCharacter() {
 
 
     window.scrollTo({
+
         top:
             document.body.scrollHeight,
+
         behavior:
             "smooth"
+
     });
 
 }
@@ -2608,6 +3334,7 @@ function renderStory() {
 
                     </div>
 
+
                     <button
                         class="action-button danger"
                         onclick="deleteStorySection(${index})"
@@ -2654,6 +3381,7 @@ function renderStory() {
                             CONTENT
                         </label>
 
+
                         <div class="rich-toolbar">
 
                             <button
@@ -2663,12 +3391,14 @@ function renderStory() {
                                 <strong>B</strong>
                             </button>
 
+
                             <button
                                 type="button"
                                 onclick="document.execCommand('italic')"
                             >
                                 <em>I</em>
                             </button>
+
 
                             <button
                                 type="button"
@@ -2879,6 +3609,7 @@ function renderRules() {
 
                     </div>
 
+
                     <button
                         class="action-button danger"
                         onclick="deleteRuleSection(${index})"
@@ -2925,6 +3656,7 @@ function renderRules() {
                             RULE CONTENT
                         </label>
 
+
                         <div class="rich-toolbar">
 
                             <button
@@ -2934,12 +3666,14 @@ function renderRules() {
                                 <strong>B</strong>
                             </button>
 
+
                             <button
                                 type="button"
                                 onclick="document.execCommand('italic')"
                             >
                                 <em>I</em>
                             </button>
+
 
                             <button
                                 type="button"
@@ -3018,32 +3752,12 @@ function deleteRuleSection(
 
 
 /* =====================================================
-   SAVE CHARACTERS
+   BUILD STORY DATA
 ===================================================== */
 
-function saveCharacters() {
+function getStoryData() {
 
-    downloadJSON(
-        characters,
-        "characters-data.json"
-    );
-
-
-    document.getElementById(
-        "character-status"
-    ).textContent =
-        "CHARACTERS EXPORTED SUCCESSFULLY";
-
-}
-
-
-/* =====================================================
-   SAVE STORY
-===================================================== */
-
-function saveStory() {
-
-    const data = {
+    return {
 
         title:
             document.getElementById(
@@ -3060,28 +3774,16 @@ function saveStory() {
 
     };
 
-
-    downloadJSON(
-        data,
-        "story-data.json"
-    );
-
-
-    document.getElementById(
-        "story-status"
-    ).textContent =
-        "STORY EXPORTED SUCCESSFULLY";
-
 }
 
 
 /* =====================================================
-   SAVE RULES
+   BUILD RULES DATA
 ===================================================== */
 
-function saveRules() {
+function getRulesData() {
 
-    const data = {
+    return {
 
         title:
             document.getElementById(
@@ -3098,9 +3800,257 @@ function saveRules() {
 
     };
 
+}
+
+
+/* =====================================================
+   SAVE CHARACTERS TO GITHUB
+===================================================== */
+
+async function saveCharactersToGitHub() {
+
+    const status =
+        document.getElementById(
+            "character-status"
+        );
+
+
+    status.textContent =
+        "SAVING TO GITHUB...";
+
+
+    try {
+
+        await saveFileToGitHub(
+
+            "characters-data.json",
+
+            JSON.stringify(
+                characters,
+                null,
+                4
+            ),
+
+            "Update characters database"
+
+        );
+
+
+        status.textContent =
+            "CHARACTERS SAVED TO GITHUB";
+
+
+        alert(
+            "Персонажі успішно збережені в GitHub!"
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        status.textContent =
+            "GITHUB SAVE FAILED";
+
+
+        alert(
+            "Помилка збереження персонажів:\n\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   SAVE STORY TO GITHUB
+===================================================== */
+
+async function saveStoryToGitHub() {
+
+    const status =
+        document.getElementById(
+            "story-status"
+        );
+
+
+    status.textContent =
+        "SAVING TO GITHUB...";
+
+
+    try {
+
+        const data =
+            getStoryData();
+
+
+        await saveFileToGitHub(
+
+            "story-data.json",
+
+            JSON.stringify(
+                data,
+                null,
+                4
+            ),
+
+            "Update story database"
+
+        );
+
+
+        status.textContent =
+            "STORY SAVED TO GITHUB";
+
+
+        alert(
+            "Сюжет успішно збережений в GitHub!"
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        status.textContent =
+            "GITHUB SAVE FAILED";
+
+
+        alert(
+            "Помилка збереження сюжету:\n\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   SAVE RULES TO GITHUB
+===================================================== */
+
+async function saveRulesToGitHub() {
+
+    const status =
+        document.getElementById(
+            "rules-status"
+        );
+
+
+    status.textContent =
+        "SAVING TO GITHUB...";
+
+
+    try {
+
+        const data =
+            getRulesData();
+
+
+        await saveFileToGitHub(
+
+            "rules-data.json",
+
+            JSON.stringify(
+                data,
+                null,
+                4
+            ),
+
+            "Update rules database"
+
+        );
+
+
+        status.textContent =
+            "RULES SAVED TO GITHUB";
+
+
+        alert(
+            "Правила успішно збережені в GitHub!"
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        status.textContent =
+            "GITHUB SAVE FAILED";
+
+
+        alert(
+            "Помилка збереження правил:\n\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   DOWNLOAD CHARACTERS
+===================================================== */
+
+function downloadCharacters() {
 
     downloadJSON(
-        data,
+        characters,
+        "characters-data.json"
+    );
+
+
+    document.getElementById(
+        "character-status"
+    ).textContent =
+        "CHARACTERS EXPORTED SUCCESSFULLY";
+
+}
+
+
+/* =====================================================
+   DOWNLOAD STORY
+===================================================== */
+
+function downloadStory() {
+
+    downloadJSON(
+        getStoryData(),
+        "story-data.json"
+    );
+
+
+    document.getElementById(
+        "story-status"
+    ).textContent =
+        "STORY EXPORTED SUCCESSFULLY";
+
+}
+
+
+/* =====================================================
+   DOWNLOAD RULES
+===================================================== */
+
+function downloadRules() {
+
+    downloadJSON(
+        getRulesData(),
         "rules-data.json"
     );
 
@@ -3234,6 +4184,8 @@ function escapeAttribute(
 /* =====================================================
    START
 ===================================================== */
+
+restoreGitHubConnection();
 
 loadDatabases();
 
