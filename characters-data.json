@@ -1,121 +1,72 @@
 [
-  {
-    "id": "wanda-maximoff",
-    "file": "001",
-
-    "name": "WANDA MAXIMOFF",
-    "fullName": "Wanda Maximoff",
-
-    "group": "avengers",
-
-    "status": "ACTIVE",
-
-    "alias": "SCARLET WITCH",
-
-    "age": "CLASSIFIED",
-
-    "affiliation": "AVENGERS",
-
-    "role": "AVENGER",
-
-    "location": "UNKNOWN",
-
-    "photo": "",
-
-    "description": "Personnel information classified.",
-
-    "abilities": [
-      "CHAOS MAGIC",
-      "TELEKINESIS",
-      "TELEPATHY"
-    ],
-
-    "personality": "Personnel psychological profile classified.",
-
-    "history": "Historical personnel records classified.",
-
-    "relationships": "Relationship records classified.",
-
-    "notes": "LEVEL 04 CLEARANCE REQUIRED."
-  },
-
-
-  {
-    "id": "yelena-belova",
-    "file": "002",
-
-    "name": "YELENA BELOVA",
-    "fullName": "Yelena Belova",
-
-    "group": "avengers",
-
-    "status": "ACTIVE",
-
-    "alias": "BLACK WIDOW",
-
-    "age": "CLASSIFIED",
-
-    "affiliation": "AVENGERS",
-
-    "role": "OPERATIVE",
-
-    "location": "UNKNOWN",
-
-    "photo": "",
-
-    "description": "Personnel information classified.",
-
-    "abilities": [
-      "HAND-TO-HAND COMBAT",
-      "ESPIONAGE",
-      "MARKSMANSHIP"
-    ],
-
-    "personality": "Personnel psychological profile classified.",
-
-    "history": "Historical personnel records classified.",
-
-    "relationships": "Relationship records classified.",
-
-    "notes": "LEVEL 04 CLEARANCE REQUIRED."
-  },
-
-
-  {
-    "id": "test-character",
-    "file": "003",
-
-    "name": "CHARACTER NAME",
-    "fullName": "Classified",
-
-    "group": "other",
-
-    "status": "CLASSIFIED",
-
-    "alias": "UNKNOWN",
-
-    "age": "UNKNOWN",
-
-    "affiliation": "UNKNOWN",
-
-    "role": "UNKNOWN",
-
-    "location": "UNKNOWN",
-
-    "photo": "",
-
-    "description": "Personnel information classified.",
-
-    "abilities": [
-      "CLASSIFIED"
-    ],
-
-    "personality": "CLASSIFIED.",
-
-    "history": "CLASSIFIED.",
-
-    "relationships": "CLASSIFIED.",
-
-    "notes": "LEVEL 04 CLEARANCE REQUIRED."
-  }
+    {
+        "id": "wanda-maximoff",
+        "file": "001",
+        "name": "WANDA MAXIMOFF",
+        "fullName": "Wanda Maximoff",
+        "group": "avengers",
+        "status": "ACTIVE",
+        "alias": "SCARLET WITCH",
+        "age": "CLASSIFIED",
+        "affiliation": "AVENGERS",
+        "role": "AVENGER",
+        "location": "UNKNOWN",
+        "photo": "",
+        "description": "Personnel information classified.",
+        "abilities": [
+            "CHAOS MAGIC",
+            "TELEKINESIS",
+            "TELEPATHY"
+        ],
+        "personality": "Personnel psychological profile classified.",
+        "history": "Historical personnel records classified.",
+        "relationships": "Relationship records classified.",
+        "notes": "LEVEL 04 CLEARANCE REQUIRED."
+    },
+    {
+        "id": "yelena-belova",
+        "file": "002",
+        "name": "YELENA BELOVA",
+        "fullName": "Yelena Belova",
+        "group": "avengers",
+        "status": "ACTIVE",
+        "alias": "BLACK WIDOW",
+        "age": "CLASSIFIED",
+        "affiliation": "AVENGERS",
+        "role": "OPERATIVE",
+        "location": "UNKNOWN",
+        "photo": "",
+        "description": "Personnel information classified.",
+        "abilities": [
+            "HAND-TO-HAND COMBAT",
+            "ESPIONAGE",
+            "MARKSMANSHIP"
+        ],
+        "personality": "Personnel psychological profile classified.",
+        "history": "Historical personnel records classified.",
+        "relationships": "Relationship records classified.",
+        "notes": "LEVEL 04 CLEARANCE REQUIRED."
+    },
+    {
+        "id": "test-character",
+        "file": "004",
+        "name": "Тест",
+        "fullName": "Classified",
+        "group": "other",
+        "status": "CLASSIFIED",
+        "alias": "UNKNOWN",
+        "age": "UNKNOWN",
+        "affiliation": "UNKNOWN",
+        "role": "UNKNOWN",
+        "location": "UNKNOWN",
+        "photo": "",
+        "description": "Personnel information classified.",
+        "abilities": [
+            "CLASSIFIED"
+        ],
+        "personality": "CLASSIFIED.",
+        "history": "CLASSIFIED.",
+        "relationships": "CLASSIFIED.",
+        "notes": "LEVEL 04 CLEARANCE REQUIRED."
+    }
 ]
