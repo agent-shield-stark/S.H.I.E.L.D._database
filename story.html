@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="uk">
 
@@ -992,7 +993,15 @@ async function loadStory() {
                     "story-content";
 
 
-                content.textContent =
+                /*
+                   IMPORTANT:
+                   Use innerHTML instead of textContent
+                   so saved formatting such as
+                   <b>, <i>, <blockquote>, <div>, <br>
+                   and other HTML tags is rendered correctly.
+                */
+
+                content.innerHTML =
                     section.content ||
                     "";
 
@@ -1125,3 +1134,4 @@ loadStory();
 </body>
 
 </html>
+```
