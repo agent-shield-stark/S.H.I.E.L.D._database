@@ -792,6 +792,14 @@ body::before {
 
 </style>
 
+<style>
+.shield-search { margin: 22px 0 28px; }
+.shield-search input { box-sizing:border-box; width:min(100%,420px); padding:14px; background:#091823; border:1px solid #23516b; color:#d8f4ff; font:inherit; border-radius:0; }
+.shield-search input:focus { outline:1px solid #36c7ff; }
+.shield-search input::placeholder {color:#6f92a2;}
+.shield-search p { color:#9be8ff; font-size:14px; margin:12px 0; }
+[hidden] {display:none !important;}
+</style>
 </head>
 
 
@@ -802,35 +810,11 @@ body::before {
      LOADING SCREEN
 ===================================================== -->
 
-<div id="loading-screen">
-
-    <div class="loading-box">
-
-        <div class="loading-header">
-            S.H.I.E.L.D. // SECURE TERMINAL
-        </div>
-
-        <div
-            class="loading-terminal"
-            id="loading-terminal"
-        ></div>
-
-        <div class="progress-container">
-
-            <div class="progress"></div>
-
-        </div>
-
-    </div>
-
-</div>
-
-
 <!-- =====================================================
      SITE
 ===================================================== -->
 
-<div id="site">
+<div id="site" class="loaded">
 
     <div class="container">
 
@@ -883,7 +867,8 @@ body::before {
              RULES
         ================================================== -->
 
-        <main id="rules-content">
+        <div class="shield-search"><input id="shield-search" type="search" aria-label="Пошук за назвою або текстом" placeholder="Пошук за назвою або текстом" autocomplete="off"><p id="shield-search-empty" role="status" hidden>Нічого не знайдено.</p></div>
+<main id="rules-content">
 
             <!-- RULES DATA LOADS HERE -->
 
@@ -912,61 +897,6 @@ body::before {
 
 
 <script>
-
-/* =====================================================
-   LOADING TERMINAL
-===================================================== */
-
-const terminal =
-    document.getElementById(
-        "loading-terminal"
-    );
-
-
-const loadingMessages = [
-
-    "INITIALIZING SECURE CONNECTION...",
-
-    "CONNECTING TO S.H.I.E.L.D. DATABASE...",
-
-    "VERIFYING AUTHORIZATION...",
-
-    "ACCESS LEVEL: AUTHORIZED",
-
-    "LOCATING PROTOCOL DATABASE...",
-
-    "DECRYPTING SECURITY FILES...",
-
-    "LOADING RULES & REGULATIONS..."
-
-];
-
-
-loadingMessages.forEach(
-    (message, index) => {
-
-        setTimeout(() => {
-
-            const line =
-                document.createElement(
-                    "div"
-                );
-
-            line.className =
-                "loading-line";
-
-            line.textContent =
-                "> " + message;
-
-            terminal.appendChild(
-                line
-            );
-
-        }, index * 260);
-
-    }
-);
-
 
 /* =====================================================
    LOAD RULES DATA
@@ -1140,28 +1070,7 @@ async function loadRules() {
         );
 
 
-        /* SHOW SITE */
-
-        setTimeout(() => {
-
-            document
-                .getElementById(
-                    "loading-screen"
-                )
-                .classList.add(
-                    "hidden"
-                );
-
-
-            document
-                .getElementById(
-                    "site"
-                )
-                .classList.add(
-                    "loaded"
-                );
-
-        }, 3000);
+        
 
 
     }
@@ -1211,13 +1120,7 @@ async function loadRules() {
         `;
 
 
-        document
-            .getElementById(
-                "loading-screen"
-            )
-            .classList.add(
-                "hidden"
-            );
+        
 
 
         document
@@ -1242,6 +1145,22 @@ loadRules();
 </script>
 
 
+<script>
+(() => {
+ const input = document.getElementById('shield-search');
+ const normalize = value => String(value).normalize('NFKC').toLocaleLowerCase('uk').replace(/[’ʼ‘`]/g,"'");
+ function filter() {
+ const q = normalize(input.value).trim();
+ const matches = value => q.split(/\s+/).every(word => normalize(value).includes(word));
+ const cards = [...document.querySelectorAll('#rules-content .rule-section')];
+ cards.forEach(card => card.hidden = !matches(card.textContent));
+ document.getElementById('shield-search-empty').hidden = !q || !cards.length || cards.some(card => !card.hidden);
+ }
+ input.addEventListener('input',filter);
+ new MutationObserver(filter).observe(document.querySelector('#rules-content'),{childList:true,subtree:true});
+ filter();
+})();
+</script>
 </body>
 
 </html>
