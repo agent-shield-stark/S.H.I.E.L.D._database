@@ -1278,7 +1278,7 @@ textarea {
 
 </style>
 
-</head>
+<link rel="stylesheet" href="modules.css"><style>.tabs{flex-wrap:wrap}.module-editor details{margin:6px 0}</style></head>
 
 
 <body>
@@ -1403,6 +1403,10 @@ textarea {
         RULES
     </button>
 
+<button class="tab" onclick="openPanel('branches',this)">Гілки</button>
+<button class="tab" onclick="openPanel('factions',this)">Фракції</button>
+<button class="tab" onclick="openPanel('events',this)">АУ та івенти</button>
+<button class="tab" onclick="openPanel('faq',this)">Запитання і відповіді</button>
 </div>
 
 
@@ -1718,7 +1722,7 @@ textarea {
 </section>
 
 
-</div>
+<section class="panel" id="branches"><h2>Гілки</h2><div class="toolbar"><button onclick="moduleAdd('branches')">+ Додати запис</button><button onclick="moduleSave('branches')">SAVE TO GITHUB</button><button onclick="downloadJSON(moduleData['branches'],'branches-data.json')">DOWNLOAD JSON</button></div><p id="branches-message"></p><div id="branches-editor"></div></section><section class="panel" id="factions"><h2>Фракції</h2><div class="toolbar"><button onclick="moduleAdd('factions')">+ Додати запис</button><button onclick="moduleSave('factions')">SAVE TO GITHUB</button><button onclick="downloadJSON(moduleData['factions'],'factions-data.json')">DOWNLOAD JSON</button></div><p id="factions-message"></p><div id="factions-editor"></div></section><section class="panel" id="events"><h2>АУ та івенти</h2><div class="toolbar"><button onclick="moduleAdd('events')">+ Додати запис</button><button onclick="moduleSave('events')">SAVE TO GITHUB</button><button onclick="downloadJSON(moduleData['events'],'events-data.json')">DOWNLOAD JSON</button></div><p id="events-message"></p><div id="events-editor"></div></section><section class="panel" id="faq"><h2>Запитання і відповіді</h2><div class="toolbar"><button onclick="moduleAdd('faq')">+ Додати запис</button><button onclick="moduleSave('faq')">SAVE TO GITHUB</button><button onclick="downloadJSON(moduleData['faq'],'faq-data.json')">DOWNLOAD JSON</button></div><p id="faq-message"></p><div id="faq-editor"></div></section></div>
 
 
 <script>
@@ -4192,6 +4196,6 @@ loadDatabases();
 </script>
 
 
-</body>
+<script src="modules-admin.js"></script></body>
 
 </html>
