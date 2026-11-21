@@ -1,3 +1,13 @@
 {
-  "records": []
+  "records": [
+    {
+      "title": "Який рік у сюжеті?",
+      "category": "",
+      "status": "",
+      "summary": "",
+      "image": "",
+      "hidden": false,
+      "blocks": []
+    }
+  ]
 }
