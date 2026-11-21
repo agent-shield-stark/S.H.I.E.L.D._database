@@ -1,3 +1,22 @@
 {
-  "records": []
+  "records": [
+    {
+      "title": "Середньовіччя",
+      "category": "АУ",
+      "status": "Активне",
+      "summary": "Короче, буквально граємо середньовіччя",
+      "image": "",
+      "hidden": false,
+      "blocks": []
+    },
+    {
+      "title": "Геловін",
+      "category": "Івенти",
+      "status": "Завершене",
+      "summary": "Букваально граємо Геловін із костюмами",
+      "image": "",
+      "hidden": false,
+      "blocks": []
+    }
+  ]
 }
